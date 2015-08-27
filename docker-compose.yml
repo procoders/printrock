@@ -1,0 +1,29 @@
+mysqldata:
+  image: harshjv/mysql-data:0.9.16-1.0
+
+composerdata:
+  image: harshjv/composer-data:0.9.16-1.0
+
+mysql:
+  image: harshjv/mysql:0.9.16-1.0
+  environment:
+    MYSQL_PASS: root
+  volumes_from:
+    - mysqldata
+  ports:
+    - "43306:3306"
+
+phpnginx:
+  image: harshjv/php-nginx:0.9.16-1.0
+  volumes_from:
+    - composerdata
+  links:
+    - mysql
+  ports:
+    - "4080:80"
+  volumes:
+    - ./nginx:/etc/nginx/sites-available
+    - ./:/var/www
+
+gulp:
+  image: harshjv/bower-gulp:1.0
