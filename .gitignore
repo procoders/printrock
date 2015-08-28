@@ -1,3 +1,5 @@
+/public/packages
+/vendor
 /node_modules
 .env
 .idea
