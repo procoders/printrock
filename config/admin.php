@@ -5,7 +5,7 @@ return [
 	 * Admin title
 	 * Displays in page title and header
 	 */
-	'title'                 => 'Sleeping Owl administrator',
+	'title'                 => 'Printrock administrator',
 
 	/*
 	 * Admin url prefix
