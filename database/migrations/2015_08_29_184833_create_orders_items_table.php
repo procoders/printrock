@@ -15,14 +15,13 @@ class CreateOrdersItemsTable extends Migration
         Schema::create('orders_items', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('orders_id')->unsigned();
-            $table->foreign('orders_id')->references('id')->on('orders')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('order_id')->unsigned();
+            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('photo_id')->unsigned();
-            $table->integer('qti')->unsigned();
+            $table->integer('qty')->unsigned();
             $table->float('price_per_item')->unsigned();
             $table->integer('format_id')->unsigned();
-            $table->integer('formats_id')->unsigned();
-            $table->foreign('formats_id')->references('id')->on('formats')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('format_id')->references('id')->on('formats')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

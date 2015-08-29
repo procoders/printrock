@@ -16,8 +16,7 @@ class CreateCustomersAddressTable extends Migration
         {
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
-            $table->integer('customers_id')->unsigned();
-            $table->foreign('customers_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('country', 100);
             $table->string('city', 100);
             $table->string('phone', 100);

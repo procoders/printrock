@@ -17,8 +17,7 @@ class CreateOrdersStatusDescriptionsTable extends Migration
             $table->increments('id');
             $table->integer('orders_id')->unsigned();
             $table->integer('language_id')->unsigned();
-            $table->integer('languages_id')->unsigned();
-            $table->foreign('languages_id')->references('id')->on('languages')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('language_id')->references('id')->on('languages')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name', 100);
             $table->integer('orders_status_id')->unsigned();
             $table->foreign('orders_status_id')->references('id')->on('orders_status')->onUpdate('cascade')->onDelete('cascade');

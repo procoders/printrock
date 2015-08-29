@@ -18,8 +18,7 @@ class CreateOrdersItemsAddonsTable extends Migration
             $table->integer('orders_item_id')->unsigned();
             $table->foreign('orders_item_id')->references('id')->on('orders_items')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('addon_id')->unsigned();
-            $table->integer('addons_id')->unsigned();
-            $table->foreign('addons_id')->references('id')->on('addons')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('addon_id')->references('id')->on('addons')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('qty')->unsigned();
             $table->timestamps();
         });
