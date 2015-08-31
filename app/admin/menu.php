@@ -16,3 +16,5 @@
  */
 
 Admin::menu(\App\Models\Administrator::class)->label('Administrators')->icon('fa-user');
+Admin::menu(\App\Models\Customer::class)->label('Customers')->icon('fa-user');
+Admin::menu(\App\Models\Language::class)->label('Languages')->icon('fa-language');

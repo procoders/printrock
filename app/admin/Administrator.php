@@ -4,16 +4,9 @@ use SleepingOwl\Admin\Models\ModelItem;
 
 Admin::model(\App\Models\Administrator::class)
     ->title('Administrators')
-    ->filters(function()
+    ->denyDeleting(function ($instance)
     {
-        $adminValue = \Input::get('admin');
-        if (isset($adminValue) && $adminValue != '-1') {
-            ModelItem::filter('searchByName')->scope('searchByName')->value($adminValue)->title('');
-        }
-    })
-    ->denyEditingAndDeleting(function ($instance)
-    {
-        return false;
+        return true;
     })
     ->columns(function ()
     {
@@ -62,8 +55,4 @@ Admin::model(\App\Models\Administrator::class)
             FormItem::password('passwd', 'Password')->validationRule('required|regex:/^[a-zA-Z0-9_@]{6,20}$/');
             FormItem::password('passwdConfirm', 'Password Confirmation')->validationRule('required|same:passwd');
         }
-    })
-    ->viewFilters(function()
-    {
-        ViewFilter::text('name', 'Name');
     });

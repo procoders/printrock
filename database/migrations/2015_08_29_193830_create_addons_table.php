@@ -17,8 +17,9 @@ class CreateAddonsTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->integer('addons_type_id')->unsigned();
+            $table->foreign('addons_type_id')->references('id')->on('addons_types')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('image')->unsigned();
-            $table->enum('price_type', []);
+            $table->enum('price_type', ['price', 'percent']);
             $table->float('price')->unsigned();
             $table->timestamps();
         });
