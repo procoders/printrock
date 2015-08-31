@@ -15,8 +15,15 @@
  * 		});
  */
 
-Admin::menu(\App\Models\Administrator::class)->label('Administrators')->icon('fa-user');
-Admin::menu(\App\Models\Customer::class)->label('Customers')->icon('fa-user');
+Admin::menu(\App\Models\Administrator::class)->label('Administrator')->icon('fa-user');
+
+
+Admin::menu()->label('Customers')->icon('fa-user')->items(function ()
+{
+    Admin::menu(\App\Models\Customer::class)->label('Customers');
+    Admin::menu(\App\Models\CustomersAddress::class)->label('Address');
+});
+
 Admin::menu(\App\Models\Language::class)->label('Languages')->icon('fa-language');
 
 Admin::menu()->label('Addons')->icon('fa-book')->items(function ()

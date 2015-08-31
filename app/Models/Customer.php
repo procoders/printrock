@@ -31,6 +31,19 @@ class Customer extends SleepingOwlModel {
     protected $guarded = array('id');
 
     /**
+     * This method will set model values
+     *
+     * @param array $attributes
+     */
+    public function fill(array $attributes)
+    {
+        if (isset($attributes['password'])) {
+            $attributes['password'] = \Hash::make($attributes['password']);
+        }
+        parent::fill($attributes);
+    }
+
+    /**
      * @return mixed
      */
     public function address()
@@ -52,6 +65,14 @@ class Customer extends SleepingOwlModel {
     public function photos()
     {
         return $this->hasMany(Photo::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getList()
+    {
+        return static::lists('login', 'id')->all();
     }
 
 }

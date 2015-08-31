@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersAddressTable extends Migration
+class CreateCustomersAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateCustomersAddressTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers_address', function(Blueprint $table)
+        Schema::create('customers_addresses', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('customer_id')->unsigned();

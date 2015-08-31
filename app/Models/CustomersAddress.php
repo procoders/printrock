@@ -7,7 +7,7 @@ use SleepingOwl\Models\SleepingOwlModel;
  * Class Administrator
  * @package App\Models
  */
-class CustomerAddress extends SleepingOwlModel {
+class CustomersAddress extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -35,6 +35,6 @@ class CustomerAddress extends SleepingOwlModel {
      */
     public function customer()
     {
-        return $this->belongsTo(Custmer::class);
+        return $this->belongsTo(Customer::class);
     }
 }

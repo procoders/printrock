@@ -51,7 +51,10 @@ Admin::model(\App\Models\Customer::class)
         FormItem::text('second_name', 'Second Name')->validationRule('required');
         FormItem::text('last_name', 'Last Name')->validationRule('required');
         FormItem::email('email', 'Email')->validationRule('required|email');
-        FormItem::email('phone', 'Phone')->validationRule('required');
+        FormItem::text('phone', 'Phone')->validationRule('required');
+        FormItem::text('login', 'Login')->validationRule('required');
+        FormItem::text('password', 'Password')->validationRule('required');
+
     })
     ->viewFilters(function()
     {
