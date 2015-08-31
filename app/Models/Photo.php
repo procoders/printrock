@@ -7,7 +7,7 @@ use SleepingOwl\Models\SleepingOwlModel;
  * Class Administrator
  * @package App\Models
  */
-class Language extends SleepingOwlModel {
+class Photo extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -21,7 +21,7 @@ class Language extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['code', 'name'];
+    protected $fillable = ['customer_id', 'image'];
 
     /**
      * Model guarded fields
@@ -33,8 +33,8 @@ class Language extends SleepingOwlModel {
     /**
      * @return mixed
      */
-    public function orderStatusDescription()
+    public function orderItem()
     {
-        return $this->belongsTo(OrdersStatusDescription::class);
+        return $this->belongsTo(OrdersItem::class);
     }
 }

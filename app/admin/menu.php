@@ -18,3 +18,9 @@
 Admin::menu(\App\Models\Administrator::class)->label('Administrators')->icon('fa-user');
 Admin::menu(\App\Models\Customer::class)->label('Customers')->icon('fa-user');
 Admin::menu(\App\Models\Language::class)->label('Languages')->icon('fa-language');
+
+Admin::menu()->label('Addons')->icon('fa-book')->items(function ()
+{
+    Admin::menu(\App\Models\AddonsType::class)->label('Type');
+    Admin::menu(\App\Models\Addon::class)->label('Addons');
+});

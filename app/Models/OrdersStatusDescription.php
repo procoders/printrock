@@ -7,7 +7,7 @@ use SleepingOwl\Models\SleepingOwlModel;
  * Class Administrator
  * @package App\Models
  */
-class Customer extends SleepingOwlModel {
+class OrdersStatusDescription extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -21,7 +21,7 @@ class Customer extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['name', 'second_name', 'last_name', 'email', 'phone', 'login', 'password'];
+    protected $fillable = ['language_id', 'name', 'orders_status_id', ];
 
     /**
      * Model guarded fields
@@ -33,25 +33,17 @@ class Customer extends SleepingOwlModel {
     /**
      * @return mixed
      */
-    public function address()
+    public function language()
     {
-        return $this->hasMany(CustomerAddress::class);
+        return $this->hasOne(Language::class);
     }
 
     /**
      * @return mixed
      */
-    public function orders()
+    public function orderStatus()
     {
-        return $this->hasMany(Order::class);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function photos()
-    {
-        return $this->hasMany(Photo::class);
+        return $this->belongsTo(OrdersStatus::class);
     }
 
 }

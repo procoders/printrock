@@ -7,7 +7,7 @@ use SleepingOwl\Models\SleepingOwlModel;
  * Class Administrator
  * @package App\Models
  */
-class Language extends SleepingOwlModel {
+class AddonsType extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -29,12 +29,4 @@ class Language extends SleepingOwlModel {
      * @var array
      */
     protected $guarded = array('id');
-
-    /**
-     * @return mixed
-     */
-    public function orderStatusDescription()
-    {
-        return $this->belongsTo(OrdersStatusDescription::class);
-    }
 }

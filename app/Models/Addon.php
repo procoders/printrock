@@ -7,7 +7,7 @@ use SleepingOwl\Models\SleepingOwlModel;
  * Class Administrator
  * @package App\Models
  */
-class Language extends SleepingOwlModel {
+class Addon extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -21,7 +21,7 @@ class Language extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['code', 'name'];
+    protected $fillable = ['name', 'addons_type_id', 'addon_id', 'image', 'price_type', 'price'];
 
     /**
      * Model guarded fields
@@ -33,8 +33,8 @@ class Language extends SleepingOwlModel {
     /**
      * @return mixed
      */
-    public function orderStatusDescription()
+    public function type()
     {
-        return $this->belongsTo(OrdersStatusDescription::class);
+        return $this->hasOne(AddonsType::class);
     }
 }

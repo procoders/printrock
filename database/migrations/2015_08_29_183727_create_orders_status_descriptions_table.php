@@ -15,7 +15,6 @@ class CreateOrdersStatusDescriptionsTable extends Migration
         Schema::create('orders_status_descriptions', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('orders_id')->unsigned();
             $table->integer('language_id')->unsigned();
             $table->foreign('language_id')->references('id')->on('languages')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name', 100);

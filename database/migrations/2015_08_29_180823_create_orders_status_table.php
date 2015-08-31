@@ -15,8 +15,6 @@ class CreateOrdersStatusTable extends Migration
         Schema::create('orders_status', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->integer('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->string('code', 100);
             $table->boolean('default');
             $table->timestamps();
