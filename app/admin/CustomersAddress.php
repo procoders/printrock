@@ -31,5 +31,8 @@ Admin::model(\App\Models\CustomersAddress::class)
     })
     ->viewFilters(function()
     {
-
+        ViewFilter::text('customer.name', 'Customer');
+        ViewFilter::text('country', 'Country');
+        ViewFilter::text('city', 'City');
+        ViewFilter::text('zip_code', 'Zip Code');
     });
