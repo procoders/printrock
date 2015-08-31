@@ -21,7 +21,7 @@ Admin::menu(\App\Models\Administrator::class)->label('Administrator')->icon('fa-
 Admin::menu()->label('Customers')->icon('fa-user')->items(function ()
 {
     Admin::menu(\App\Models\Customer::class)->label('Customers');
-    Admin::menu(\App\Models\CustomersAddress::class)->label('Address');
+    Admin::menu(\App\Models\CustomersAddress::class)->label('Addresses');
 });
 
 Admin::menu(\App\Models\Language::class)->label('Languages')->icon('fa-language');

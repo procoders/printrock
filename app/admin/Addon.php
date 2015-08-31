@@ -1,6 +1,7 @@
 <?php
 
 use SleepingOwl\Admin\Models\ModelItem;
+use App\Models;
 
 Admin::model(\App\Models\Addon::class)
     ->title('Addons')
@@ -13,6 +14,9 @@ Admin::model(\App\Models\Addon::class)
         Column::string('id', 'Id');
         Column::string('name', 'Name')
             ->inlineEdit(true);
+        Column::string('type.name', 'Type');
+        Column::string('price_type', 'Price Type');
+        Column::string('price', 'Price');
     })
     ->inlineEdit(function($field) {
         switch($field) {
@@ -30,8 +34,18 @@ Admin::model(\App\Models\Addon::class)
     ->form(function ()
     {
         FormItem::text('name', 'Name')->validationRule('required');
+        FormItem::select('addons_type_id', 'Type')
+            ->list(Models\AddonsType::class)
+            ->required();
+        FormItem::text('image', 'Image')->validationRule('required');
+        FormItem::select('price_type', 'Price Type')
+            ->list(['price' => 'price', 'percent' => 'percent'])
+            ->required();
+        FormItem::text('price', 'Price')->validationRule('required');
     })
     ->viewFilters(function()
     {
         ViewFilter::text('name', 'Name');
+        ViewFilter::text('type.name', 'Type');
+        ViewFilter::text('price_type', 'Price Type');
     });

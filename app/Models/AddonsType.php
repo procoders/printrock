@@ -29,4 +29,12 @@ class AddonsType extends SleepingOwlModel {
      * @var array
      */
     protected $guarded = array('id');
+
+    /**
+     * @return mixed
+     */
+    public static function getList()
+    {
+        return static::lists('name', 'id')->all();
+    }
 }
