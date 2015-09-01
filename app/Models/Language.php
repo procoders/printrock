@@ -35,6 +35,6 @@ class Language extends SleepingOwlModel {
      */
     public function orderStatusDescription()
     {
-        return $this->belongsTo(OrdersStatusDescription::class);
+        return $this->belongsTo(OrdersStatusesDescription::class);
     }
 }

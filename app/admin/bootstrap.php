@@ -21,3 +21,4 @@
  * 		});
  */
 
+FormItem::register('descriptions', App\AdminCustom\Forms\LanguagesFields::class);

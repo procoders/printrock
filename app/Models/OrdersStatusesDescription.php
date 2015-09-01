@@ -7,7 +7,7 @@ use SleepingOwl\Models\SleepingOwlModel;
  * Class Administrator
  * @package App\Models
  */
-class OrdersStatusDescription extends SleepingOwlModel {
+class OrdersStatusesDescription extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -21,7 +21,7 @@ class OrdersStatusDescription extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['language_id', 'name', 'orders_status_id', ];
+    protected $fillable = ['language_id', 'name', 'orders_status_id'];
 
     /**
      * Model guarded fields

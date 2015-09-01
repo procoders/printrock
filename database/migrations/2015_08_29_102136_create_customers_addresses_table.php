@@ -32,6 +32,6 @@ class CreateCustomersAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('customers_address');
+        Schema::drop('customers_addresses');
     }
 }

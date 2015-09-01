@@ -35,7 +35,15 @@ class OrdersStatus extends SleepingOwlModel {
      */
     public function descriptions()
     {
-        return $this->hasMany(OrdersStatusDescription::class);
+        return $this->hasMany(OrdersStatusesDescription::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function languages()
+    {
+        return $this->belongsTo(Language::class);
     }
 
     /**
@@ -44,6 +52,16 @@ class OrdersStatus extends SleepingOwlModel {
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    /**
+     * This method will return orders status repository
+     *
+     * @return Repositories\OrdersStatusRepository
+     */
+    public function getRepository()
+    {
+        return new Repositories\OrdersStatusRepository($this);
     }
 
 }

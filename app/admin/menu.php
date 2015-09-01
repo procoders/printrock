@@ -26,8 +26,15 @@ Admin::menu()->label('Customers')->icon('fa-user')->items(function ()
 
 Admin::menu(\App\Models\Language::class)->label('Languages')->icon('fa-language');
 
+Admin::menu()->label('Orders')->icon('fa-book')->items(function ()
+{
+    Admin::menu(\App\Models\OrdersStatus::class)->label('Statuses');
+});
+
 Admin::menu()->label('Addons')->icon('fa-book')->items(function ()
 {
     Admin::menu(\App\Models\AddonsType::class)->label('Type');
     Admin::menu(\App\Models\Addon::class)->label('Addons');
 });
+
+Admin::menu(\App\Models\Format::class)->label('Formats')->icon('fa-file-image-o');
