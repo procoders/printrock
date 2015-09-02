@@ -64,4 +64,12 @@ class OrdersStatus extends SleepingOwlModel {
         return new Repositories\OrdersStatusRepository($this);
     }
 
+    /**
+     * @return mixed
+     */
+    public static function getList()
+    {
+        return static::lists('code', 'id')->all();
+    }
+
 }

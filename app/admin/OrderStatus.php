@@ -1,6 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
 use SleepingOwl\Admin\Models\Form\FormGroup;
 
 Admin::model(\App\Models\OrdersStatus::class)

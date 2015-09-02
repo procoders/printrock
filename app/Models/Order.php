@@ -21,7 +21,7 @@ class Order extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['customer_id', 'order_status_id', 'total'];
+    protected $fillable = ['customer_id', 'orders_status_id', 'total'];
 
     /**
      * Model guarded fields
@@ -35,22 +35,32 @@ class Order extends SleepingOwlModel {
      */
     public function customer()
     {
-        return $this->belongsTo(Custmer::class);
+        return $this->belongsTo(Customer::class);
     }
 
-    /**
-     * @return mixed
-     */
-    public function items()
-    {
-        return $this->hasMany(OrdersItem::class);
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function items()
+//    {
+//        return $this->hasMany(OrdersItem::class);
+//    }
 
     /**
      * @return mixed
      */
     public function status()
     {
-        return $this->hasOne(OrdersStatus::class);
+        return $this->belongsTo(OrdersStatus::class);
+    }
+
+    /**
+     * This method will return order repository
+     *
+     * @return Repositories\Order
+     */
+    public function getRepository()
+    {
+        return new Repositories\OrderRepository($this);
     }
 }

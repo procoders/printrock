@@ -29,6 +29,7 @@ Admin::menu(\App\Models\Language::class)->label('Languages')->icon('fa-language'
 Admin::menu()->label('Orders')->icon('fa-book')->items(function ()
 {
     Admin::menu(\App\Models\OrdersStatus::class)->label('Statuses');
+    Admin::menu(\App\Models\Order::class)->label('Orders');
 });
 
 Admin::menu()->label('Addons')->icon('fa-book')->items(function ()
