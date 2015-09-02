@@ -5,3 +5,4 @@
 .idea
 composer.lock
 auth.json
+/storage/docs

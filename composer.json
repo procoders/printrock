@@ -8,7 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "procoders/admin": "dev-master",
-        "laravelcollective/html": "~5.0"
+        "laravelcollective/html": "~5.0",
+        "zircote/swagger-php": "0.9.6",
+        "jlapp/swaggervel": "2.0.*@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
