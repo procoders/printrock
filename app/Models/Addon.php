@@ -35,6 +35,6 @@ class Addon extends SleepingOwlModel {
      */
     public function type()
     {
-        return $this->belongsTo(AddonsType::class);
+        return $this->belongsTo(AddonsType::class, 'addons_type_id');
     }
 }

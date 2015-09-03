@@ -137,7 +137,9 @@ $applicationConfig = [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-
+        App\Providers\AppServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class
     ],
 
     /*
@@ -189,7 +191,7 @@ $applicationConfig = [
 
 ];
 
-if (!empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "/admin") !== false){
+if (! empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "/admin") !== false){
     $applicationConfig['providers'][] = 'SleepingOwl\Admin\AdminServiceProvider';
     $applicationConfig['providers'][] = 'Illuminate\Html\HtmlServiceProvider';
 //    $applicationConfig['providers'][] = 'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider';
@@ -205,7 +207,25 @@ if (!empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUE
     $applicationConfig['aliases']['ModelItem'] = 'SleepingOwl\Admin\Models\ModelItem';
     $applicationConfig['aliases']['Form'] = 'Collective\Html\FormFacade';
     $applicationConfig['aliases']['Html'] = 'Collective\Html\HtmlFacade';
-} elseif (!empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && (strpos($_SERVER['REQUEST_URI'], "/api-docs") !== false || strpos($_SERVER['REQUEST_URI'], "/docs") !== false )) {
+} else if (! empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && (strpos($_SERVER['REQUEST_URI'], "/api-docs") !== false || strpos($_SERVER['REQUEST_URI'], "/docs") !== false )) {
+    $applicationConfig['providers'][] = 'Jlapp\Swaggervel\SwaggervelServiceProvider';
+    $applicationConfig['providers'][] = 'Collective\Html\HtmlServiceProvider';
+} else {
+    $applicationConfig['providers'][] = 'SleepingOwl\Admin\AdminServiceProvider';
+    $applicationConfig['providers'][] = 'Illuminate\Html\HtmlServiceProvider';
+//    $applicationConfig['providers'][] = 'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider';
+
+    $applicationConfig['aliases']['Admin'] = 'SleepingOwl\Admin\Admin';
+    $applicationConfig['aliases']['AdminAuth'] = 'SleepingOwl\AdminAuth\Facades\AdminAuth';
+    $applicationConfig['aliases']['AdminRouter'] = 'SleepingOwl\Admin\Facades\AdminRouter';
+    $applicationConfig['aliases']['AssetManager'] = 'SleepingOwl\Admin\AssetManager\AssetManager';
+    $applicationConfig['aliases']['Column'] = 'SleepingOwl\Admin\Columns\Column';
+    $applicationConfig['aliases']['FormItem'] = 'SleepingOwl\Admin\Models\Form\FormItem';
+    $applicationConfig['aliases']['InlineEditItem'] = 'SleepingOwl\Admin\Models\InlineEdit\InlineEditItem';
+    $applicationConfig['aliases']['ViewFilter'] = 'SleepingOwl\Admin\ViewFilters\ViewFilter';
+    $applicationConfig['aliases']['ModelItem'] = 'SleepingOwl\Admin\Models\ModelItem';
+    $applicationConfig['aliases']['Form'] = 'Collective\Html\FormFacade';
+    $applicationConfig['aliases']['Html'] = 'Collective\Html\HtmlFacade';
     $applicationConfig['providers'][] = 'Jlapp\Swaggervel\SwaggervelServiceProvider';
     $applicationConfig['providers'][] = 'Collective\Html\HtmlServiceProvider';
 }
