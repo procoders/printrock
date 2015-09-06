@@ -64,6 +64,7 @@ Class Customer extends BaseView
         $addresses = [];
         foreach ($this->_model->addresses()->get() as $customersAddressModel) {
             $customersAddressView = new ModelViews\CustomersAddress($customersAddressModel);
+
             $addresses[] = $customersAddressView->get();
         }
 
@@ -72,6 +73,7 @@ Class Customer extends BaseView
         $photos = [];
         foreach ($this->_model->photos()->get() as $photoModel) {
             $photoView = new ModelViews\Photo($photoModel);
+
             $photos[] = $photoView->get();
         }
 

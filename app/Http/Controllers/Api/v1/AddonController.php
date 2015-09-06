@@ -132,10 +132,7 @@ class AddonController extends Controller {
 
             foreach ($addonModels->get() as $addonModel) {
                 $addonView = new ModelViews\Addon($addonModel);
-                $addonsTypeView = new ModelViews\AddonsType($addonModel->type()->first());
-                $addon = $addonView->get();
-                $addon['type'] = $addonsTypeView->get();
-                $response[] = $addon;
+                $response[] = $addonView->get();
             }
         }
 

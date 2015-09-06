@@ -3,6 +3,7 @@
 namespace App\Http\Views\Api\v1;
 
 use App\Models as Models;
+use App\Http\Views\Api\v1 as ModelViews;
 
 /**
  * Class Addon
@@ -38,12 +39,17 @@ Class Addon extends BaseView
 
     public function get()
     {
+        $addonsType = $this->_model->type()->first();
+
+        $addonsTypeView = new ModelViews\AddonsType($addonsType);
+
         $result = [
             'id'         => $this->_model->id,
             'name'       => $this->_model->name,
             'image'      => $this->_model->image,
             'price_type' => $this->_model->price_type,
-            'price'      => $this->_model->price
+            'price'      => $this->_model->price,
+            'type'       => $addonsTypeView->get()
         ];
 
         return $result;
