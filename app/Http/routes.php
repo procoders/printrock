@@ -23,4 +23,7 @@ Route::group(array('prefix' => 'api/v1'), function()
     Route::get('/language/get/{id}', 'Api\v1\LanguageController@get');
     Route::get('/customer/get/{id}', 'Api\v1\CustomerController@get');
     Route::post('/customer/add', 'Api\v1\CustomerController@add');
+    Route::get('/customers_address/get/{id}', 'Api\v1\CustomersAddressController@get');
+    Route::post('/customers_address/add', 'Api\v1\CustomersAddressController@add');
+    Route::post('/photo/add', 'Api\v1\PhotoController@add');
 });

@@ -45,6 +45,10 @@ Class Customer extends BaseView
      * @SWG\Property(name="addresses", type="array", @SWG\Items("CustomersAddress"), required=true)
      */
 
+    /**
+     * @SWG\Property(name="photos", type="array", @SWG\Items("Photo"), required=true)
+     */
+
     public function get()
     {
         $result = [
@@ -64,6 +68,14 @@ Class Customer extends BaseView
         }
 
         $result['addresses'] = $addresses;
+
+        $photos = [];
+        foreach ($this->_model->photos()->get() as $photoModel) {
+            $photoView = new ModelViews\Photo($photoModel);
+            $photos[] = $photoView->get();
+        }
+
+        $result['photos'] = $photos;
 
         return $result;
     }

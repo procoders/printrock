@@ -4,10 +4,9 @@ namespace App\Models\Repositories;
 
 use App\Models\Repositories\Interfaces as Interfaces;
 use App\Models as Models;
-//use App\AdminCustom\Helpers\Admin;
 
 /**
- * Class BookingRepository
+ * Class AdministratorRepository
  *
  * @package App\Models\Repositories
  */

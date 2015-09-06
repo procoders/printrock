@@ -37,4 +37,14 @@ class Photo extends SleepingOwlModel {
     {
         return $this->belongsTo(OrdersItem::class);
     }
+
+    /**
+     * This method will return photo repository
+     *
+     * @return Repositories\PhotoRepository
+     */
+    public function getRepository()
+    {
+        return new Repositories\PhotoRepository($this);
+    }
 }

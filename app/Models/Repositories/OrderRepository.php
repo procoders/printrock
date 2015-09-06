@@ -4,10 +4,9 @@ namespace App\Models\Repositories;
 
 use App\Models\Repositories\Interfaces as Interfaces;
 use App\Models as Models;
-use Illuminate\Support\Facades\DB;
 
 /**
- * Class HotelRepository
+ * Class OrderRepository
  *
  * @package App\Models\Repositories
  */

@@ -37,4 +37,14 @@ class CustomersAddress extends SleepingOwlModel {
     {
         return $this->belongsTo(Customer::class);
     }
+
+    /**
+     * This method will return customers address repository
+     *
+     * @return Repositories\CustomersAddressRepository
+     */
+    public function getRepository()
+    {
+        return new Repositories\CustomersAddressRepository($this);
+    }
 }

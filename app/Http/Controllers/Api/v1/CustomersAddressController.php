@@ -11,32 +11,33 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/customer",
+ *     resourcePath="/customers_address",
  *     basePath="/api/v1"
  * )
  */
-class CustomerController extends Controller {
+class CustomersAddressController extends Controller
+{
 
     /**
      * @SWG\Api(
-     *   path="/customer/get/{id}",
+     *   path="/customers_address/get/{id}",
      *   @SWG\Operation(
-     *     nickname="Get customer",
+     *     nickname="Get customers address",
      *     method="GET",
-     *     summary="Find customer by ID",
-     *     notes="Returns customer",
-     *     type="Customer",
+     *     summary="Find customers address by ID",
+     *     notes="Returns customers address",
+     *     type="CustomersAddress",
      *     authorizations={},
      *     @SWG\Parameter(
      *       name="id",
-     *       description="ID of customer",
+     *       description="ID of customers address",
      *       required=true,
      *       type="integer",
      *       format="int64",
      *       paramType="path",
      *       allowMultiple=false
      *     ),
-     *     @SWG\ResponseMessage(code=404, message="Customer not found"),
+     *     @SWG\ResponseMessage(code=404, message="Customers address not found"),
      *     @SWG\ResponseMessage(code=500, message="Internal server error")
      *   )
      * )
@@ -55,17 +56,17 @@ class CustomerController extends Controller {
                 $response = ['error' => $validator->errors()];
                 $statusCode = 500;
             } else {
-                $customerModel = Models\Customer::where('id', $id)->first();
-                if (! isset($customerModel)) {
+                $customersAddressModel = Models\CustomersAddress::where('id', $id)->first();
+                if (!isset($customersAddressModel)) {
                     throw new ModelNotFoundException();
                 }
-                $customerView = new ModelViews\Customer($customerModel);
+                $customersAddressView = new ModelViews\CustomersAddress($customersAddressModel);
 
-                $response = $customerView->get();
+                $response = $customersAddressView->get();
             }
         } catch (ModelNotFoundException $e) {
             $response = [
-                'error' => 'Customer doesn\'t exists'
+                'error' => 'Customers address doesn\'t exists'
             ];
             $statusCode = 404;
         } finally {
@@ -75,41 +76,34 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/customer/add",
+     *   path="/customers_address/add",
      *   @SWG\Operation(
-     *     nickname="Add new cusromer",
+     *     nickname="Add new cusromers address",
      *     method="POST",
-     *     summary="Add new customer",
-     *     notes="Returns customer",
-     *     type="Customer",
+     *     summary="Add new customers address",
+     *     notes="Returns customers address",
+     *     type="CustomersAddress",
      *     authorizations={},
      *     @SWG\Parameter(
-     *       name="name",
-     *       description="Name",
+     *       name="customer_id",
+     *       description="Customer ID",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="country",
+     *       description="Country",
      *       required=true,
      *       type="string",
      *       paramType="form",
      *       allowMultiple=false
      *     ),
      *     @SWG\Parameter(
-     *       name="second_name",
-     *       description="Second Name",
-     *       required=true,
-     *       type="string",
-     *       paramType="form",
-     *       allowMultiple=false
-     *     ),
-     *     @SWG\Parameter(
-     *       name="last_name",
-     *       description="Last Name",
-     *       required=true,
-     *       type="string",
-     *       paramType="form",
-     *       allowMultiple=false
-     *     ),
-     *     @SWG\Parameter(
-     *       name="email",
-     *       description="Email",
+     *       name="city",
+     *       description="City",
      *       required=true,
      *       type="string",
      *       paramType="form",
@@ -124,16 +118,8 @@ class CustomerController extends Controller {
      *       allowMultiple=false
      *     ),
      *     @SWG\Parameter(
-     *       name="login",
-     *       description="Login",
-     *       required=true,
-     *       type="string",
-     *       paramType="form",
-     *       allowMultiple=false
-     *     ),
-     *     @SWG\Parameter(
-     *       name="password",
-     *       description="Password",
+     *       name="zip_code",
+     *       description="Zip Code",
      *       required=true,
      *       type="string",
      *       paramType="form",
@@ -150,13 +136,12 @@ class CustomerController extends Controller {
         $inputs = \Input::all();
 
         $validator = Validator::make($inputs, [
-            'name'        => 'required',
-            'second_name' => 'required',
-            'last_name'   => 'required',
-            'email'       => 'required',
+            'customer_id' => 'required',
+            'country'     => 'required',
+            'city'        => 'required',
             'phone'       => 'required',
-            'login'       => 'required',
-            'password'    => 'required'
+            'zip_code'    => 'required'
+
 //
 //            'rooms_type'          => 'required|integer|min:1|exists:hotels_rooms_types,id',
 //            'rooms_count'         => 'required|integer|min:1',
@@ -181,24 +166,23 @@ class CustomerController extends Controller {
             $statusCode = 500;
         } else {
             $params = [
-                'name'        => $inputs['name'],
-                'second_name' => $inputs['second_name'],
-                'last_name'   => $inputs['last_name'],
-                'email'       => $inputs['email'],
+                'customer_id' => $inputs['customer_id'],
+                'country'     => $inputs['country'],
+                'city'        => $inputs['city'],
                 'phone'       => $inputs['phone'],
-                'login'       => $inputs['login'],
-                'password'    => \Hash::make($inputs['password'])
+                'zip_code'    => $inputs['zip_code']
             ];
 
-            $customer = new Models\Customer();
+            $customersAddress = new Models\CustomersAddress();
 
-            $customer->getRepository()->saveFromArray($params);
+            $customersAddress->getRepository()->saveFromArray($params);
 
-            $customerView = new ModelViews\Customer($customer);
+            $customersAddressView = new ModelViews\CustomersAddress($customersAddress);
 
-            $response = $customerView->get();
+            $response = $customersAddressView->get();
         }
 
         return \Response::json($response, $statusCode);
     }
+
 }
