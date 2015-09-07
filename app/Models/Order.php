@@ -38,20 +38,20 @@ class Order extends SleepingOwlModel {
         return $this->belongsTo(Customer::class);
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function items()
-//    {
-//        return $this->hasMany(OrdersItem::class);
-//    }
+    /**
+     * @return mixed
+     */
+    public function items()
+    {
+        return $this->hasMany(OrdersItem::class);
+    }
 
     /**
      * @return mixed
      */
     public function status()
     {
-        return $this->belongsTo(OrdersStatus::class);
+        return $this->belongsTo(OrdersStatus::class, 'orders_status_id');
     }
 
     /**
@@ -63,4 +63,5 @@ class Order extends SleepingOwlModel {
     {
         return new Repositories\OrderRepository($this);
     }
+
 }

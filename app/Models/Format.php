@@ -4,7 +4,7 @@ namespace App\Models;
 use SleepingOwl\Models\SleepingOwlModel;
 
 /**
- * Class Administrator
+ * Class Format
  * @package App\Models
  */
 class Format extends SleepingOwlModel {

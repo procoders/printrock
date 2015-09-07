@@ -4,7 +4,7 @@ namespace App\Models;
 use SleepingOwl\Models\SleepingOwlModel;
 
 /**
- * Class Administrator
+ * Class OrdersItemsAddon
  * @package App\Models
  */
 class OrdersItemsAddon extends SleepingOwlModel {
@@ -33,32 +33,16 @@ class OrdersItemsAddon extends SleepingOwlModel {
     /**
      * @return mixed
      */
-    public function order()
+    public function orderItems()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(OrdersItem::class);
     }
 
     /**
      * @return mixed
      */
-    public function photo()
+    public function addon()
     {
-        return $this->hasOne(Photo::class);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function format()
-    {
-        return $this->hasOne(Format::class);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function addons()
-    {
-        return $this->hasOne(OrdersItemsAddon::class);
+        return $this->belongsTo(Addon::class);
     }
 }

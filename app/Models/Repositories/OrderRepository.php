@@ -4,6 +4,7 @@ namespace App\Models\Repositories;
 
 use App\Models\Repositories\Interfaces as Interfaces;
 use App\Models as Models;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class OrderRepository
@@ -28,23 +29,39 @@ Class OrderRepository implements Interfaces\iAdminSave
      */
     public function saveFromArray(array $attributes = array())
     {
+        $this->model->customer_id = $attributes['customer_id'];
+
+        $ordersStatus = Models\OrdersStatus::where('default', 1)->first();
+
+        $this->model->orders_status_id = $ordersStatus->id;
+
+        $this->model->total = $attributes['total'];
+
         $this->model->save();
+
+        $this->model->items()->delete();
+
+        foreach ($attributes['items'] as $oredersItem) {
+            $item = new Models\OrdersItem();
+
+            $item->order_id = $this->model->id;
+            $item->photo_id = $oredersItem['photo_id'];
+            $item->qty = $oredersItem['qty'];
+            $item->format_id = $oredersItem['format_id'];
+            $item->price_per_item = $oredersItem['price_per_item'];
+
+            $item->save();
+
+            foreach ($oredersItem['addons'] as $oredersItemsAddon) {
+                $addon = new Models\OrdersItemsAddon();
+
+                $addon->orders_item_id = $item->id;
+                $addon->addon_id = $oredersItemsAddon['id'];
+                $addon->qty = $oredersItemsAddon['qty'];
+
+                $addon->save();
+            }
+        }
     }
 
-//    public function inlineSave(array $data = [])
-//    {
-//        foreach ($data as $key => $value) {
-//            switch ($key) {
-//                case 'name':
-//                    $this->model->name = trim($value);
-//                    $this->model->update();
-//                    break;
-//                case 'active':
-//                    $this->model->default = (int)$value;
-//                    $this->model->update();
-//                    break;
-//            }
-//        }
-//        return true;
-//    }
 }

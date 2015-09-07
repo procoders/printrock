@@ -4,7 +4,7 @@ namespace App\Models;
 use SleepingOwl\Models\SleepingOwlModel;
 
 /**
- * Class Administrator
+ * Class Photo
  * @package App\Models
  */
 class Photo extends SleepingOwlModel {

@@ -4,7 +4,7 @@ namespace App\Models;
 use SleepingOwl\Models\SleepingOwlModel;
 
 /**
- * Class Administrator
+ * Class Customer
  * @package App\Models
  */
 class Customer extends SleepingOwlModel {

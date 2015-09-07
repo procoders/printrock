@@ -55,11 +55,11 @@ class OrdersStatusController extends Controller {
                 $response = ['error' => $validator->errors()];
                 $statusCode = 500;
             } else {
-                $oredersStatusModel = Models\OrdersStatus::where('id', $id)->first();
-                if (! isset($oredersStatusModel)) {
+                $ordersStatusModel = Models\OrdersStatus::where('id', $id)->first();
+                if (! isset($ordersStatusModel)) {
                     throw new ModelNotFoundException();
                 }
-                $ordersStatusView = new ModelViews\OrdersStatus($oredersStatusModel);
+                $ordersStatusView = new ModelViews\OrdersStatus($ordersStatusModel);
 
                 $response = $ordersStatusView->get();
             }
@@ -92,9 +92,9 @@ class OrdersStatusController extends Controller {
         $statusCode = 200;
         $response = [];
 
-        $oredersStatusModels = Models\OrdersStatus::all();
-        foreach ($oredersStatusModels as $oredersStatusModel) {
-            $ordersStatusView = new ModelViews\OrdersStatus($oredersStatusModel);
+        $ordersStatusModels = Models\OrdersStatus::all();
+        foreach ($ordersStatusModels as $ordersStatusModel) {
+            $ordersStatusView = new ModelViews\OrdersStatus($ordersStatusModel);
             $response[] = $ordersStatusView->get();
         }
 

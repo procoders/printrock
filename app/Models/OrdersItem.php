@@ -43,7 +43,7 @@ class OrdersItem extends SleepingOwlModel {
      */
     public function photo()
     {
-        return $this->hasOne(Photo::class);
+        return $this->belongsTo(Photo::class);
     }
 
     /**
@@ -51,14 +51,14 @@ class OrdersItem extends SleepingOwlModel {
      */
     public function format()
     {
-        return $this->hasOne(Format::class);
+        return $this->belongsTo(Format::class);
     }
 
     /**
      * @return mixed
      */
-    public function addons()
+    public function ordersItemsAddons()
     {
-        return $this->belongsTo(Addon::class);
+        return $this->hasMany(OrdersItemsAddon::class);
     }
 }

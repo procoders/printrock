@@ -1,5 +1,4 @@
 /public/packages
-/public/photos
 /vendor
 /node_modules
 .env

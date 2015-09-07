@@ -28,4 +28,7 @@ Route::group(array('prefix' => 'api/v1'), function()
     Route::post('/photo/add', 'Api\v1\PhotoController@add');
     Route::get('/orders_status/all', 'Api\v1\OrdersStatusController@all');
     Route::get('/orders_status/get/{id}', 'Api\v1\OrdersStatusController@get');
+    Route::get('/order/get/{id}', 'Api\v1\OrderController@get');
+    Route::post('/order/add', 'Api\v1\OrderController@add');
+
 });
