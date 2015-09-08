@@ -22,3 +22,4 @@
  */
 
 FormItem::register('descriptions', App\AdminCustom\Forms\LanguagesFields::class);
+FormItem::register('images', App\AdminCustom\Forms\ImagesFields::class);

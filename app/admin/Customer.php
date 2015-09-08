@@ -1,5 +1,7 @@
 <?php
 
+use SleepingOwl\Admin\Models\Form\FormGroup;
+
 Admin::model(\App\Models\Customer::class)
     ->title('Customers')
     ->denyEditingAndDeleting(function ($instance)
@@ -45,13 +47,20 @@ Admin::model(\App\Models\Customer::class)
     })
     ->form(function ()
     {
-        FormItem::text('name', 'Name')->validationRule('required');
-        FormItem::text('second_name', 'Second Name')->validationRule('required');
-        FormItem::text('last_name', 'Last Name')->validationRule('required');
-        FormItem::email('email', 'Email')->validationRule('required|email');
-        FormItem::text('phone', 'Phone')->validationRule('required');
-        FormItem::text('login', 'Login')->validationRule('required');
-        FormItem::text('password', 'Password')->validationRule('required');
+        FormItem::text('name', 'Name')->validationRule('required')->group('general');
+        FormItem::text('second_name', 'Second Name')->validationRule('required')->group('general');
+        FormItem::text('last_name', 'Last Name')->validationRule('required')->group('general');
+        FormItem::email('email', 'Email')->validationRule('required|email')->group('general');
+        FormItem::text('phone', 'Phone')->validationRule('required')->group('general');
+        FormItem::text('login', 'Login')->validationRule('required')->group('general');
+        FormItem::text('password', 'Password')->validationRule('required')->group('general');
+        FormItem::images()
+            ->type('model')
+            ->modelMethod('photos')
+            ->group('photos');
+
+        FormGroup::create('general', 'General')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
+        FormGroup::create('photos', 'Photos')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
 
     })
     ->viewFilters(function()
