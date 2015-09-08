@@ -101,41 +101,67 @@ class OrderController extends Controller {
 
         $params = \Input::all();
 
-        $validator = Validator::make($params, [
-            'customer_id' => 'required|numeric',
-            'total'       => 'required|numeric',
-            'items'       => 'required'
+        if ($params) {
+            $errors = [];
+            $mainValidator = Validator::make($params, [
+                'customer_id' => 'required|numeric|exists:customers,id',
+                'total' => 'required|numeric|min:1',
+                'items' => 'required|array'
+            ]);
 
-//
-//            'rooms_type'          => 'required|integer|min:1|exists:hotels_rooms_types,id',
-//            'rooms_count'         => 'required|integer|min:1',
-//            'accommodation'       => 'required|integer|exists:hotels_accommodations,id',
-//            'client_first_name'   => 'required',
-//            'client_last_name'    => 'required',
-//            'client_phone'        => 'required',
-//            'client_email'        => 'required|email',
-//            'payment_type'        => 'required|alpha_dash|in:NOT_GUARANTEED,GUARANTEED_BY_CARD',
-//            'payment_holder_name' => 'required',
-//            'payment_card_number' => 'required',
-//            'payment_date_month'  => 'required',
-//            'payment_date_year'   => 'required|integer',
-//            'payment_cvv2'        => 'required',
-//            'addons'              => 'regex:"^\d+(,\d+)*$"',
-//            'wishes'              => 'regex:"^\d+(,\d+)*$"',
-//            'gift'                => 'integer|exists:hotels_gifts,id'
-        ]);
+            if ($mainValidator->fails()) {
+                $response = ['error' => [
+                    'main' => $mainValidator->errors()
+                ]];
+                $statusCode = 500;
+            } else {
+                $itemsValidator = [];
+                $itemsAddonsValidator = [];
 
-        if ($validator->fails()) {
-            $response = ['error' => $validator->errors()];
-            $statusCode = 500;
+                foreach ($params['items'] as $itemKey => $item) {
+                    $itemsValidator[$itemKey] = Validator::make($item, [
+                        'photo_id' => 'required|numeric|exists:photos,id',
+                        'qty' => 'required|numeric|min:1',
+                        'price_per_item' => 'required|numeric',
+                        'format_id' => 'required|numeric|exists:formats,id',
+                        'addons' => 'required|array'
+                    ]);
+
+                    foreach ($item['addons'] as $addon) {
+                        $itemsAddonsValidator[$itemKey][] = Validator::make($addon, [
+                            'id' => 'required|numeric|exists:addons,id',
+                            'qty' => 'required|numeric|min:1'
+                        ]);
+                    }
+                }
+
+                foreach ($itemsValidator as $itemKey => $validator) {
+                    if ($validator->fails()) {
+                        $errors['items'][$itemKey + 1] = $validator->errors();
+                    }
+                    foreach ($itemsAddonsValidator[$itemKey] as $addonKey => $validator) {
+                        if ($validator->fails()) {
+                            $errors['items'][$itemKey + 1]['addons'][$addonKey + 1] = $validator->errors();
+                        }
+                    }
+                }
+
+                if ($errors) {
+                    $response = ['error' => $errors];
+                    $statusCode = 500;
+                } else {
+                    $orderModel = new Models\Order();
+
+                    $orderModel->getRepository()->saveFromArray($params);
+
+                    $orderView = new ModelViews\Order($orderModel);
+
+                    $response = $orderView->get();
+                }
+            }
         } else {
-            $orderModel = new Models\Order();
-
-            $orderModel->getRepository()->saveFromArray($params);
-
-            $orderView = new ModelViews\Order($orderModel);
-
-            $response = $orderView->get();
+            $response = ['error' => 'Empty or invalid body'];
+            $statusCode = 500;
         }
 
         return \Response::json($response, $statusCode);

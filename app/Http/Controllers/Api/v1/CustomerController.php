@@ -150,30 +150,13 @@ class CustomerController extends Controller {
         $inputs = \Input::all();
 
         $validator = Validator::make($inputs, [
-            'name'        => 'required',
-            'second_name' => 'required',
-            'last_name'   => 'required',
-            'email'       => 'required',
-            'phone'       => 'required',
-            'login'       => 'required',
+            'name'        => 'required|max:100',
+            'second_name' => 'required|max:100',
+            'last_name'   => 'required|max:100',
+            'email'       => 'required|email|unique:customers,email',
+            'phone'       => 'required|max:100',
+            'login'       => 'required|unique:customers,login',
             'password'    => 'required'
-//
-//            'rooms_type'          => 'required|integer|min:1|exists:hotels_rooms_types,id',
-//            'rooms_count'         => 'required|integer|min:1',
-//            'accommodation'       => 'required|integer|exists:hotels_accommodations,id',
-//            'client_first_name'   => 'required',
-//            'client_last_name'    => 'required',
-//            'client_phone'        => 'required',
-//            'client_email'        => 'required|email',
-//            'payment_type'        => 'required|alpha_dash|in:NOT_GUARANTEED,GUARANTEED_BY_CARD',
-//            'payment_holder_name' => 'required',
-//            'payment_card_number' => 'required',
-//            'payment_date_month'  => 'required',
-//            'payment_date_year'   => 'required|integer',
-//            'payment_cvv2'        => 'required',
-//            'addons'              => 'regex:"^\d+(,\d+)*$"',
-//            'wishes'              => 'regex:"^\d+(,\d+)*$"',
-//            'gift'                => 'integer|exists:hotels_gifts,id'
         ]);
 
         if ($validator->fails()) {

@@ -136,29 +136,11 @@ class CustomersAddressController extends Controller
         $inputs = \Input::all();
 
         $validator = Validator::make($inputs, [
-            'customer_id' => 'required',
-            'country'     => 'required',
-            'city'        => 'required',
-            'phone'       => 'required',
-            'zip_code'    => 'required'
-
-//
-//            'rooms_type'          => 'required|integer|min:1|exists:hotels_rooms_types,id',
-//            'rooms_count'         => 'required|integer|min:1',
-//            'accommodation'       => 'required|integer|exists:hotels_accommodations,id',
-//            'client_first_name'   => 'required',
-//            'client_last_name'    => 'required',
-//            'client_phone'        => 'required',
-//            'client_email'        => 'required|email',
-//            'payment_type'        => 'required|alpha_dash|in:NOT_GUARANTEED,GUARANTEED_BY_CARD',
-//            'payment_holder_name' => 'required',
-//            'payment_card_number' => 'required',
-//            'payment_date_month'  => 'required',
-//            'payment_date_year'   => 'required|integer',
-//            'payment_cvv2'        => 'required',
-//            'addons'              => 'regex:"^\d+(,\d+)*$"',
-//            'wishes'              => 'regex:"^\d+(,\d+)*$"',
-//            'gift'                => 'integer|exists:hotels_gifts,id'
+            'customer_id' => 'required|numeric|exists:customers,id',
+            'country'     => 'required|alpha|max:100',
+            'city'        => 'required|alpha|max:100',
+            'phone'       => 'required|max:100',
+            'zip_code'    => 'required|regex:"^\d{5}(?:[-\s]\d{4})?$"'
         ]);
 
         if ($validator->fails()) {

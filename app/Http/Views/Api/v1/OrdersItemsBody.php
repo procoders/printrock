@@ -22,7 +22,7 @@ Class OrdersItemsBody extends BaseView
      */
 
     /**
-     * @SWG\Property(name="price_per_item", type="float", required=true)
+     * @SWG\Property(name="price_per_item", type="double", required=true)
      */
 
     /**

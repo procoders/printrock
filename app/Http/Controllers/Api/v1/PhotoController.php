@@ -55,8 +55,8 @@ class PhotoController extends Controller
         $inputs = \Input::all();
 
         $validator = Validator::make($inputs, [
-            'customer_id' => 'required',
-            'image' => 'required'
+            'customer_id' => 'required|numeric|exists:customers,id',
+            'image' => 'required|image'
         ]);
 
         if ($validator->fails()) {

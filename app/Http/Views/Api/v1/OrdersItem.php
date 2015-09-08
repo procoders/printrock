@@ -26,7 +26,7 @@ Class OrdersItem extends BaseView
      */
 
     /**
-     * @SWG\Property(name="price_per_item", type="integer", required=true)
+     * @SWG\Property(name="price_per_item", type="double", required=true)
      */
 
     /**
