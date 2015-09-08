@@ -87,7 +87,7 @@ class OrderController extends Controller {
      *       name="Body",
      *       description="Body",
      *       required=true,
-     *       type="string",
+     *       type="OrdersBody",
      *       paramType="body",
      *       allowMultiple=false
      *     ),
