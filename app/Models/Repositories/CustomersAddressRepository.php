@@ -28,8 +28,6 @@ Class CustomersAddressRepository implements Interfaces\iAdminSave
      */
     public function saveFromArray(array $attributes = array())
     {
-        $this->model->fill($attributes);
-
         $this->model->save();
     }
 

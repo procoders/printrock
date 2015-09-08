@@ -34,9 +34,10 @@ Class PhotoRepository implements Interfaces\iAdminSave
             $imagePath = 'photos/' . $attributes['customer_id'];
             $image->move($imagePath, $imageName);
 
-            $attributes['image'] = $imagePath . '/' . $imageName;
+            $params['image'] = $imagePath . '/' . $imageName;
+            $params['customer_id'] = $attributes['customer_id'];
 
-            $this->model->fill($attributes);
+            $this->model->fill($params);
 
             $this->model->save();
         }

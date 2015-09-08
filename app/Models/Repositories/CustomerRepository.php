@@ -28,9 +28,20 @@ Class CustomerRepository implements Interfaces\iAdminSave
      */
     public function saveFromArray(array $attributes = array())
     {
-        $this->model->fill($attributes);
-
         $this->model->save();
+
+        $attributes['customer_id'] = $this->model->id;
+
+        foreach ($attributes['images'] as $image) {
+            $photoModel = new Models\Photo();
+
+            $params = [
+                'customer_id' => $this->model->id,
+                'image' => $image
+            ];
+
+            $photoModel->getRepository()->saveFromArray($params);
+        }
     }
 
 }

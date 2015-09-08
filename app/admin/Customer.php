@@ -52,8 +52,12 @@ Admin::model(\App\Models\Customer::class)
         FormItem::text('last_name', 'Last Name')->validationRule('required')->group('general');
         FormItem::email('email', 'Email')->validationRule('required|email')->group('general');
         FormItem::text('phone', 'Phone')->validationRule('required')->group('general');
-        FormItem::text('login', 'Login')->validationRule('required')->group('general');
-        FormItem::text('password', 'Password')->validationRule('required')->group('general');
+
+        if (! preg_match('/edit$/', Request::url()) && ! preg_match('/update$/', Request::url())) {
+            FormItem::text('login', 'Login')->validationRule('required')->group('general');
+            FormItem::text('password', 'Password')->validationRule('required')->group('general');
+        }
+
         FormItem::images()
             ->type('model')
             ->modelMethod('photos')
