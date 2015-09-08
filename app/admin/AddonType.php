@@ -1,7 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
-
 Admin::model(\App\Models\AddonsType::class)
     ->title('Addons Types')
     ->denyEditingAndDeleting(function ($instance)

@@ -1,7 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
-
 Admin::model(\App\Models\Administrator::class)
     ->title('Administrators')
     ->denyDeleting(function ($instance)
@@ -14,7 +12,6 @@ Admin::model(\App\Models\Administrator::class)
         Column::string('username', 'Login');
         Column::string('name', 'Name')
             ->inlineEdit(true);
-        Column::string('email', 'Email');
     })
     ->inlineEdit(function($field) {
         switch($field) {
@@ -34,8 +31,6 @@ Admin::model(\App\Models\Administrator::class)
         // Describing elements in create and editing forms
         FormItem::text('username', 'Login')->validationRule('required|regex:/^[a-zA-Z0-9_@]{3,20}$/');
         FormItem::text('name', 'Name')->validationRule('required|regex:/^[a-zA-Z0-9_\s@]{3,20}$/');
-        FormItem::email('email', 'Email')->validationRule('required|email');
-
 
         $data = Input::all();
 

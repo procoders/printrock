@@ -1,6 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
 use App\Models;
 
 Admin::model(\App\Models\Addon::class)

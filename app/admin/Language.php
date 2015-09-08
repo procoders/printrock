@@ -1,7 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
-
 Admin::model(\App\Models\Language::class)
     ->title('Langauges')
     ->denyEditingAndDeleting(function ($instance)

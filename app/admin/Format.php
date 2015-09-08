@@ -1,7 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
-
 Admin::model(\App\Models\Format::class)
     ->title('Formats')
     ->denyEditingAndDeleting(function ($instance)

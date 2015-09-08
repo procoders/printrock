@@ -1,7 +1,5 @@
 <?php
 
-use SleepingOwl\Admin\Models\ModelItem;
-
 Admin::model(\App\Models\Customer::class)
     ->title('Customers')
     ->denyEditingAndDeleting(function ($instance)
