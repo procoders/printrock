@@ -48,6 +48,8 @@ Admin::model(\App\Models\Order::class)
             ->group('general');
         FormItem::text('total', 'Total')
             ->group('general');
+        FormItem::items('items', 'Items')
+            ->group('items');
 
         FormGroup::create('general', 'General')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
         FormGroup::create('items', 'Items')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
