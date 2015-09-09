@@ -72,4 +72,18 @@ class Customer extends SleepingOwlModel {
         return new Repositories\CustomerRepository($this);
     }
 
+    /**
+     * Deletes customers
+     *
+     * @return mixed
+     */
+    public function delete()
+    {
+        foreach ($this->photos()->get() as $photo) {
+            $photo->delete();
+        }
+
+        return parent::delete();
+    }
+
 }

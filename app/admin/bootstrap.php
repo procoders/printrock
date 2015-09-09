@@ -23,3 +23,5 @@
 
 FormItem::register('descriptions', App\AdminCustom\Forms\LanguagesFields::class);
 FormItem::register('images', App\AdminCustom\Forms\ImagesFields::class);
+
+AdminRouter::get('/customer/photo/{id}/delete', 'App\Http\Controllers\AjaxController@deletePhoto');

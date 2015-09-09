@@ -5,15 +5,15 @@
 ?>
 
 <div class="form-group">
-    <label class="col-md-2 control-label">{{trans('admin.hotels.edit.images')}}</label>
+    <label class="col-md-2 control-label">{{trans('admin.images.edit.images')}}</label>
     <div class="col-md-10">
         <table class="table">
             <col width="100px">
             <col width="100px">
             <thead>
             <tr>
-                <td>{{trans('admin.hotels.edit.images')}}</td>
-                <td>{{trans('admin.hotels.edit.action')}}</td>
+                <td>{{trans('admin.images.edit.images')}}</td>
+                <td>{{trans('admin.images.edit.action')}}</td>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                     </td>
                     <td>
                         <a href="#" class="img-delete" data-name="photo">
-                            <i class="fa fa-times"></i> {{trans('admin.hotels.edit.delete')}}
+                            <i class="fa fa-times"></i> {{trans('admin.images.edit.delete')}}
                         </a>
                     </td>
                 </tr>
@@ -48,7 +48,17 @@
 </div>
 <script>
     $('.img-delete').click(function() {
-        $(this).parents('.img-container:first').hide();
+        var tr = $(this).parents('.img-container:first');
+        var photoId = tr.find('input').val();
+        console.log(photoId);
+        var url = '/admin/customer/photo/' + photoId + '/delete';
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            async: true
+        }).done(function(data) {
+            tr.hide();
+        });
         return false;
     });
 </script>

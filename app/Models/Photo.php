@@ -47,4 +47,18 @@ class Photo extends SleepingOwlModel {
     {
         return new Repositories\PhotoRepository($this);
     }
+
+    /**
+     * Deletes photos
+     *
+     * @return mixed
+     */
+    public function delete()
+    {
+        $imageUrl = $this->image;
+
+        if (unlink($imageUrl)) {
+            return parent::delete();
+        }
+    }
 }
