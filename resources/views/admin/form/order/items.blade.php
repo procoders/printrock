@@ -47,15 +47,15 @@
                                             <th>Qty</th>
                                         </tr>
                                         </thead>
-                                            @foreach ($addons as $addon)
+                                            @foreach ($addons as $addonKey => $addon)
                                                 <tr>
-                                                    <td><input type="checkbox" name="items[{{$key}}][addons][]" value="{{$addon->id}}" @if (isset($itemsAddons[$key][$addon->id])) checked="checked" @endif /></td>
+                                                    <td><input type="checkbox" name="items[{{$key}}][addons][{{$addonKey}}][id]" value="{{$addon->id}}" @if (isset($itemsAddons[$key][$addon->id])) checked="checked" @endif /></td>
                                                     <td>{{$addon->name}}</td>
                                                     <td>{{$addon->type()->first()->name}} ({{$addon->type()->first()->code}})</td>
                                                     <td>{{$addon->price_type}}</td>
                                                     <td>{{$addon->price}}</td>
                                                     <td>
-                                                        <input type="text" name="" value="@if (isset($itemsAddons[$key][$addon->id])) {{$itemsAddons[$key][$addon->id]}} @else 0 @endif" />
+                                                        <input type="text" name="items[{{$key}}][addons][{{$addonKey}}][qty]" value="@if (isset($itemsAddons[$key][$addon->id])) {{$itemsAddons[$key][$addon->id]}} @else 0 @endif" />
                                                     </td>
                                                 </tr>
                                             @endforeach

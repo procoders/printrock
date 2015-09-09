@@ -9,7 +9,6 @@ use SleepingOwl\Admin\Models\Form\Interfaces\FormItemInterface;
 use URL;
 use App\Models as Models;
 
-
 /**
  * Class Addons
  *

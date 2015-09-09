@@ -31,9 +31,12 @@ Class OrderRepository implements Interfaces\iAdminSave
     {
         $this->model->customer_id = $attributes['customer_id'];
 
-        $ordersStatus = Models\OrdersStatus::where('default', 1)->first();
-
-        $this->model->orders_status_id = $ordersStatus->id;
+        if (! isset($attributes['orders_status_id'])) {
+            $ordersStatus = Models\OrdersStatus::where('default', 1)->first();
+            $this->model->orders_status_id = $ordersStatus->id;
+        } else {
+            $this->model->orders_status_id = $attributes['orders_status_id'];
+        }
 
         $this->model->total = $attributes['total'];
 
@@ -53,13 +56,15 @@ Class OrderRepository implements Interfaces\iAdminSave
             $item->save();
 
             foreach ($oredersItem['addons'] as $oredersItemsAddon) {
-                $addon = new Models\OrdersItemsAddon();
+                if (isset($oredersItemsAddon['id']) && $oredersItemsAddon['id']) {
+                    $addon = new Models\OrdersItemsAddon();
 
-                $addon->orders_item_id = $item->id;
-                $addon->addon_id = $oredersItemsAddon['id'];
-                $addon->qty = $oredersItemsAddon['qty'];
+                    $addon->orders_item_id = $item->id;
+                    $addon->addon_id = $oredersItemsAddon['id'];
+                    $addon->qty = $oredersItemsAddon['qty'];
 
-                $addon->save();
+                    $addon->save();
+                }
             }
         }
     }

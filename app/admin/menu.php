@@ -17,7 +17,6 @@
 
 Admin::menu(\App\Models\Administrator::class)->label('Administrator')->icon('fa-user');
 
-
 Admin::menu()->label('Customers')->icon('fa-user')->items(function ()
 {
     Admin::menu(\App\Models\Customer::class)->label('Customers');
