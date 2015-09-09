@@ -3,7 +3,7 @@
 use App\Models;
 use SleepingOwl\Admin\Models\Form\FormGroup;
 
-Admin::model(\App\Models\Order::class)
+Admin::model(\App\Models\OrdersItem::class)
     ->title('Orders')
     ->denyEditingAndDeleting(function ($instance)
     {
@@ -12,23 +12,18 @@ Admin::model(\App\Models\Order::class)
     ->columns(function ()
     {
         Column::string('id', 'Id');
-        Column::string('customer.login', 'Customer');
-        Column::string('status.code', 'Status');
-        Column::string('total', 'Total')
-            ->inlineEdit(true);
-        Column::count('items', 'Items');
+        Column::image('photo', 'Photo')
+            ->modelMethod('photo');
+        Column::string('order_id', 'Order');
+        Column::string('qty', 'Qty');
+        Column::string('price_per_item', 'Price per item');
     })
     ->inlineEdit(function($field) {
         switch($field) {
-            case 'code':
+            case 'qty':
                 return function() {
-                    InlineEditItem::text('code', NULL)
+                    InlineEditItem::text('qty', NULL)
                         ->validationRule('required');
-                };
-                break;
-            case 'default':
-                return function() {
-                    InlineEditItem::checkbox('default', NULL);
                 };
                 break;
             default:
@@ -38,19 +33,17 @@ Admin::model(\App\Models\Order::class)
     })
     ->form(function ()
     {
-        FormItem::select('customer_id', 'Customer')
-            ->list(Models\Customer::class)
+        FormItem::select('order_id', 'Order')
+            ->list(Models\Order::class)
             ->required()
             ->group('general');
-        FormItem::select('orders_status_id', 'Status')
-            ->list(Models\OrdersStatus::class)
-            ->required()
+        FormItem::text('qty', 'Qty')
             ->group('general');
-        FormItem::text('total', 'Total')
+        FormItem::text('price_per_item', 'Price per item')
             ->group('general');
 
         FormGroup::create('general', 'General')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
-        FormGroup::create('items', 'Items')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
+        FormGroup::create('addons', 'Addons')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
     })
     ->viewFilters(function()
     {

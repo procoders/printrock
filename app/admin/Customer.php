@@ -19,6 +19,8 @@ Admin::model(\App\Models\Customer::class)
             ->inlineEdit(true);
         Column::string('email', 'Email');
         Column::string('login', 'Login');
+        Column::count('photos', 'Photos');
+        Column::count('addresses', 'Addresses');
     })
     ->inlineEdit(function($field) {
         switch($field) {

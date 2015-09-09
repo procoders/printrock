@@ -138,10 +138,11 @@ class OrderController extends Controller {
                 foreach ($itemsValidator as $itemKey => $validator) {
                     if ($validator->fails()) {
                         $errors['items'][$itemKey + 1] = $validator->errors();
-                    }
-                    foreach ($itemsAddonsValidator[$itemKey] as $addonKey => $validator) {
-                        if ($validator->fails()) {
-                            $errors['items'][$itemKey + 1]['addons'][$addonKey + 1] = $validator->errors();
+                    } else {
+                        foreach ($itemsAddonsValidator[$itemKey] as $addonKey => $validator) {
+                            if ($validator->fails()) {
+                                $errors['items'][$itemKey + 1]['addons'][$addonKey + 1] = $validator->errors();;
+                            }
                         }
                     }
                 }
