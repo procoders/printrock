@@ -55,7 +55,7 @@
                                                     <td>{{$addon->price_type}}</td>
                                                     <td>{{$addon->price}}</td>
                                                     <td>
-                                                        <input type="text" name="items[{{$key}}][addons][{{$addonKey}}][qty]" value="@if (isset($itemsAddons[$key][$addon->id])) {{$itemsAddons[$key][$addon->id]}} @else 0 @endif" />
+                                                        <input type="text" name="items[{{$key}}][addons][{{$addonKey}}][qty]" value="@if(isset($itemsAddons[$key][$addon->id])){{$itemsAddons[$key][$addon->id]}}@endif" />
                                                     </td>
                                                 </tr>
                                             @endforeach

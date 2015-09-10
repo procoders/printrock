@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use SleepingOwl\Models\SleepingOwlModel;
+use App\Models;
 
 /**
  * Class OrdersStatus
@@ -69,7 +70,17 @@ class OrdersStatus extends SleepingOwlModel {
      */
     public static function getList()
     {
-        return static::lists('code', 'id')->all();
+        $model = new Models\OrdersStatus();
+
+        return $model->getRepository()->getList();
+    }
+
+    /**
+     * Returns name
+     */
+    public function getName()
+    {
+        return $this->getRepository()->getName();
     }
 
 }

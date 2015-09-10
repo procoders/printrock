@@ -43,20 +43,47 @@ Class OrdersStatusRepository implements Interfaces\iAdminSave
         $this->saveDescriptions($this->model, $descriptions, Models\OrdersStatusesDescription::class);
     }
 
-//    public function inlineSave(array $data = [])
-//    {
-//        foreach ($data as $key => $value) {
-//            switch ($key) {
-//                case 'name':
-//                    $this->model->name = trim($value);
-//                    $this->model->update();
-//                    break;
-//                case 'active':
-//                    $this->model->default = (int)$value;
-//                    $this->model->update();
-//                    break;
-//            }
-//        }
-//        return true;
-//    }
+    /**
+     * This method will build options array
+     *
+     * @return array
+     */
+    public static function getOptionsList()
+    {
+        $options = [];
+
+        foreach (Models\OrdersStatus::all() as $status) {
+            $options[] = [
+                'id' => $status->id,
+                'name' => $status->getName()
+            ];
+        }
+
+        return $options;
+    }
+
+    /**
+     * Returns name
+     *
+     * @return mixed
+     */
+    public function getName()
+    {
+        $language = 'en';
+
+        $languageId = Models\Language::where('code', $language)->first()->id;
+
+        return $this->model->descriptions()->where('language_id', $languageId)->first()->name . ' (' . $this->model->code . ')';
+    }
+
+    public function getList()
+    {
+        $list = [];
+
+        foreach (Models\OrdersStatus::all() as $status) {
+            $list[$status->id] = $status->getName();
+        }
+
+        return $list;
+    }
 }

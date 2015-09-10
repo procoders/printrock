@@ -29,19 +29,26 @@ class Items extends Text implements FormItemInterface
         }
 
         $photos = [];
-        $addons = Models\Addon::get();
         $itemsAddons = [];
+        $itemsField = [];
 
         foreach ($model->items()->get() as $key => $item) {
             $itemsField[$key] = [
                 HtmlBuilder::text('items[' . $key . '][qty]', 'Qty', $item->qty, [
-                    'data-parsley-required' => true
+                    'data-parsley-required' => true,
+                    'data-parsley-type' => 'number',
+                    'data-parsley-min' => '1'
                 ]),
                 HtmlBuilder::text('items[' . $key . '][price_per_item]', 'Price per item', $item->price_per_item, [
+                    'data-parsley-required' => true,
+                    'data-parsley-type' => 'number',
+                ]),
+                HtmlBuilder::select('items[' . $key . '][format_id]', 'Format', $formats, $item->format_id, [
                     'data-parsley-required' => true
                 ]),
-                HtmlBuilder::select('items[' . $key . '][format_id]', 'Format', $formats, $item->format_id),
-                $this->formBuilder->hidden('items[' . $key . '][photo_id]', $item->photo_id),
+                $this->formBuilder->hidden('items[' . $key . '][photo_id]', $item->photo_id, [
+                    'data-parsley-required' => true
+                ]),
             ];
             $photos[$key] = $item->photo()->first();
 
@@ -54,7 +61,7 @@ class Items extends Text implements FormItemInterface
             ->with('label', $this->label)
             ->with('itemsField', $itemsField)
             ->with('photos', $photos)
-            ->with('addons', $addons)
+            ->with('addons', Models\Addon::get())
             ->with('itemsAddons', $itemsAddons);
     }
 }

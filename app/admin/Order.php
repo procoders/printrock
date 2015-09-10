@@ -5,6 +5,10 @@ use SleepingOwl\Admin\Models\Form\FormGroup;
 
 Admin::model(\App\Models\Order::class)
     ->title('Orders')
+    ->denyCreating(function ()
+    {
+        return true;
+    })
     ->denyEditingAndDeleting(function ($instance)
     {
         return false;
@@ -12,23 +16,35 @@ Admin::model(\App\Models\Order::class)
     ->columns(function ()
     {
         Column::string('id', 'Id');
-        Column::string('customer.login', 'Customer');
-        Column::string('status.code', 'Status');
+        Column::string('customer.login', 'Customer')
+            ->inlineEdit(true);
+        Column::callback('orders_status_id', 'Status')
+            ->contentCallback(function($instance) {
+                return $instance->status()->first()->getName();
+            })
+            ->inlineEdit(true);
         Column::string('total', 'Total')
             ->inlineEdit(true);
         Column::count('items', 'Items');
     })
     ->inlineEdit(function($field) {
         switch($field) {
-            case 'code':
+            case 'customer.login':
                 return function() {
-                    InlineEditItem::text('code', NULL)
-                        ->validationRule('required');
+                    InlineEditItem::select('customer_id', NULL)
+                        ->list(Models\Customer::class);
                 };
                 break;
-            case 'default':
+            case 'orders_status_id':
                 return function() {
-                    InlineEditItem::checkbox('default', NULL);
+                    InlineEditItem::select('orders_status_id', NULL)
+                        ->list(Models\OrdersStatus::class);
+                };
+                break;
+            case 'total':
+                return function() {
+                    InlineEditItem::text('total', NULL)
+                        ->validationRule('required|regexp:\d');
                 };
                 break;
             default:
@@ -40,13 +56,14 @@ Admin::model(\App\Models\Order::class)
     {
         FormItem::select('customer_id', 'Customer')
             ->list(Models\Customer::class)
-            ->required()
+            ->validationRule('required|numeric|exists:customers,id')
             ->group('general');
         FormItem::select('orders_status_id', 'Status')
             ->list(Models\OrdersStatus::class)
-            ->required()
+            ->validationRule('required|numeric|exists:orders_statuses,id')
             ->group('general');
         FormItem::text('total', 'Total')
+            ->validationRule('required|numeric|min:1')
             ->group('general');
         FormItem::items('items', 'Items')
             ->group('items');
@@ -56,5 +73,12 @@ Admin::model(\App\Models\Order::class)
     })
     ->viewFilters(function()
     {
-//        ViewFilter::text('code', 'Code');
+        ViewFilter::text('customer.login', 'Customer');
+        ViewFilter::dropdown('orders_status_id', 'Status')
+            ->options(function () {
+                $options = [
+                    ['id' => '', 'name' => '- Status -']
+                ];
+                return array_merge($options, App\Models\Repositories\OrdersStatusRepository::getOptionsList());
+            });
     });
