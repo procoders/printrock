@@ -1,20 +1,22 @@
 <?php
 
 use SleepingOwl\Admin\Models\Form\FormGroup;
+use App\Models;
+use SleepingOwl\Html\HtmlBuilder;
 
 Admin::model(\App\Models\OrdersStatus::class)
     ->title('Statuses')
-    ->denyEditingAndDeleting(function ($instance)
-    {
-        return false;
-    })
     ->columns(function ()
     {
         Column::string('id', 'Id');
         Column::string('code', 'Code')
             ->inlineEdit(true);
-        Column::boolean('default', 'Default')
+        Column::callback('name', 'Name')
+            ->contentCallback(function($instance) {
+                return $instance->getName();
+            })
             ->inlineEdit(true);
+        Column::boolean('default', 'Default');
     })
     ->inlineEdit(function($field) {
         switch($field) {
@@ -24,9 +26,23 @@ Admin::model(\App\Models\OrdersStatus::class)
                         ->validationRule('required');
                 };
                 break;
-            case 'default':
+            case 'name':
                 return function() {
-                    InlineEditItem::checkbox('default', NULL);
+                    InlineEditItem::callback('name', '')
+                        ->callback(function($instance) {
+                            $content = '';
+                            foreach (Models\Language::get() as $language) {
+                                $value = '';
+                                $descriptions = $instance->descriptions->where('language_id', $language->id)->first();
+                                if (!is_null($descriptions)) {
+                                    $value = $descriptions->name;
+                                }
+
+                                $content .= HtmlBuilder::text('name_' . $language->id, 'Name [' . $language->code . ']', $value, ['data-parsley-required' => true]);
+                            }
+
+                            return $content;
+                        });
                 };
                 break;
             default:
@@ -58,8 +74,4 @@ Admin::model(\App\Models\OrdersStatus::class)
 
         FormGroup::create('status', 'Status')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
         FormGroup::create('descriptions', 'Status Descriptions')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
-    })
-    ->viewFilters(function()
-    {
-        ViewFilter::text('code', 'Code');
     });

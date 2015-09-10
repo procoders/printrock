@@ -9,10 +9,6 @@ Admin::model(\App\Models\Order::class)
     {
         return true;
     })
-    ->denyEditingAndDeleting(function ($instance)
-    {
-        return false;
-    })
     ->columns(function ()
     {
         Column::string('id', 'Id');

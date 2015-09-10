@@ -73,9 +73,12 @@ Class OrdersStatusRepository implements Interfaces\iAdminSave
 
         $languageId = Models\Language::where('code', $language)->first()->id;
 
-        return $this->model->descriptions()->where('language_id', $languageId)->first()->name . ' (' . $this->model->code . ')';
+        return $this->model->descriptions()->where('language_id', $languageId)->first()->name;
     }
 
+    /**
+     * @return array
+     */
     public function getList()
     {
         $list = [];
@@ -85,5 +88,43 @@ Class OrdersStatusRepository implements Interfaces\iAdminSave
         }
 
         return $list;
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function inlineSave(array $data = [])
+    {
+        foreach ($data as $key => $value) {
+            $language = 0;
+            if (preg_match('/^name/', $key)) {
+                $tmp = explode('_', $key);
+                $language = $tmp[1];
+                $key = 'name';
+            }
+            switch ($key) {
+                case 'name':
+                    if (! empty($language)) {
+                        $descriptions = $this->model->descriptions()->where('language_id', $language)->first();
+                        if (is_null($descriptions)) {
+                            Models\OrdersStatusesDescription::create([
+                                'name' => $value,
+                                'language_id' => $language,
+                                'orders_status_id' => $this->model->id
+                            ]);
+                        } else {
+                            $descriptions->name = $value;
+                            $descriptions->update();
+                        }
+                    }
+                break;
+                case 'code':
+                    $this->model->code = $value;
+                    $this->model->update();
+                break;
+            }
+        }
+        return true;
     }
 }

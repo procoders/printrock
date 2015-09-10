@@ -44,7 +44,7 @@ class OrdersStatus extends SleepingOwlModel {
      */
     public function languages()
     {
-        return $this->belongsTo(Language::class);
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     /**
