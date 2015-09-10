@@ -22,19 +22,19 @@ Admin::model(\App\Models\Format::class)
             case 'width':
                 return function() {
                     InlineEditItem::text('width', NULL)
-                        ->validationRule('required');
+                        ->validationRule('required|regex:\d');
                 };
                 break;
             case 'height':
                 return function() {
                     InlineEditItem::text('height', NULL)
-                        ->validationRule('required');
+                        ->validationRule('required|regex:\d');
                 };
                 break;
             case 'price':
                 return function() {
                     InlineEditItem::text('price', NULL)
-                        ->validationRule('required');
+                        ->validationRule('required|regex:\d');
                 };
                 break;
             default:
@@ -44,7 +44,7 @@ Admin::model(\App\Models\Format::class)
     })
     ->form(function ()
     {
-        FormItem::text('width', 'Width')->validationRule('required');
-        FormItem::text('height', 'Height')->validationRule('required');
-        FormItem::text('price', 'Price')->validationRule('required');
+        FormItem::text('width', 'Width')->validationRule('required|numeric');
+        FormItem::text('height', 'Height')->validationRule('required|numeric');
+        FormItem::text('price', 'Price')->validationRule('required|numeric');
     });

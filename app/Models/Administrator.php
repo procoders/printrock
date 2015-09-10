@@ -43,27 +43,16 @@ class Administrator extends SleepingOwlModel {
     {
         parent::fill($attributes);
 
-//        if (!empty($attributes)) {
-//            $adminHelper = AdminHelpers\Admin::getInstance();
-//            // admin section
-//            if ($adminHelper->isLoggedOn()) {
-//                if ($adminHelper->isSuperAdmin()) {
-//                    // ok this is super admin, and he can create or change admin hotel subscription
-//                    if (empty($this->hotel_id))
-//                        $this->hotel_id = NULL;
-//                } else {
-//                    $this->hotel_id = $adminHelper->getHotelId();
-//                }
-//                if ($this->id == NULL) {
-//                    // ok this is new member, so we need password for it
-//                    $this->password = \Hash::make($attributes['passwd']);
-//                } else {
-//                    // updating admin
-//                    if (!empty($attributes['changePassword']) && $attributes['changePassword'] == 1)
-//                        $this->password = \Hash::make($attributes['passwd']);
-//                }
-//            }
-//        }
+        if (! empty($attributes)) {
+            if ($this->id == NULL) {
+                // ok this is new member, so we need password for it
+                $this->password = \Hash::make($attributes['passwd']);
+            } else {
+                // updating admin
+                if (!empty($attributes['changePassword']) && $attributes['changePassword'] == 1)
+                    $this->password = \Hash::make($attributes['passwd']);
+            }
+        }
 
     }
 
@@ -84,6 +73,14 @@ class Administrator extends SleepingOwlModel {
     public function scopeSearchByName($query, $name)
     {
         $query->where('name', 'like', "%$name%")->get();
+    }
+
+    /**
+     * @return bool
+     */
+    public function delete()
+    {
+        return false;
     }
 
 }

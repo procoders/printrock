@@ -27,31 +27,6 @@ Class AdministratorRepository
         return $this;
     }
 
-    public function isSuperAdmin()
-    {
-        return (is_null($this->model->hotel_id)) ? true : false;
-    }
-
-    public static function getOptionsList($dependsOn = 'hotel_id')
-    {
-        $options = ['-1' => 'All administrators'];
-//        if (!Admin::getInstance()->isSuperAdmin()) {
-//            $dependsOnValue = Admin::getInstance()->getHotelId();
-//        } else {
-//            $dependsOnValue = \Input::get($dependsOn);
-//        }
-//        if (isset($dependsOnValue) && $dependsOnValue != '-1') {
-//            foreach(Models\Administrator::where($dependsOn, '=', $dependsOnValue)->get() as $admin) {
-//                $options[$admin->id] = $admin->name;
-//            }
-//        } else {
-//            foreach(Models\Administrator::all() as $admin) {
-//                $options[$admin->id] = $admin->name;
-//            }
-//        }
-        return $options;
-    }
-
     public function inlineSave(array $data = [])
     {
         foreach ($data as $key => $value) {
