@@ -56,4 +56,8 @@ return [
 	 * Blade template prefix, default admin::
 	 */
     'bladePrefix'                => 'admin::',
+
+	'registration' => [
+		'enabled' => false
+	]
 ];
