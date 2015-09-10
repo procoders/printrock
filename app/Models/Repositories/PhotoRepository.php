@@ -30,7 +30,7 @@ Class PhotoRepository implements Interfaces\iAdminSave
     {
         if ($attributes['image']) {
             $image = $attributes['image'];
-            $imageName = md5(time()) . '.' . $image->guessClientExtension();
+            $imageName = md5(time() . rand(0, 999)) . '.' . $image->guessClientExtension();
             $imagePath = 'photos/' . $attributes['customer_id'];
             $image->move($imagePath, $imageName);
 
