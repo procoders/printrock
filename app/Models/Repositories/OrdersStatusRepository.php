@@ -69,7 +69,7 @@ Class OrdersStatusRepository implements Interfaces\iAdminSave
      */
     public function getName()
     {
-        $language = 'en';
+        $language = config('admin.default_language_code');
 
         $languageId = Models\Language::where('code', $language)->first()->id;
 

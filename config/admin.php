@@ -59,5 +59,7 @@ return [
 
 	'registration' => [
 		'enabled' => false
-	]
+	],
+
+	'default_language_code' => 'en'
 ];
