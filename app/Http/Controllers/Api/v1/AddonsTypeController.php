@@ -59,7 +59,7 @@ class AddonsTypeController extends Controller {
                 if (! isset($addonsTypeModel)) {
                     throw new ModelNotFoundException();
                 }
-                $addonsTypeView = new ModelViews\Addon($addonsTypeModel);
+                $addonsTypeView = new ModelViews\AddonsType($addonsTypeModel);
                 $response = $addonsTypeView->get();
             }
         } catch (ModelNotFoundException $e) {
