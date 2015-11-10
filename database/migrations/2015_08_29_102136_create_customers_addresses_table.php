@@ -21,6 +21,8 @@ class CreateCustomersAddressesTable extends Migration
             $table->string('city', 100);
             $table->string('phone', 100);
             $table->string('zip_code', 100);
+            $table->string('street', 100);
+            $table->string('name', 100);
             $table->timestamps();
         });
     }

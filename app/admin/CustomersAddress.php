@@ -36,8 +36,8 @@ Admin::model(\App\Models\CustomersAddress::class)
                 break;
             case 'zip_code':
                 return function() {
-                    InlineEditItem::text('zip_code', NULL)
-                        ->validationRule('required|regex:^\d{5}(?:[-\s]\d{4})?$');
+                    InlineEditItem::text('zip_code', NULL);
+//                        ->validationRule('required|regex:^\d{5}(?:[-\s]\d{4})?$');
                 };
                 break;
             default:
@@ -54,7 +54,8 @@ Admin::model(\App\Models\CustomersAddress::class)
         FormItem::text('city', 'City')->validationRule('required|alpha');
         FormItem::text('phone', 'Phone')->validationRule('required');
         FormItem::text('zip_code', 'Zip Code')->validationRule('required');
-
+        FormItem::text('street', 'Street')->validationRule('required');
+        FormItem::text('name', 'Name')->validationRule('required');
     })
     ->viewFilters(function()
     {

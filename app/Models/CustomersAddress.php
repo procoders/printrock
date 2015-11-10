@@ -21,7 +21,15 @@ class CustomersAddress extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['customer_id', 'country', 'city', 'phone', 'zip_code'];
+    protected $fillable = [
+        'customer_id',
+        'country',
+        'city',
+        'phone',
+        'zip_code',
+        'street',
+        'name'
+    ];
 
     /**
      * Model guarded fields
