@@ -4,6 +4,7 @@ namespace App\Models\Repositories;
 
 use App\Models\Repositories\Interfaces as Interfaces;
 use App\Models as Models;
+use Input;
 
 /**
  * Class PhotoRepository
@@ -29,10 +30,10 @@ Class PhotoRepository implements Interfaces\iAdminSave
     public function saveFromArray(array $attributes = array())
     {
         if ($attributes['image']) {
-            $image = $attributes['image'];
-            $imageName = md5(time() . rand(0, 999)) . '.' . $image->guessClientExtension();
+            $imageName = md5(time() . rand(0, 999)) . '.' . $attributes['image']->guessClientExtension();
             $imagePath = 'photos/' . $attributes['customer_id'];
-            $image->move($imagePath, $imageName);
+
+            Input::file('image')->move($imagePath, $imageName);
 
             $params['image'] = $imagePath . '/' . $imageName;
             $params['customer_id'] = $attributes['customer_id'];
