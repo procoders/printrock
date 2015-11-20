@@ -125,6 +125,22 @@ class CustomersAddressController extends Controller
      *       paramType="form",
      *       allowMultiple=false
      *     ),
+     *     @SWG\Parameter(
+     *       name="name",
+     *       description="Name",
+     *       required=true,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="street",
+     *       description="Street",
+     *       required=true,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
      *     @SWG\ResponseMessage(code=500, message="Internal server error")
      *   )
      * )
@@ -140,7 +156,9 @@ class CustomersAddressController extends Controller
             'country'     => 'required|alpha|max:100',
             'city'        => 'required|alpha|max:100',
             'phone'       => 'required|max:100',
-            'zip_code'    => 'required|regex:"^\d{5}(?:[-\s]\d{4})?$"'
+            'zip_code'    => 'required|regex:"^\d{5}(?:[-\s]\d{4})?$"',
+            'name'        => 'required',
+            'street'      => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -152,7 +170,9 @@ class CustomersAddressController extends Controller
                 'country'     => $inputs['country'],
                 'city'        => $inputs['city'],
                 'phone'       => $inputs['phone'],
-                'zip_code'    => $inputs['zip_code']
+                'zip_code'    => $inputs['zip_code'],
+                'name'        => $inputs['name'],
+                'street'      => $inputs['street']
             ];
 
             $customersAddress = new Models\CustomersAddress();
