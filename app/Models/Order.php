@@ -21,7 +21,7 @@ class Order extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['customer_id', 'orders_status_id', 'total'];
+    protected $fillable = ['customer_id', 'orders_status_id', 'total', 'comment'];
 
     /**
      * Model guarded fields

@@ -39,6 +39,7 @@ Class OrderRepository implements Interfaces\iAdminSave
         }
 
         $this->model->total = $attributes['total'];
+        $this->model->comment = $attributes['comment'];
 
         $this->model->save();
 

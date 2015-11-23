@@ -29,6 +29,10 @@ Class Order extends BaseView
      * @SWG\Property(name="total", type="integer", required=true)
      */
 
+    /**
+     * @SWG\Property(name="comment", type="string", required=false)
+     */
+
     public function get()
     {
         $ordersStatusModel = $this->_model->status()->first();
@@ -45,7 +49,8 @@ Class Order extends BaseView
             'id'            => $this->_model->id,
             'orders_status' => $ordersStatusView->get(),
             'items'         => $items,
-            'total'         => $this->_model->total
+            'total'         => $this->_model->total,
+            'comment'       => $this->_model->comment
         ];
     }
 

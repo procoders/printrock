@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('orders_status_id')->unsigned();
             $table->foreign('orders_status_id')->references('id')->on('orders_statuses')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('total')->unsigned();
+            $table->text('comment');
             $table->timestamps();
         });
     }

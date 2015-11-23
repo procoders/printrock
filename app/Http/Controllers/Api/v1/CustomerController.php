@@ -184,4 +184,61 @@ class CustomerController extends Controller {
 
         return \Response::json($response, $statusCode);
     }
+
+    /**
+     * @SWG\Api(
+     *   path="/customer/login",
+     *   @SWG\Operation(
+     *     nickname="Login",
+     *     method="POST",
+     *     summary="Login cusomer",
+     *     type="Customer",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="login",
+     *       description="Login",
+     *       required=true,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="password",
+     *       description="Password",
+     *       required=true,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=404, message="Customer not found"),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function login()
+    {
+        $statusCode = 200;
+
+        $inputs = \Input::all();
+
+        try {
+            $customerModel = Models\Customer::where([
+                'login' => $inputs['login'],
+                'password' => $inputs['password']
+            ])->first();
+            if (! isset($customerModel)) {
+                throw new ModelNotFoundException();
+            }
+            $customerView = new ModelViews\Customer($customerModel);
+
+            $response = $customerView->get();
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'error' => 'Customer doesn\'t exists'
+            ];
+            $statusCode = 404;
+        } finally {
+            return \Response::json($response, $statusCode);
+        }
+    }
 }

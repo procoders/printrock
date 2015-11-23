@@ -25,6 +25,10 @@ Class OrdersBody extends BaseView
      * @SWG\Property(name="items", type="array", @SWG\Items("OrdersItemsBody"), required=true)
      */
 
+    /**
+     * @SWG\Property(name="comment", type="string", required=false)
+     */
+
     public function get()
     {
         $ordersItemsBodyModel = new SleepingOwlModel();
@@ -39,6 +43,7 @@ Class OrdersBody extends BaseView
             'customer_id' => 0,
             'total'       => 0,
             'items'       => $items,
+            'comment'     => ''
         ];
     }
 
