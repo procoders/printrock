@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register('Darkaonline\L5Swagger\L5SwaggerServiceProvider');
     }
 }

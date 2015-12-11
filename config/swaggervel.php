@@ -67,7 +67,7 @@ return [
       | Edit to set the api's base path
       |--------------------------------------------------------------------------
     */
-    "default-base-path" => "",
+    "default-base-path" => "http://mobile.dev:4080/",
     /*
       |--------------------------------------------------------------------------
       | Uncomment to add response headers when swagger is generated

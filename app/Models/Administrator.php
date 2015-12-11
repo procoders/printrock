@@ -46,7 +46,9 @@ class Administrator extends SleepingOwlModel {
         if (! empty($attributes)) {
             if ($this->id == NULL) {
                 // ok this is new member, so we need password for it
-                $this->password = \Hash::make($attributes['passwd']);
+                // todo: check and remove this shit
+                if (isset($attributes['passwd']))
+                    $this->password = \Hash::make($attributes['passwd']);
             } else {
                 // updating admin
                 if (!empty($attributes['changePassword']) && $attributes['changePassword'] == 1)

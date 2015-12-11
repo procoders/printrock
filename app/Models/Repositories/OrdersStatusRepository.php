@@ -73,7 +73,9 @@ Class OrdersStatusRepository implements Interfaces\iAdminSave
 
         $languageId = Models\Language::where('code', $language)->first()->id;
 
-        return $this->model->descriptions()->where('language_id', $languageId)->first()->name;
+        $descriptionsModel = $this->model->descriptions()->where('language_id', $languageId)->first();
+
+        return $descriptionsModel ? $descriptionsModel->name : '';
     }
 
     /**

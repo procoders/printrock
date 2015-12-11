@@ -12,13 +12,9 @@ class AdministratorsTableSeeder extends Seeder {
      */
     public function run()
     {
-//        foreach (Models\Administrator::all() as $admin) {
-//            $admin->delete();
-//        }
-
         Models\Administrator::create([
             'username' => 'admin',
-            'password' => Hash::make('admin'),
+            'password' => \Hash::make('admin'),
             'name' => 'Administrator'
         ]);
     }

@@ -7,7 +7,7 @@ Admin::model(\App\Models\Order::class)
     ->title('Orders')
     ->denyCreating(function ()
     {
-        return true;
+        return false;
     })
     ->columns(function ()
     {

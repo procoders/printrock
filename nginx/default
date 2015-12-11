@@ -5,9 +5,10 @@ server {
     root /var/www/public;
     index index.php index.html index.htm;
 
-    server_name localhost;
+    server_name mobile.dev;
 
     location / {
+        add_header Access-Control-Allow-Origin *;
          try_files $uri $uri/ /index.php$is_args$args;
     }
 
@@ -17,6 +18,7 @@ server {
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
+        add_header Access-Control-Allow-Origin *;
     }
 
     location ~ /\.ht {
