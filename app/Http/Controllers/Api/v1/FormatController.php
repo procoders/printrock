@@ -11,7 +11,7 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/format",
+ *     resourcePath="/formats",
  *     basePath="/api/v1"
  * )
  */
@@ -19,7 +19,7 @@ class FormatController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/format/get/{id}",
+     *   path="/formats/{id}",
      *   @SWG\Operation(
      *     nickname="Get format",
      *     method="GET",
@@ -75,7 +75,7 @@ class FormatController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/format/all",
+     *   path="/formats/",
      *   @SWG\Operation(
      *     nickname="Get all formats",
      *     method="GET",

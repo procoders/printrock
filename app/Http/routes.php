@@ -13,22 +13,53 @@
 
 Route::group(array('prefix' => 'api/v1'), function()
 {
-    Route::get('/addons_type/all', 'Api\v1\AddonsTypeController@all');
-    Route::get('/addons_type/get/{id}', 'Api\v1\AddonsTypeController@get');
-    Route::get('/addon/all', 'Api\v1\AddonController@all');
-    Route::get('/addon/get/{id}', 'Api\v1\AddonController@get');
-    Route::get('/format/all', 'Api\v1\FormatController@all');
-    Route::get('/format/get/{id}', 'Api\v1\FormatController@get');
-    Route::get('/language/all', 'Api\v1\LanguageController@all');
-    Route::get('/language/get/{id}', 'Api\v1\LanguageController@get');
-    Route::get('/customer/get/{id}', 'Api\v1\CustomerController@get');
-    Route::post('/customer/add', 'Api\v1\CustomerController@add');
-    Route::post('/customer/login', 'Api\v1\CustomerController@login');
-    Route::get('/customers_address/get/{id}', 'Api\v1\CustomersAddressController@get');
-    Route::post('/customers_address/add', 'Api\v1\CustomersAddressController@add');
-    Route::post('/photo/add', 'Api\v1\PhotoController@add');
-    Route::get('/orders_status/all', 'Api\v1\OrdersStatusController@all');
-    Route::get('/orders_status/get/{id}', 'Api\v1\OrdersStatusController@get');
-    Route::get('/order/get/{id}', 'Api\v1\OrderController@get');
-    Route::post('/order/add', 'Api\v1\OrderController@add');
+    Route::group(array('prefix' => 'addons_types'), function()
+    {
+        Route::get('/', 'Api\v1\AddonsTypeController@all');
+        Route::get('/{id}', 'Api\v1\AddonsTypeController@get');
+    });
+
+    Route::group(array('prefix' => 'addons'), function()
+    {
+        Route::get('/', 'Api\v1\AddonController@all');
+        Route::get('/{id}', 'Api\v1\AddonController@get');
+    });
+
+    Route::group(array('prefix' => 'formats'), function()
+    {
+        Route::get('/', 'Api\v1\FormatController@all');
+        Route::get('/{id}', 'Api\v1\FormatController@get');
+    });
+
+    Route::group(array('prefix' => 'languages'), function()
+    {
+        Route::get('/', 'Api\v1\LanguageController@all');
+        Route::get('/{id}', 'Api\v1\LanguageController@get');
+    });
+
+    Route::group(array('prefix' => 'customers'), function()
+    {
+        Route::get('/{id}', 'Api\v1\CustomerController@get');
+        Route::post('/', 'Api\v1\CustomerController@add');
+        Route::post('/login', 'Api\v1\CustomerController@login');
+
+        Route::get('{customerId}/address/{id}', 'Api\v1\CustomerController@getAddressById');
+        Route::post('{customerId}/address/', 'Api\v1\CustomerController@addAddress');
+
+        Route::get('{customerId}/orders/', 'Api\v1\CustomerController@getOrders');
+        Route::get('{customerId}/orders/{id}', 'Api\v1\CustomerController@getOrderById');
+        Route::post('{customerId}/orders/', 'Api\v1\CustomerController@addOrder');
+    });
+
+    Route::group(array('prefix' => 'photos'), function()
+    {
+        Route::post('/add', 'Api\v1\PhotoController@add');
+    });
+
+    Route::group(array('prefix' => 'orders_status'), function()
+    {
+        Route::get('/', 'Api\v1\OrdersStatusController@all');
+        Route::get('/{id}', 'Api\v1\OrdersStatusController@get');
+    });
+
 });

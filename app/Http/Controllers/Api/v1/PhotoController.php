@@ -11,7 +11,7 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/photo",
+ *     resourcePath="/photos",
  *     basePath="/api/v1"
  * )
  */
@@ -19,7 +19,7 @@ class PhotoController extends Controller
 {
     /**
      * @SWG\Api(
-     *   path="/photo/add",
+     *   path="/photos",
      *   @SWG\Operation(
      *     nickname="Add new photo",
      *     method="POST",

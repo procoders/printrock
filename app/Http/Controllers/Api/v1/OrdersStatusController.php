@@ -19,7 +19,7 @@ class OrdersStatusController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/orders_status/get/{id}",
+     *   path="/orders_status/{id}",
      *   @SWG\Operation(
      *     nickname="Get orders status",
      *     method="GET",
@@ -75,7 +75,7 @@ class OrdersStatusController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/orders_status/all",
+     *   path="/orders_status/",
      *   @SWG\Operation(
      *     nickname="Get all orders status",
      *     method="GET",

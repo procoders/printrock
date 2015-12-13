@@ -11,7 +11,7 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/language",
+ *     resourcePath="/languages",
  *     basePath="/api/v1"
  * )
  */
@@ -19,7 +19,7 @@ class LanguageController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/language/get/{id}",
+     *   path="/languages/{id}",
      *   @SWG\Operation(
      *     nickname="Get languge",
      *     method="GET",
@@ -75,7 +75,7 @@ class LanguageController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/language/all",
+     *   path="/languages/",
      *   @SWG\Operation(
      *     nickname="Get all languages",
      *     method="GET",

@@ -11,7 +11,7 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/addons_type",
+ *     resourcePath="/addons_types",
  *     basePath="/api/v1"
  * )
  */
@@ -19,7 +19,7 @@ class AddonsTypeController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/addons_type/get/{id}",
+     *   path="/addons_types/{id}",
      *   @SWG\Operation(
      *     nickname="Get addons type",
      *     method="GET",
@@ -74,7 +74,7 @@ class AddonsTypeController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/addons_type/all",
+     *   path="/addons_types",
      *   @SWG\Operation(
      *     nickname="Get all addons type",
      *     method="GET",

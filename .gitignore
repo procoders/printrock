@@ -6,3 +6,4 @@
 composer.lock
 auth.json
 /storage/docs
+/storage/api-docs
