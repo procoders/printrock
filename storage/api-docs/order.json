@@ -1,0 +1,371 @@
+{
+    "basePath": "/api/v1",
+    "swaggerVersion": "1.2",
+    "apiVersion": "0.1",
+    "resourcePath": "/order",
+    "apis": [
+        {
+            "path": "/order/add",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Add new order",
+                    "nickname": "Add new order",
+                    "type": "Order",
+                    "parameters": [
+                        {
+                            "paramType": "body",
+                            "name": "Body",
+                            "type": "OrdersBody",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Body"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns order",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/order/get/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find order by ID",
+                    "nickname": "Get order",
+                    "type": "Order",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "type": "integer",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "ID of order",
+                            "format": "int64"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Order not found"
+                        },
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns order status",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Order": {
+            "id": "Order",
+            "description": "Class Order",
+            "required": [
+                "id",
+                "items",
+                "orders_status",
+                "total"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "orders_status": {
+                    "$ref": "OrdersStatus"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "OrdersItem"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            }
+        },
+        "OrdersStatus": {
+            "id": "OrdersStatus",
+            "description": "Class Language",
+            "required": [
+                "code",
+                "default",
+                "descriptions",
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "default": {
+                    "type": "boolean"
+                },
+                "descriptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "OrdersStatusesDescription"
+                    }
+                }
+            }
+        },
+        "OrdersItem": {
+            "id": "OrdersItem",
+            "description": "Class OrdersItem",
+            "required": [
+                "addons",
+                "format",
+                "id",
+                "photo",
+                "price_per_item",
+                "qty"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "photo": {
+                    "$ref": "Photo"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "price_per_item": {
+                    "type": "double"
+                },
+                "format": {
+                    "$ref": "Format"
+                },
+                "addons": {
+                    "$ref": "Addon"
+                }
+            }
+        },
+        "OrdersStatusesDescription": {
+            "id": "OrdersStatusesDescription",
+            "description": "Class Language",
+            "required": [
+                "id",
+                "language",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "language": {
+                    "$ref": "Language"
+                }
+            }
+        },
+        "Photo": {
+            "id": "Photo",
+            "description": "Class Photo",
+            "required": [
+                "id",
+                "image"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        },
+        "Format": {
+            "id": "Format",
+            "description": "Class Format",
+            "required": [
+                "height",
+                "id",
+                "price",
+                "width"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "width": {
+                    "type": "integer"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Addon": {
+            "id": "Addon",
+            "description": "Class Addon",
+            "required": [
+                "id",
+                "image",
+                "name",
+                "price",
+                "price_type",
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "price_type": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "float"
+                },
+                "type": {
+                    "$ref": "AddonsType"
+                }
+            }
+        },
+        "Language": {
+            "id": "Language",
+            "description": "Class Language",
+            "required": [
+                "code",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "AddonsType": {
+            "id": "AddonsType",
+            "description": "Class AddonsType",
+            "required": [
+                "code",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "OrdersBody": {
+            "id": "OrdersBody",
+            "description": "Class OrdersBody",
+            "required": [
+                "customer_id",
+                "items",
+                "total"
+            ],
+            "properties": {
+                "customer_id": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "OrdersItemsBody"
+                    }
+                },
+                "comment": {
+                    "type": "string"
+                }
+            }
+        },
+        "OrdersItemsBody": {
+            "id": "OrdersItemsBody",
+            "description": "Class OrdersItemsBody",
+            "required": [
+                "addons",
+                "format_id",
+                "photo_id",
+                "price_per_item",
+                "qty"
+            ],
+            "properties": {
+                "photo_id": {
+                    "type": "integer"
+                },
+                "qty": {
+                    "type": "integer"
+                },
+                "price_per_item": {
+                    "type": "double"
+                },
+                "format_id": {
+                    "type": "integer"
+                },
+                "addons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "OrdersItemsAddonsBody"
+                    }
+                }
+            }
+        },
+        "OrdersItemsAddonsBody": {
+            "id": "OrdersItemsAddonsBody",
+            "description": "Class OrdersItemsAddonsBody",
+            "required": [
+                "id",
+                "qty"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "qty": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

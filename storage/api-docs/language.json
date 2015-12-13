@@ -1,0 +1,84 @@
+{
+    "basePath": "/api/v1",
+    "swaggerVersion": "1.2",
+    "apiVersion": "0.1",
+    "resourcePath": "/language",
+    "apis": [
+        {
+            "path": "/language/all",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find all languages",
+                    "nickname": "Get all languages",
+                    "type": "array",
+                    "items": {
+                        "$ref": "Language"
+                    },
+                    "notes": "Returns all languages",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/language/get/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find language by ID",
+                    "nickname": "Get languge",
+                    "type": "Language",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "type": "integer",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "ID of language",
+                            "format": "int64"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "language not found"
+                        },
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns language",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Language": {
+            "id": "Language",
+            "description": "Class Language",
+            "required": [
+                "code",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

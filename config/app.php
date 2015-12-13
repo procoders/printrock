@@ -193,7 +193,8 @@ $applicationConfig = [
 
 if (! empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "/admin") !== false){
     $applicationConfig['providers'][] = 'SleepingOwl\Admin\AdminServiceProvider';
-    $applicationConfig['providers'][] = 'Illuminate\Html\HtmlServiceProvider';$applicationConfig['aliases']['Admin'] = 'SleepingOwl\Admin\Admin';
+    $applicationConfig['providers'][] = 'Illuminate\Html\HtmlServiceProvider';
+    $applicationConfig['aliases']['Admin'] = 'SleepingOwl\Admin\Admin';
     $applicationConfig['aliases']['AdminAuth'] = 'SleepingOwl\AdminAuth\Facades\AdminAuth';
     $applicationConfig['aliases']['AdminRouter'] = 'SleepingOwl\Admin\Facades\AdminRouter';
     $applicationConfig['aliases']['AssetManager'] = 'SleepingOwl\Admin\AssetManager\AssetManager';
@@ -205,7 +206,15 @@ if (! empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQU
     $applicationConfig['aliases']['Form'] = 'Collective\Html\FormFacade';
     $applicationConfig['aliases']['Html'] = 'Collective\Html\HtmlFacade';
 } else {
-    $applicationConfig['providers'][] = 'Collective\Html\HtmlServiceProvider';
+//    $applicationConfig['providers'][] = 'Collective\Html\HtmlServiceProvider';
+    $applicationConfig['providers'][] = 'SleepingOwl\Admin\AdminServiceProvider';
+    $applicationConfig['aliases']['Admin'] = 'SleepingOwl\Admin\Admin';
+    $applicationConfig['aliases']['AdminAuth'] = 'SleepingOwl\AdminAuth\Facades\AdminAuth';
+    $applicationConfig['aliases']['AdminRouter'] = 'SleepingOwl\Admin\Facades\AdminRouter';
+    $applicationConfig['aliases']['AssetManager'] = 'SleepingOwl\Admin\AssetManager\AssetManager';
+    $applicationConfig['aliases']['Column'] = 'SleepingOwl\Admin\Columns\Column'; 
+    $applicationConfig['aliases']['FormItem'] = 'SleepingOwl\Admin\Models\Form\FormItem'; 
+    $applicationConfig['aliases']['ViewFilter'] = 'SleepingOwl\Admin\ViewFilters\ViewFilter';  
 }
 
 return $applicationConfig;

@@ -23,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register('Darkaonline\L5Swagger\L5SwaggerServiceProvider');
+        try {
+            if ( class_exists( 'Darkaonline\L5Swagger\L5SwaggerServiceProvider' ) ) {
+                $this->app->register('Darkaonline\L5Swagger\L5SwaggerServiceProvider');
+            }
+        } catch (Exception $e) {
+
+        }
     }
 }

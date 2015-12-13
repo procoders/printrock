@@ -1,0 +1,269 @@
+{
+    "basePath": "/api/v1",
+    "swaggerVersion": "1.2",
+    "apiVersion": "0.1",
+    "resourcePath": "/customer",
+    "apis": [
+        {
+            "path": "/customer/add",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Add new customer",
+                    "nickname": "Add new cusromer",
+                    "type": "Customer",
+                    "parameters": [
+                        {
+                            "paramType": "form",
+                            "name": "name",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Name"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "second_name",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Second Name"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "last_name",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Last Name"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "email",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Email"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "phone",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Phone"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "login",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Login"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "password",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Password"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns customer",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/customer/get/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find customer by ID",
+                    "nickname": "Get customer",
+                    "type": "Customer",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "type": "integer",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "ID of customer",
+                            "format": "int64"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Customer not found"
+                        },
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns customer",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/customer/login",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Login cusomer",
+                    "nickname": "Login",
+                    "type": "Customer",
+                    "parameters": [
+                        {
+                            "paramType": "form",
+                            "name": "login",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Login"
+                        },
+                        {
+                            "paramType": "form",
+                            "name": "password",
+                            "type": "string",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Password"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Customer not found"
+                        },
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Customer": {
+            "id": "Customer",
+            "description": "Class Customer",
+            "required": [
+                "addresses",
+                "email",
+                "id",
+                "last_name",
+                "login",
+                "name",
+                "phone",
+                "photos",
+                "second_name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "second_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "login": {
+                    "type": "string"
+                },
+                "addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "CustomersAddress"
+                    }
+                },
+                "photos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Photo"
+                    }
+                }
+            }
+        },
+        "CustomersAddress": {
+            "id": "CustomersAddress",
+            "description": "Class CustomersAddress",
+            "required": [
+                "city",
+                "country",
+                "id",
+                "name",
+                "phone",
+                "street",
+                "zip_code"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                }
+            }
+        },
+        "Photo": {
+            "id": "Photo",
+            "description": "Class Photo",
+            "required": [
+                "id",
+                "image"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

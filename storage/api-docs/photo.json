@@ -1,0 +1,66 @@
+{
+    "basePath": "/api/v1",
+    "swaggerVersion": "1.2",
+    "apiVersion": "0.1",
+    "resourcePath": "/photo",
+    "apis": [
+        {
+            "path": "/photo/add",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Add new photo",
+                    "nickname": "Add new photo",
+                    "type": "Photo",
+                    "parameters": [
+                        {
+                            "paramType": "form",
+                            "name": "customer_id",
+                            "type": "integer",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "Customer ID",
+                            "format": "int64"
+                        },
+                        {
+                            "paramType": "body",
+                            "name": "image",
+                            "type": "file",
+                            "required": true,
+                            "allowMultiple": true,
+                            "description": "Image"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns photo",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Photo": {
+            "id": "Photo",
+            "description": "Class Photo",
+            "required": [
+                "id",
+                "image"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

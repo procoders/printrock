@@ -75,6 +75,11 @@ Admin::model(\App\Models\Order::class)
                 $options = [
                     ['id' => '', 'name' => '- Status -']
                 ];
-                return array_merge($options, App\Models\Repositories\OrdersStatusRepository::getOptionsList());
+                try {
+                    $optionsList = App\Models\Repositories\OrdersStatusRepository::getOptionsList();
+                } catch (Exception $e) {
+                    return $options;
+                }
+                return array_merge($options, $optionsList);
             });
     });
