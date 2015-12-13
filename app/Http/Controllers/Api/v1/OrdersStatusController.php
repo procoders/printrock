@@ -36,6 +36,14 @@ class OrdersStatusController extends Controller {
      *       paramType="path",
      *       allowMultiple=false
      *     ),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
      *     @SWG\ResponseMessage(code=404, message="Orders status not found"),
      *     @SWG\ResponseMessage(code=500, message="Internal server error")
      *   )
@@ -59,6 +67,7 @@ class OrdersStatusController extends Controller {
                 if (! isset($ordersStatusModel)) {
                     throw new ModelNotFoundException();
                 }
+
                 $ordersStatusView = new ModelViews\OrdersStatus($ordersStatusModel);
 
                 $response = $ordersStatusView->get();
@@ -83,8 +92,16 @@ class OrdersStatusController extends Controller {
      *     notes="Returns all orders status",
      *     type="array",
      *     @SWG\Items("OrdersStatus"),
-     *     authorizations={}
-     *   )
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
+     *  ),
      * )
      */
     public function all()
