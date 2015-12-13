@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdministratorsTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);
         $this->call(OrdersStatusTableSeeder::class);
+        $this->call(FormatsTableSeeder::class);
 
         Model::reguard();
     }
