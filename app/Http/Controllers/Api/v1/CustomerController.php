@@ -597,6 +597,7 @@ class CustomerController extends Controller {
         $statusCode = 200;
 
         $inputs = \Input::all();
+        $inputs['customer_id'] = $customerId;
 
         $validator = Validator::make($inputs, [
             'customer_id' => 'required|numeric|exists:customers,id',

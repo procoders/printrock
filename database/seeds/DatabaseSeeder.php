@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(FormatsTableSeeder::class);
         $this->call(AddonTypesTableSeeder::class);
         $this->call(AddonsTableSeeder::class);
+        $this->call(CustomersTableSeeder::class);
+        $this->call(CustomersAddressTableSeeder::class);
 
         Model::reguard();
     }
