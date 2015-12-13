@@ -5,7 +5,7 @@
     "resourcePath": "/orders_status",
     "apis": [
         {
-            "path": "/orders_status/all",
+            "path": "/orders_status/",
             "operations": [
                 {
                     "method": "GET",
@@ -23,7 +23,7 @@
             ]
         },
         {
-            "path": "/orders_status/get/{id}",
+            "path": "/orders_status/{id}",
             "operations": [
                 {
                     "method": "GET",

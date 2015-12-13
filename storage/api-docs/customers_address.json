@@ -5,7 +5,7 @@
     "resourcePath": "/customers_address",
     "apis": [
         {
-            "path": "/customers_address/add",
+            "path": "/customers_address/",
             "operations": [
                 {
                     "method": "POST",
@@ -85,7 +85,7 @@
             ]
         },
         {
-            "path": "/customers_address/get/{id}",
+            "path": "/customers_address/{id}",
             "operations": [
                 {
                     "method": "GET",

@@ -3,31 +3,31 @@
     "swaggerVersion": "2.0",
     "apis": [
         {
-            "path": "/addon"
+            "path": "/addons"
         },
         {
-            "path": "/addons_type"
+            "path": "/addons_types"
         },
         {
-            "path": "/customer"
+            "path": "/customers"
         },
         {
             "path": "/customers_address"
         },
         {
-            "path": "/format"
+            "path": "/formats"
         },
         {
-            "path": "/language"
+            "path": "/languages"
         },
         {
-            "path": "/order"
+            "path": "/orders"
         },
         {
             "path": "/orders_status"
         },
         {
-            "path": "/photo"
+            "path": "/photos"
         }
     ]
 }
