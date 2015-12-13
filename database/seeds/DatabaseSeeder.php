@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(LanguagesTableSeeder::class);
         $this->call(OrdersStatusTableSeeder::class);
         $this->call(FormatsTableSeeder::class);
+        $this->call(AddonTypesTableSeeder::class);
+        $this->call(AddonsTableSeeder::class);
 
         Model::reguard();
     }

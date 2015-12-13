@@ -12,12 +12,11 @@ class ApiLanguagesTest extends TestCase
         $response = $this->call('GET', '/api/v1/languages');
         $this->assertEquals(200, $response->status());
 
-        $responseData = json_decode($response->getContent());
+        $responseData = json_decode($response->getContent(), true);
 
         $this->assertEquals(count($responseData), 3);
 
         foreach ($responseData as $language) {
-            $language = (array) $language;
             $this->assertArrayHasKey('id', $language);
             $this->assertArrayHasKey('code', $language);
             $this->assertArrayHasKey('name', $language);
@@ -29,8 +28,7 @@ class ApiLanguagesTest extends TestCase
         $response = $this->call('GET', '/api/v1/languages/1');
         $this->assertEquals(200, $response->status());
 
-        $responseData = json_decode($response->getContent());
-        $responseData = (array) $responseData;
+        $responseData = json_decode($response->getContent(), true);
 
         $this->assertArrayHasKey('id', $responseData);
         $this->assertArrayHasKey('code', $responseData);

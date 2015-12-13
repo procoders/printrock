@@ -48,9 +48,7 @@ class ApiOrdersStatusTest extends TestCase
 
         $this->assertEquals(200, $response->status());
 
-        $orderStatus = json_decode($response->getContent());
-
-        $orderStatus = (array) $orderStatus;
+        $orderStatus = json_decode($response->getContent(), true);
 
         $this->assertArrayHasKey('id', $orderStatus);
         $this->assertArrayHasKey('code', $orderStatus);
@@ -64,9 +62,7 @@ class ApiOrdersStatusTest extends TestCase
 
         $this->assertEquals(200, $response->status());
 
-        $orderStatus = json_decode($response->getContent());
-
-        $orderStatus = (array) $orderStatus;
+        $orderStatus = json_decode($response->getContent(), true);
 
         $this->assertEquals(count($orderStatus['descriptions']), 1);
 

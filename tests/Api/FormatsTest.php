@@ -12,13 +12,12 @@ class ApiFormatsTest extends TestCase
         $response = $this->call('GET', '/api/v1/formats');
         $this->assertEquals(200, $response->status());
 
-        $responseData = json_decode($response->getContent());
+        $responseData = json_decode($response->getContent(), true);
 
         $this->assertEquals(true, (count($responseData) > 0));
 
         foreach ($responseData as $format) {
 
-            $format = (array) $format;
             $this->assertArrayHasKey('id', $format);
             $this->assertArrayHasKey('width', $format);
             $this->assertArrayHasKey('height', $format);
@@ -32,9 +31,8 @@ class ApiFormatsTest extends TestCase
         $response = $this->call('GET', '/api/v1/formats/1');
         $this->assertEquals(200, $response->status());
 
-        $format = json_decode($response->getContent());
+        $format = json_decode($response->getContent(), true);
 
-        $format = (array) $format;
         $this->assertArrayHasKey('id', $format);
         $this->assertArrayHasKey('width', $format);
         $this->assertArrayHasKey('height', $format);
