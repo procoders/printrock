@@ -13,22 +13,22 @@
 
 Route::group(array('prefix' => 'api/v1'), function()
 {
-    Route::get('/addons_type/all', 'Api\v1\AddonsTypeController@all');
-    Route::get('/addons_type/get/{id}', 'Api\v1\AddonsTypeController@get');
-    Route::get('/addon/all', 'Api\v1\AddonController@all');
-    Route::get('/addon/get/{id}', 'Api\v1\AddonController@get');
-    Route::get('/format/all', 'Api\v1\FormatController@all');
-    Route::get('/format/get/{id}', 'Api\v1\FormatController@get');
-    Route::get('/language/all', 'Api\v1\LanguageController@all');
-    Route::get('/language/get/{id}', 'Api\v1\LanguageController@get');
-    Route::get('/customer/get/{id}', 'Api\v1\CustomerController@get');
-    Route::post('/customer/add', 'Api\v1\CustomerController@add');
-    Route::post('/customer/login', 'Api\v1\CustomerController@login');
-    Route::get('/customers_address/get/{id}', 'Api\v1\CustomersAddressController@get');
-    Route::post('/customers_address/add', 'Api\v1\CustomersAddressController@add');
-    Route::post('/photo/add', 'Api\v1\PhotoController@add');
-    Route::get('/orders_status/all', 'Api\v1\OrdersStatusController@all');
-    Route::get('/orders_status/get/{id}', 'Api\v1\OrdersStatusController@get');
-    Route::get('/order/get/{id}', 'Api\v1\OrderController@get');
-    Route::post('/order/add', 'Api\v1\OrderController@add');
+    Route::get('/addons_types/', 'Api\v1\AddonsTypeController@all');
+    Route::get('/addons_types/{id}', 'Api\v1\AddonsTypeController@get');
+    Route::get('/addons/', 'Api\v1\AddonController@all');
+    Route::get('/addons/{id}', 'Api\v1\AddonController@get');
+    Route::get('/formats/', 'Api\v1\FormatController@all');
+    Route::get('/formats/{id}', 'Api\v1\FormatController@get');
+    Route::get('/languages/', 'Api\v1\LanguageController@all');
+    Route::get('/languages/{id}', 'Api\v1\LanguageController@get');
+    Route::get('/customers/{id}', 'Api\v1\CustomerController@get');
+    Route::post('/customers/', 'Api\v1\CustomerController@add');
+    Route::post('/customers/login', 'Api\v1\CustomerController@login');
+    Route::get('/customers_address/{id}', 'Api\v1\CustomersAddressController@get');
+    Route::post('/customers_address/', 'Api\v1\CustomersAddressController@add');
+    Route::post('/photos/add', 'Api\v1\PhotoController@add');
+    Route::get('/orders_status/', 'Api\v1\OrdersStatusController@all');
+    Route::get('/orders_status/{id}', 'Api\v1\OrdersStatusController@get');
+    Route::get('/orders/{id}', 'Api\v1\OrderController@get');
+    Route::post('/orders/', 'Api\v1\OrderController@add');
 });

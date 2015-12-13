@@ -11,7 +11,7 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/customer",
+ *     resourcePath="/customers",
  *     basePath="/api/v1"
  * )
  */
@@ -19,7 +19,7 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/customer/get/{id}",
+     *   path="/customers/{id}",
      *   @SWG\Operation(
      *     nickname="Get customer",
      *     method="GET",
@@ -75,7 +75,7 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/customer/add",
+     *   path="/customers/",
      *   @SWG\Operation(
      *     nickname="Add new cusromer",
      *     method="POST",
@@ -187,7 +187,7 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/customer/login",
+     *   path="/customers/login",
      *   @SWG\Operation(
      *     nickname="Login",
      *     method="POST",

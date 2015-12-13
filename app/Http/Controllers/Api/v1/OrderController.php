@@ -11,7 +11,7 @@ use Validator;
  * @SWG\Resource(
  *     apiVersion="0.1",
  *     swaggerVersion="1.2",
- *     resourcePath="/order",
+ *     resourcePath="/orders",
  *     basePath="/api/v1"
  * )
  */
@@ -19,7 +19,7 @@ class OrderController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/order/get/{id}",
+     *   path="/orders/{id}",
      *   @SWG\Operation(
      *     nickname="Get order",
      *     method="GET",
@@ -75,7 +75,7 @@ class OrderController extends Controller {
 
     /**
      * @SWG\Api(
-     *   path="/order/add",
+     *   path="/orders",
      *   @SWG\Operation(
      *     nickname="Add new order",
      *     method="POST",

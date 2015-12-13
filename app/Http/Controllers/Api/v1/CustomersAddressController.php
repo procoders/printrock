@@ -20,7 +20,7 @@ class CustomersAddressController extends Controller
 
     /**
      * @SWG\Api(
-     *   path="/customers_address/get/{id}",
+     *   path="/customers_address/{id}",
      *   @SWG\Operation(
      *     nickname="Get customers address",
      *     method="GET",
@@ -76,7 +76,7 @@ class CustomersAddressController extends Controller
 
     /**
      * @SWG\Api(
-     *   path="/customers_address/add",
+     *   path="/customers_address/",
      *   @SWG\Operation(
      *     nickname="Add new cusromers address",
      *     method="POST",
