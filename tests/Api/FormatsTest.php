@@ -27,4 +27,19 @@ class ApiFormatsTest extends TestCase
         }
     }
 
+    public function testGetById()
+    {
+        $response = $this->call('GET', '/api/v1/formats/1');
+        $this->assertEquals(200, $response->status());
+
+        $format = json_decode($response->getContent());
+
+        $format = (array) $format;
+        $this->assertArrayHasKey('id', $format);
+        $this->assertArrayHasKey('width', $format);
+        $this->assertArrayHasKey('height', $format);
+        $this->assertArrayHasKey('price', $format);
+
+    }
+
 }
