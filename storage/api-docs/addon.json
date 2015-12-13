@@ -1,0 +1,144 @@
+{
+    "basePath": "/api/v1",
+    "swaggerVersion": "1.2",
+    "apiVersion": "0.1",
+    "resourcePath": "/addon",
+    "apis": [
+        {
+            "path": "/addon/all",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find all addons",
+                    "nickname": "Get all addons",
+                    "type": "array",
+                    "items": {
+                        "$ref": "Addon"
+                    },
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "type_id",
+                            "type": "integer",
+                            "required": false,
+                            "allowMultiple": false,
+                            "description": "ID of addons type"
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "price_type",
+                            "type": "string",
+                            "required": false,
+                            "allowMultiple": false,
+                            "description": "Price Type",
+                            "enum": [
+                                "price",
+                                "percent"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns all addons",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/addon/get/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Find addon by ID",
+                    "nickname": "Get addon",
+                    "type": "Addon",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "type": "integer",
+                            "required": true,
+                            "allowMultiple": false,
+                            "description": "ID of addon",
+                            "format": "int64"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 404,
+                            "message": "Format not found"
+                        },
+                        {
+                            "code": 500,
+                            "message": "Internal server error"
+                        }
+                    ],
+                    "notes": "Returns addon",
+                    "authorizations": {
+
+                    }
+                }
+            ]
+        }
+    ],
+    "models": {
+        "Addon": {
+            "id": "Addon",
+            "description": "Class Addon",
+            "required": [
+                "id",
+                "image",
+                "name",
+                "price",
+                "price_type",
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "price_type": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "float"
+                },
+                "type": {
+                    "$ref": "AddonsType"
+                }
+            }
+        },
+        "AddonsType": {
+            "id": "AddonsType",
+            "description": "Class AddonsType",
+            "required": [
+                "code",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
