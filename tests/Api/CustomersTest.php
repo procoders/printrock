@@ -49,6 +49,23 @@ class ApiCustomersTest extends TestCase
         }
     }
 
+    public function login()
+    {
+        // validate for incorrect login
+        $response = $this->call('POST', '/api/v1/customers/login', ['login' => 'bob', 'password' => 'bobby']);
+        $this->assertEquals(404, $response->status());
+
+        // validate for incorrect password
+        $response = $this->call('POST', '/api/v1/customers/login', ['login' => 'bobby', 'password' => 'bob']);
+        $this->assertEquals(404, $response->status());
+
+        // validate for correct login
+        $response = $this->call('POST', '/api/v1/customers/login', ['login' => 'bobby', 'password' => 'bobby']);
+        $this->assertEquals(200, $response->status());
+        $customer = json_decode($response->getContent(), true);
+        $this->_validateCustomerObject($customer);
+    }
+
     protected function _validateCustomerObject($customer)
     {
         $this->assertArrayHasKey('id', $customer);
