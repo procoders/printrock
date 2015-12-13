@@ -22,8 +22,8 @@ phpnginx:
   ports:
     - "4080:80"
   volumes:
-    - .nginx:/etc/nginx/sites-available
-    - .:/var/www
+    - ./nginx:/etc/nginx/sites-available
+    - ./:/var/www
 
 gulp:
   image: harshjv/bower-gulp:1.0
