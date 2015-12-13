@@ -523,6 +523,53 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
+     *   path="/customers/{customerId}/address",
+     *   @SWG\Operation(
+     *     nickname="Get customers all addresses",
+     *     method="GET",
+     *     summary="Get customers all addresses",
+     *     notes="Returns customers address collection",
+     *     type="CustomersAddress",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer Id",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=404, message="Customers address not found"),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function getAddressCustomerId($customerId)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try {
+            $customersAddressModel = Models\CustomersAddress::where('customer_id', $customerId);
+
+            foreach ($customersAddressModel->get() as $address) {
+                $model = new ModelViews\CustomersAddress($address);
+                $response[] = $model->get();
+            }
+
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'error' => 'Customers address doesn\'t exists'
+            ];
+            $statusCode = 404;
+        } finally {
+            return \Response::json($response, $statusCode);
+        }
+    }
+
+    /**
+     * @SWG\Api(
      *   path="/customers/{customerId}/address/",
      *   @SWG\Operation(
      *     nickname="Add new customers address",

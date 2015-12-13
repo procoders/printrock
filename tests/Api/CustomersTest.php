@@ -37,6 +37,18 @@ class ApiCustomersTest extends TestCase
         $this->assertEquals(404, $response->status());
     }
 
+    public function testGetCustomerAddress()
+    {
+        $response = $this->call('GET', '/api/v1/customers/1/address');
+        $this->assertEquals(200, $response->status());
+
+        $addressCollection = json_decode($response->getContent(), true);
+
+        foreach ($addressCollection as $address) {
+            $this->_validateCustomAddress($address);
+        }
+    }
+
     protected function _validateCustomerObject($customer)
     {
         $this->assertArrayHasKey('id', $customer);

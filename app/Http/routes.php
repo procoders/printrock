@@ -43,6 +43,7 @@ Route::group(array('prefix' => 'api/v1'), function()
         Route::post('/', 'Api\v1\CustomerController@add');
         Route::post('/login', 'Api\v1\CustomerController@login');
 
+        Route::get('{customerId}/address/', 'Api\v1\CustomerController@getAddressCustomerId');
         Route::get('{customerId}/address/{id}', 'Api\v1\CustomerController@getAddressById');
         Route::post('{customerId}/address/', 'Api\v1\CustomerController@addAddress');
 
