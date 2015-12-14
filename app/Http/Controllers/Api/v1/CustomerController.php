@@ -727,7 +727,7 @@ class CustomerController extends Controller {
             'customer_id' => 'required|numeric|exists:customers,id',
             'country'     => 'required|alpha|max:100',
             'city'        => 'required|alpha|max:100',
-            'phone'       => 'required|max:100',
+            'phone'       => 'required|regex:"^([0-9\s\-\+\(\)]{5,})$"',
             'zip_code'    => 'required|regex:"^\d{5}(?:[-\s]\d{4})?$"',
             'name'        => 'required',
             'street'      => 'required'
