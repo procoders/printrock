@@ -49,6 +49,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 
         Route::get('{customerId}/orders/', 'Api\v1\CustomerController@getOrders');
         Route::get('{customerId}/orders/{id}', 'Api\v1\CustomerController@getOrderById');
+        Route::get('{customerId}/orders/{id}/status', 'Api\v1\CustomerController@getOrderStatusByOrderId');
         Route::post('{customerId}/orders/', 'Api\v1\CustomerController@addOrder');
     });
 

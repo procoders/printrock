@@ -352,6 +352,82 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
+     *   path="/customers/{customerId}/orders/{id}/status",
+     *   @SWG\Operation(
+     *     nickname="Get order",
+     *     method="GET",
+     *     summary="Find order and return it status",
+     *     notes="Returns order status",
+     *     type="Order",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer Id",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="id",
+     *       description="ID of order",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=404, message="Order not found"),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function getOrderStatusByOrderId($customerId, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try {
+            $validator = Validator::make(['id' => $id], [
+                'id' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                $response = ['error' => $validator->errors()];
+                $statusCode = 500;
+            } else {
+                $orderModel = Models\Order::where('id', $id)
+                    ->where('customer_id', $customerId)
+                    ->first();
+                if (! isset($orderModel)) {
+                    throw new ModelNotFoundException();
+                }
+
+                $ordersStatusView = new ModelViews\OrdersStatus($orderModel->status());
+
+                $response = $ordersStatusView->get();
+            }
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'error' => 'Order doesn\'t exists'
+            ];
+            $statusCode = 404;
+        } finally {
+            return \Response::json($response, $statusCode);
+        }
+    }
+
+    /**
+     * @SWG\Api(
      *   path="/customers/{customerId}/orders",
      *   @SWG\Operation(
      *     nickname="Add new order",
