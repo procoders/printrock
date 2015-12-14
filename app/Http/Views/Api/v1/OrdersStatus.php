@@ -32,7 +32,16 @@ Class OrdersStatus extends BaseView
     public function get()
     {
         $descriptions = [];
-        foreach ($this->_model->descriptions()->get() as $ordersStatusesDescriptionModel) {
+
+        $languageId = (int)\Input::get('language_id', 0);
+
+        if (!empty($languageId)) {
+            $descriptionsModel = $this->_model->descriptions()->where('language_id', $languageId)->get();
+        } else {
+            $descriptionsModel = $this->_model->descriptions()->get();
+        }
+
+        foreach ($descriptionsModel as $ordersStatusesDescriptionModel) {
             $ordersStatusesDescriptionView = new ModelViews\OrdersStatusesDescription($ordersStatusesDescriptionModel);
 
             $descriptions[] = $ordersStatusesDescriptionView->get();

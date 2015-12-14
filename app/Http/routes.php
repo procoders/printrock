@@ -43,11 +43,13 @@ Route::group(array('prefix' => 'api/v1'), function()
         Route::post('/', 'Api\v1\CustomerController@add');
         Route::post('/login', 'Api\v1\CustomerController@login');
 
+        Route::get('{customerId}/address/', 'Api\v1\CustomerController@getAddressCustomerId');
         Route::get('{customerId}/address/{id}', 'Api\v1\CustomerController@getAddressById');
         Route::post('{customerId}/address/', 'Api\v1\CustomerController@addAddress');
 
         Route::get('{customerId}/orders/', 'Api\v1\CustomerController@getOrders');
         Route::get('{customerId}/orders/{id}', 'Api\v1\CustomerController@getOrderById');
+        Route::get('{customerId}/orders/{id}/status', 'Api\v1\CustomerController@getOrderStatusByOrderId');
         Route::post('{customerId}/orders/', 'Api\v1\CustomerController@addOrder');
     });
 
