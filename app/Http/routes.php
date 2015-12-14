@@ -55,7 +55,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 
     Route::group(array('prefix' => 'photos'), function()
     {
-        Route::post('/add', 'Api\v1\PhotoController@add');
+        Route::post('/', 'Api\v1\PhotoController@add');
     });
 
     Route::group(array('prefix' => 'orders_status'), function()
