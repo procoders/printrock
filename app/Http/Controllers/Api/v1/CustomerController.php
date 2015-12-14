@@ -86,7 +86,7 @@ class CustomerController extends Controller {
      *     @SWG\Parameter(
      *       name="name",
      *       description="Name",
-     *       required=true,
+     *       required=false,
      *       type="string",
      *       paramType="form",
      *       allowMultiple=false
@@ -94,7 +94,7 @@ class CustomerController extends Controller {
      *     @SWG\Parameter(
      *       name="second_name",
      *       description="Second Name",
-     *       required=true,
+     *       required=false,
      *       type="string",
      *       paramType="form",
      *       allowMultiple=false
@@ -102,7 +102,7 @@ class CustomerController extends Controller {
      *     @SWG\Parameter(
      *       name="last_name",
      *       description="Last Name",
-     *       required=true,
+     *       required=false,
      *       type="string",
      *       paramType="form",
      *       allowMultiple=false
@@ -110,7 +110,7 @@ class CustomerController extends Controller {
      *     @SWG\Parameter(
      *       name="email",
      *       description="Email",
-     *       required=true,
+     *       required=false,
      *       type="string",
      *       paramType="form",
      *       allowMultiple=false
@@ -118,7 +118,7 @@ class CustomerController extends Controller {
      *     @SWG\Parameter(
      *       name="phone",
      *       description="Phone",
-     *       required=true,
+     *       required=false,
      *       type="string",
      *       paramType="form",
      *       allowMultiple=false
@@ -149,26 +149,27 @@ class CustomerController extends Controller {
 
         $inputs = \Input::all();
 
-        $validator = Validator::make($inputs, [
-            'name'        => 'required|max:100',
-            'second_name' => 'required|max:100',
-            'last_name'   => 'required|max:100',
-            'email'       => 'required|email|unique:customers,email',
-            'phone'       => 'required|max:100',
+        $validationRules = [
             'login'       => 'required|unique:customers,login',
             'password'    => 'required'
-        ]);
+        ];
+
+        if (isset($inputs['email'])) {
+            $validationRules['email'] = 'required|email|unique:customers,email';
+        }
+
+        $validator = Validator::make($inputs, $validationRules);
 
         if ($validator->fails()) {
             $response = ['error' => $validator->errors()];
             $statusCode = 500;
         } else {
             $params = [
-                'name'        => $inputs['name'],
-                'second_name' => $inputs['second_name'],
-                'last_name'   => $inputs['last_name'],
-                'email'       => $inputs['email'],
-                'phone'       => $inputs['phone'],
+                'name'        => (string)@$inputs['name'],
+                'second_name' => (string)@$inputs['second_name'],
+                'last_name'   => (string)@$inputs['last_name'],
+                'email'       => (string)@$inputs['email'],
+                'phone'       => (string)@$inputs['phone'],
                 'login'       => $inputs['login'],
                 'password'    => $inputs['password']
             ];
