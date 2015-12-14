@@ -276,7 +276,7 @@ class CustomerController extends Controller {
         if ($ordersModel->count() == 0) {
             $statusCode = 404;
         } else {
-            foreach ($ordersModel as $orderModel) {
+            foreach ($ordersModel->get() as $orderModel) {
                 $response[] = (new ModelViews\Order($orderModel))->get();
             }
         }
@@ -795,6 +795,70 @@ class CustomerController extends Controller {
             $customersAddressView = new ModelViews\CustomersAddress($customersAddress);
 
             $response = $customersAddressView->get();
+        }
+
+        return \Response::json($response, $statusCode);
+    }
+
+    /**
+     * @SWG\Api(
+     *   path="/customers/{customerId}/photo",
+     *   @SWG\Operation(
+     *     nickname="Add new photo",
+     *     method="POST",
+     *     summary="Add new photo",
+     *     notes="Returns photo",
+     *     type="Photo",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer ID",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="image",
+     *       description="Image",
+     *       type="file",
+     *       required=true,
+     *       allowMultiple=true,
+     *       paramType="body"
+     *     ),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function addPhoto($customerId)
+    {
+        $statusCode = 200;
+
+        $inputs = \Input::all();
+        $inputs['customer_id'] = $customerId;
+
+        $validator = Validator::make($inputs, [
+            'customer_id' => 'required|numeric|exists:customers,id',
+            'image' => 'required|image'
+        ]);
+
+        if ($validator->fails()) {
+            $response = ['error' => $validator->errors()];
+            $statusCode = 500;
+        } else {
+            $params = [
+                'customer_id' => $inputs['customer_id'],
+                'image' => $inputs['image']
+            ];
+
+            $photo = new Models\Photo();
+
+            $photo->getRepository()->saveFromArray($params);
+
+            $photoView = new ModelViews\Photo($photo);
+
+            $response = $photoView->get();
         }
 
         return \Response::json($response, $statusCode);

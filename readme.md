@@ -13,3 +13,6 @@
 - docker-compose run phpnginx php composer.phar update
 - docker-compose run phpnginx php artisan l5-swagger:generate
 - chmod -R 777 storage
+- chmod -R 777 bootstrap/cache
+- chmod -R 777 public/photos
+- chmod -R 777 public/addons

@@ -20,6 +20,7 @@ class CreateOrdersItemsAddonsTable extends Migration
             $table->integer('addon_id')->unsigned();
             $table->foreign('addon_id')->references('id')->on('addons')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('qty')->unsigned();
+            $table->decimal('price_per_item',8,2);
             $table->timestamps();
         });
     }

@@ -58,13 +58,15 @@ Class OrderRepository implements Interfaces\iAdminSave
 
             foreach ($oredersItem['addons'] as $oredersItemsAddon) {
                 if (isset($oredersItemsAddon['id']) && $oredersItemsAddon['id']) {
-                    $addon = new Models\OrdersItemsAddon();
+                    $orderAddon = new Models\OrdersItemsAddon();
+                    $addon = Models\Addon::find($oredersItemsAddon['id']);
 
-                    $addon->orders_item_id = $item->id;
-                    $addon->addon_id = $oredersItemsAddon['id'];
-                    $addon->qty = $oredersItemsAddon['qty'];
+                    $orderAddon->orders_item_id = $item->id;
+                    $orderAddon->addon_id = $addon->id;
+                    $orderAddon->price_per_item = $addon->price;
+                    $orderAddon->qty = $oredersItemsAddon['qty'];
 
-                    $addon->save();
+                    $orderAddon->save();
                 }
             }
         }

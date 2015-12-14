@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Symfony\Component\HttpFoundation\File\UploadedFile as UploadedFile;
 
 class ApiCustomersTest extends TestCase
 {
@@ -135,6 +136,8 @@ class ApiCustomersTest extends TestCase
         $customData['zip_code'] = 'some fake data';
         $response = $this->call('POST', '/api/v1/customers/' . $customerData->id . '/address', $customData);
         $this->assertEquals(500, $response->status());
+
+        \App\Models\Customer::find($customerData->id)->delete();
     }
 
     public function testGetCustomerAddressByCustomerIdAndAddressId()
@@ -153,29 +156,57 @@ class ApiCustomersTest extends TestCase
         $this->assertEquals(404, $response->status());
     }
 
-    protected function _createAnFakeOrder()
+    public function testCreateNewOrder()
     {
-/*
- * {
-  "customer_id": 0,
-  "total": 0,
-  "items": [
-    {
-      "photo_id": 0,
-      "qty": 0,
-      "price_per_item": 0,
-      "format_id": 0,
-      "addons": [
-        {
-          "id": 0,
-          "qty": 0
-        }
-      ]
-    }
-  ],
-  "comment": ""
-}
- */
+
+        // create cutomer
+        $customerData = [
+            'login' => 'test_customer',
+            'password' => 'test_customer'
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/', $customerData);
+        $this->assertEquals(200, $response->status());
+        $customerData = json_decode($response->getContent());
+
+        $photo = \App\Models\Photo::create([
+            'customer_id' => $customerData->id,
+            'image' => 'seeder_wedding.jpg'
+        ]);
+        $addon = \App\Models\Addon::find(1);
+        $format = \App\Models\Format::find(1);
+
+        $data = [
+            'customer_id' => $customerData->id,
+            'total' => ($format->price + $addon->price),
+            'items' => [
+                [
+                    'photo_id' => $photo->id,
+                    'qty' => 1,
+                    'price_per_item' => $format->price,
+                    'format_id' => $format->id,
+                    'addons' => [
+                        [
+                            'id' => $addon->id,
+                            'qty' => 1
+                        ]
+                    ]
+                ]
+            ],
+            'comment' => 'test comment'
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/' . $customerData->id . '/orders', $data);
+        $this->assertEquals(200, $response->status());
+        $orderData = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('id', $orderData);
+        $this->assertArrayHasKey('orders_status', $orderData);
+        $this->assertArrayHasKey('orders_status', $orderData);
+        $this->assertArrayHasKey('items', $orderData);
+        $this->assertArrayHasKey('total', $orderData);
+        $this->assertArrayHasKey('comment', $orderData);
+        \App\Models\Customer::find($customerData->id)->delete();
     }
 
     public function testCustomerGetPhotos()
@@ -191,19 +222,36 @@ class ApiCustomersTest extends TestCase
         }
     }
 
-    public function testGetCustomerOrders()
+    protected function _validateOrder($order)
     {
-
+        $this->assertArrayHasKey('id', $order);
+        $this->assertArrayHasKey('orders_status', $order);
+        $this->assertArrayHasKey('orders_status', $order);
+        $this->assertArrayHasKey('items', $order);
+        $this->assertArrayHasKey('total', $order);
+        $this->assertArrayHasKey('comment', $order);
     }
 
-    public function testCreateNewOrder()
+    public function testGetCustomerOrders()
     {
+        $response = $this->call('GET', '/api/v1/customers/1/orders');
+        $this->assertEquals(200, $response->status());
+
+        $orders = json_decode($response->getContent(), true);
+
+        foreach ($orders as $order) {
+            $this->_validateOrder($order);
+        }
 
     }
 
     public function testGetCustomerOrder()
     {
+        $response = $this->call('GET', '/api/v1/customers/1/orders/1');
+        $this->assertEquals(200, $response->status());
 
+        $order = json_decode($response->getContent(), true);
+        $this->_validateOrder($order);
     }
 
     public function testCustomerGetById()

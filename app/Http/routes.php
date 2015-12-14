@@ -48,16 +48,12 @@ Route::group(array('prefix' => 'api/v1'), function()
         Route::post('{customerId}/address/', 'Api\v1\CustomerController@addAddress');
 
         Route::get('{customerId}/photo/', 'Api\v1\CustomerController@getPhoto');
+        Route::post('{customerId}/photo/', 'Api\v1\CustomerController@addPhoto');
 
         Route::get('{customerId}/orders/', 'Api\v1\CustomerController@getOrders');
         Route::get('{customerId}/orders/{id}', 'Api\v1\CustomerController@getOrderById');
         Route::get('{customerId}/orders/{id}/status', 'Api\v1\CustomerController@getOrderStatusByOrderId');
         Route::post('{customerId}/orders/', 'Api\v1\CustomerController@addOrder');
-    });
-
-    Route::group(array('prefix' => 'photos'), function()
-    {
-        Route::post('/', 'Api\v1\PhotoController@add');
     });
 
     Route::group(array('prefix' => 'orders_status'), function()

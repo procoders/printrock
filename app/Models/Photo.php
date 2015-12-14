@@ -57,8 +57,10 @@ class Photo extends SleepingOwlModel {
     {
         $imageUrl = $this->image;
 
-        if (unlink($imageUrl)) {
-            return parent::delete();
-        }
+        if (file_exists($imageUrl))
+            unlink($imageUrl);
+
+        return parent::delete();
+
     }
 }
