@@ -86,4 +86,11 @@ class Customer extends SleepingOwlModel {
         return parent::delete();
     }
 
+    public function fill(array $attributes)
+    {
+        if (isset($attributes['password']))
+            $attributes['password'] = md5($attributes['password']);
+        parent::fill($attributes);
+    }
+
 }

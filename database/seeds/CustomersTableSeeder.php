@@ -41,7 +41,7 @@ class CustomersTableSeeder extends Seeder
 				"email" => $customer["email"],
 				"phone" => $customer["phone"],
 				"login" => $customer["login"],
-				"password" => \Hash::make($customer["password"]),
+				"password" => $customer["password"],
 			]);
 		}
     }

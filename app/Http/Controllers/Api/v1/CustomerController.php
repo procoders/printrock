@@ -170,7 +170,7 @@ class CustomerController extends Controller {
                 'email'       => $inputs['email'],
                 'phone'       => $inputs['phone'],
                 'login'       => $inputs['login'],
-                'password'    => \Hash::make($inputs['password'])
+                'password'    => $inputs['password']
             ];
 
             $customer = new Models\Customer();
@@ -224,7 +224,7 @@ class CustomerController extends Controller {
         try {
             $customerModel = Models\Customer::where([
                 'login' => $inputs['login'],
-                'password' => \Hash::make($inputs['password'])
+                'password' => md5($inputs['password'])
             ])->first();
             if (! isset($customerModel)) {
                 throw new ModelNotFoundException();
