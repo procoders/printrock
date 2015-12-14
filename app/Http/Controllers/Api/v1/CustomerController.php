@@ -276,8 +276,49 @@ class CustomerController extends Controller {
         if ($ordersModel->count() == 0) {
             $statusCode = 404;
         } else {
-            foreach ($ordersModel as $mode) {
+            foreach ($ordersModel as $orderModel) {
                 $response[] = (new ModelViews\Order($orderModel))->get();
+            }
+        }
+
+        return \Response::json($response, $statusCode);
+    }
+
+    /**
+     * @SWG\Api(
+     *   path="/customers/{customerId}/photo",
+     *   @SWG\Operation(
+     *     nickname="Get all customer photos",
+     *     method="GET",
+     *     summary="Will return all photos of selected customer",
+     *     notes="",
+     *     type="Photo",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer Id",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=404, message="Customer not found"),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function getPhoto($customerId)
+    {
+        $statusCode = 200;
+        $response = [];
+        $customer = Models\Customer::find($customerId);
+
+        if ($customer->count() == 0) {
+            $statusCode = 404;
+        } else {
+            foreach ($customer->photos as $photo) {
+                $response[] = (new ModelViews\Photo($photo))->get();
             }
         }
 

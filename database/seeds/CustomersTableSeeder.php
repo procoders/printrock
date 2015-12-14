@@ -34,7 +34,7 @@ class CustomersTableSeeder extends Seeder
 		];
 
 		foreach ($customers as $customer) {
-			Models\Customer::create([
+			$customer = Models\Customer::create([
 				"name" => $customer["name"],
 				"second_name" => $customer["second_name"],
 				"last_name" => $customer["last_name"],
@@ -43,6 +43,13 @@ class CustomersTableSeeder extends Seeder
 				"login" => $customer["login"],
 				"password" => $customer["password"],
 			]);
+
+			if ($customer->id == 1) {
+				Models\Photo::create([
+					'customer_id' => $customer->id,
+					'image' => 'seeder_wedding.jpg'
+				]);
+			}
 		}
     }
 }

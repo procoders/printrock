@@ -137,20 +137,6 @@ class ApiCustomersTest extends TestCase
         $this->assertEquals(500, $response->status());
     }
 
-    public function testCustomerGetById()
-    {
-        $response = $this->call('GET', '/api/v1/customers/1');
-        $this->assertEquals(200, $response->status());
-
-        $customer = json_decode($response->getContent(), true);
-        $this->_validateCustomerObject($customer);
-
-
-        // validate for unknown addon type
-        $response = $this->call('GET', '/api/v1/customers/999999');
-        $this->assertEquals(404, $response->status());
-    }
-
     public function testGetCustomerAddressByCustomerIdAndAddressId()
     {
         $response = $this->call('GET', '/api/v1/customers/1/address/1');
@@ -167,6 +153,72 @@ class ApiCustomersTest extends TestCase
         $this->assertEquals(404, $response->status());
     }
 
+    protected function _createAnFakeOrder()
+    {
+/*
+ * {
+  "customer_id": 0,
+  "total": 0,
+  "items": [
+    {
+      "photo_id": 0,
+      "qty": 0,
+      "price_per_item": 0,
+      "format_id": 0,
+      "addons": [
+        {
+          "id": 0,
+          "qty": 0
+        }
+      ]
+    }
+  ],
+  "comment": ""
+}
+ */
+    }
+
+    public function testCustomerGetPhotos()
+    {
+        $response = $this->call('GET', '/api/v1/customers/1/photo');
+        $this->assertEquals(200, $response->status());
+
+        $photos = json_decode($response->getContent(), true);
+
+        foreach($photos as $photo) {
+            $this->assertArrayHasKey('id', $photo);
+            $this->assertArrayHasKey('image', $photo);
+        }
+    }
+
+    public function testGetCustomerOrders()
+    {
+
+    }
+
+    public function testCreateNewOrder()
+    {
+
+    }
+
+    public function testGetCustomerOrder()
+    {
+
+    }
+
+    public function testCustomerGetById()
+    {
+        $response = $this->call('GET', '/api/v1/customers/1');
+        $this->assertEquals(200, $response->status());
+
+        $customer = json_decode($response->getContent(), true);
+        $this->_validateCustomerObject($customer);
+
+
+        // validate for unknown addon type
+        $response = $this->call('GET', '/api/v1/customers/999999');
+        $this->assertEquals(404, $response->status());
+    }
 
     protected function _validateCustomerObject($customer)
     {
