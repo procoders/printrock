@@ -59,6 +59,48 @@ class ApiCustomersTest extends TestCase
 
     }
 
+    public function testUpdateCustomer()
+    {
+        $fieldsToProcess = [
+            'name' => 'test_customer_test',
+            'second_name' => 'test_customer_test',
+            'last_name' => 'test_customer_test',
+            'phone' => '777-777-88',
+            'email' => 'test@ya.ru'
+        ];
+
+        // validate new customer creation
+        $customerData = [
+            'login' => 'test_customer',
+            'password' => 'test_customer',
+            'name' => 'test_customer',
+            'second_name' => 'test_customer',
+            'last_name' => 'test_customer',
+            'phone' => '777-777-77',
+            'email' => 'test@test.com'
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/', $customerData);
+        $this->assertEquals(200, $response->status());
+
+        $customerResponse = json_decode($response->getContent());
+
+        foreach ($fieldsToProcess as $field => $value) {
+            $data = [
+                'id' => $customerResponse->id,
+                $field => $value
+            ];
+
+            $response = $this->call('PATCH', '/api/v1/customers/' . $customerResponse->id, $data);
+            $this->assertEquals(200, $response->status());
+
+            $updatedResponse = json_decode($response->getContent());
+
+            $this->assertEquals($updatedResponse->$field, $value);
+        }
+        \App\Models\Customer::find($customerResponse->id)->delete();
+    }
+
     public function testLogin()
     {
         // validate for incorrect login

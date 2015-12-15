@@ -39,6 +39,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 
     Route::group(array('prefix' => 'customers'), function()
     {
+        Route::patch('/{id}', 'Api\v1\CustomerController@update');
         Route::get('/{id}', 'Api\v1\CustomerController@get');
         Route::post('/', 'Api\v1\CustomerController@add');
         Route::post('/login', 'Api\v1\CustomerController@login');

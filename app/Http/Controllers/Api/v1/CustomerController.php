@@ -75,6 +75,124 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
+     *   path="/customers/{id}",
+     *   @SWG\Operation(
+     *     nickname="Update customer data",
+     *     method="PATCH",
+     *     summary="Find customer by ID and update it",
+     *     notes="Returns customer",
+     *     type="Customer",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="id",
+     *       description="ID of customer",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="name",
+     *       description="Name",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="second_name",
+     *       description="Second Name",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="last_name",
+     *       description="Last Name",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="email",
+     *       description="Email",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="phone",
+     *       description="Phone",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=404, message="Customer not found"),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function update($id)
+    {
+        $statusCode = 200;
+        $response = [];
+        $inputs = \Input::all();
+        $inputs['id'] = $id;
+
+        try {
+            $validationRules = [
+                'id' => 'required|numeric'
+            ];
+
+            if (isset($inputs['email'])) {
+                $validationRules['email'] = 'required|email|unique:customers,email';
+            }
+
+            $validator = Validator::make($inputs, $validationRules);
+            if ($validator->fails()) {
+                $response = ['error' => $validator->errors()];
+                $statusCode = 500;
+            } else {
+                $customerModel = Models\Customer::where('id', $id)->first();
+
+                if (! isset($customerModel)) {
+                    throw new ModelNotFoundException();
+                }
+
+                foreach ($inputs as $key => $val) {
+                    switch ($key) {
+                        case 'name':
+                        case 'second_name':
+                        case 'last_name':
+                        case 'email':
+                        case 'phone':
+                            $customerModel->$key = $val;
+                            break;
+                    }
+                }
+
+                $customerModel->save();
+                $customerView = new ModelViews\Customer($customerModel);
+
+                $response = $customerView->get();
+            }
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'error' => 'Customer doesn\'t exists'
+            ];
+            $statusCode = 404;
+        } finally {
+            return \Response::json($response, $statusCode);
+        }
+    }
+
+    /**
+     * @SWG\Api(
      *   path="/customers/",
      *   @SWG\Operation(
      *     nickname="Add new cusromer",
