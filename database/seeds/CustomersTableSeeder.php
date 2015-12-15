@@ -47,7 +47,7 @@ class CustomersTableSeeder extends Seeder
 			if ($customer->id == 1) {
 				Models\Photo::create([
 					'customer_id' => $customer->id,
-					'image' => 'seeder_wedding.jpg'
+					'image' => 'photos/seeder_wedding.jpg'
 				]);
 			}
 		}
