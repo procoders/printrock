@@ -45,6 +45,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 
         Route::get('{customerId}/address/', 'Api\v1\CustomerController@getAddressCustomerId');
         Route::get('{customerId}/address/{id}', 'Api\v1\CustomerController@getAddressById');
+        Route::delete('{customerId}/address/{id}', 'Api\v1\CustomerController@deleteAddressById');
         Route::post('{customerId}/address/', 'Api\v1\CustomerController@addAddress');
 
         Route::get('{customerId}/photo/', 'Api\v1\CustomerController@getPhoto');

@@ -88,6 +88,37 @@ class ApiCustomersTest extends TestCase
         }
     }
 
+    public function testDeleteAddress()
+    {
+        // create cutomer
+        $customerData = [
+            'login' => 'test_customer',
+            'password' => 'test_customer'
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/', $customerData);
+        $this->assertEquals(200, $response->status());
+        $customerData = json_decode($response->getContent());
+
+        $addressData = [
+            "country" => "Germany",
+            "city" => "Munich",
+            "phone" => "55-66-77",
+            "zip_code" => 12345,
+            "name" => "Wolter",
+            "street" => "Some street"
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/' . $customerData->id . '/address', $addressData);
+        $this->assertEquals(200, $response->status());
+        $addressData = json_decode($response->getContent());
+
+        $response = $this->call('DELETE', '/api/v1/customers/' . $customerData->id . '/address/' . $addressData->id);
+        $this->assertEquals(200, $response->status());
+
+        \App\Models\Customer::find($customerData->id)->delete();
+    }
+
     public function testAddAddress()
     {
         // create cutomer

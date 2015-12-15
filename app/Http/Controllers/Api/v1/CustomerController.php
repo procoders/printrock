@@ -576,6 +576,65 @@ class CustomerController extends Controller {
      * @SWG\Api(
      *   path="/customers/{customerId}/address/{id}",
      *   @SWG\Operation(
+     *     nickname="Delete customers address",
+     *     method="DELETE",
+     *     summary="Find customers address by ID and delete it",
+     *     notes="Will delete customer adress from the database",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer Id",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="id",
+     *       description="ID of customers address",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=404, message="Customers address not found"),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function deleteAddressById($customerId, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try {
+            $customersAddressModel = Models\CustomersAddress::where('id', $id)
+                ->where('customer_id', $customerId)
+                ->first();
+
+            if (!isset($customersAddressModel)) {
+                throw new ModelNotFoundException();
+            }
+
+            $customersAddressModel->delete();
+
+            return $response;
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'error' => 'Customers address doesn\'t exists'
+            ];
+            $statusCode = 404;
+        } finally {
+            return \Response::json($response, $statusCode);
+        }
+    }
+
+    /**
+     * @SWG\Api(
+     *   path="/customers/{customerId}/address/{id}",
+     *   @SWG\Operation(
      *     nickname="Get customers address",
      *     method="GET",
      *     summary="Find customers address by ID",
