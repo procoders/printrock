@@ -23,6 +23,7 @@
 
 FormItem::register('descriptions', App\AdminCustom\Forms\LanguagesFields::class);
 FormItem::register('images', App\AdminCustom\Forms\ImagesFields::class);
+FormItem::register('image', App\AdminCustom\Forms\ImageField::class);
 FormItem::register('items', App\AdminCustom\Forms\Order\Items::class);
 
 Column::register('image', App\AdminCustom\Column\ImageColumn::class);

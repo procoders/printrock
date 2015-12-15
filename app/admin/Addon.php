@@ -36,11 +36,13 @@ Admin::model(\App\Models\Addon::class)
         FormItem::select('addons_type_id', 'Type')
             ->list(Models\AddonsType::class)
             ->required();
-        FormItem::text('image', 'Image')->validationRule('required');
         FormItem::select('price_type', 'Price Type')
             ->list(['price' => 'price', 'percent' => 'percent'])
             ->required();
         FormItem::text('price', 'Price')->validationRule('required');
+        FormItem::image()
+            ->column('image')
+            ->label('Image');
     })
     ->viewFilters(function()
     {

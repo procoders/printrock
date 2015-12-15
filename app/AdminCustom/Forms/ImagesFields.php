@@ -12,6 +12,7 @@ class ImagesFields extends Image implements FormItemInterface
     protected $modelMethod;
     protected $fields;
     protected $type;
+    protected $_denyDelete = false;
 
     public function modelMethod($method) {
         $this->modelMethod = $method;
@@ -26,8 +27,16 @@ class ImagesFields extends Image implements FormItemInterface
         return $this;
     }
 
+    public function denyDelete($val)
+    {
+        $this->_denyDelete = (bool)$val;
+    }
+
     public function render()
     {
+        $params = [
+            'deny-delete' => $this->_denyDelete
+        ];
         $model = $this->form->instance;
 
         if (empty($model)) {
@@ -39,19 +48,25 @@ class ImagesFields extends Image implements FormItemInterface
         $editImages = Admin::$instance->formBuilder->getSessionStore()->getOldInput('edit_images');
 
         $images = [];
-        if ($editImages) {
-            foreach ($model->$method()->get() as $image) {
-                if (in_array($image->id, $editImages)) {
-                    $images[] = $image;
+        if (!empty($method)) {
+            if ($editImages) {
+                foreach ($model->$method()->get() as $image) {
+                    if (in_array($image->id, $editImages)) {
+                        $images[] = $image;
+                    }
                 }
+            } else {
+                $images = $model->$method()->get();
             }
         } else {
-            $images = $model->$method()->get();
+            $images[] = $model->image;
         }
 
         AssetManager::addScript('/js/admin/fileinput.min.js');
         AssetManager::addStyle('/css/admin/fileinput.min.css');
-        return view('admin/form/images')->with('images', $images);
+        return view('admin/form/images')
+            ->with('images', $images)
+            ->with('params', $params);
     }
 
     public function type($type)

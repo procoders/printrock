@@ -30,7 +30,7 @@ Class PhotoRepository implements Interfaces\iAdminSave
     public function saveFromArray(array $attributes = array())
     {
         if ($attributes['image']) {
-            $imageName = 'photos/' . md5(time() . rand(0, 999)) . '_' . $attributes['customer_id'] . $attributes['image']->guessClientExtension();
+            $imageName = 'photos/' . md5(time() . rand(0, 999)) . '_' . $attributes['customer_id'] . '.' . $attributes['image']->guessClientExtension();
             $imagePath = public_path() . DIRECTORY_SEPARATOR . 'photos' . DIRECTORY_SEPARATOR;
 
             $attributes['image']->move($imagePath, $imageName);

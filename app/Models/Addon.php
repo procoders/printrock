@@ -37,4 +37,9 @@ class Addon extends SleepingOwlModel {
     {
         return $this->belongsTo(AddonsType::class, 'addons_type_id');
     }
+
+    public function getRepository()
+    {
+        return new Repositories\AddonRepository($this);
+    }
 }
