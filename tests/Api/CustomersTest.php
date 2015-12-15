@@ -161,6 +161,53 @@ class ApiCustomersTest extends TestCase
         \App\Models\Customer::find($customerData->id)->delete();
     }
 
+    public function testUpdateAddress()
+    {
+        // create cutomer
+        $customerData = [
+            'login' => 'test_customer',
+            'password' => 'test_customer'
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/', $customerData);
+        $this->assertEquals(200, $response->status());
+        $customerData = json_decode($response->getContent());
+
+        $addressData = [
+            "country" => "Germany",
+            "city" => "Munich",
+            "phone" => "55-66-77",
+            "zip_code" => 12345,
+            "name" => "Wolter",
+            "street" => "Some street"
+        ];
+
+        $updateData = [
+            "country" => "Germanytest",
+            "city" => "Munichtest",
+            "phone" => "55-66-88",
+            "zip_code" => 12377,
+            "name" => "Woltertest",
+            "street" => "Some streettest"
+        ];
+
+        $response = $this->call('POST', '/api/v1/customers/' . $customerData->id . '/address', $addressData);
+        $this->assertEquals(200, $response->status());
+        $addressDataResponse = json_decode($response->getContent());
+
+        foreach ($updateData as $key => $value) {
+            $patchData[$key] = $value;
+
+            $response = $this->call('PATCH', '/api/v1/customers/' . $customerData->id . '/address/' . $addressDataResponse->id, $patchData);
+            $this->assertEquals(200, $response->status());
+            $patchedAddressDataResponse = json_decode($response->getContent());
+
+            $this->assertEquals($value, $patchedAddressDataResponse->$key);
+        }
+
+        \App\Models\Customer::find($customerData->id)->delete();
+    }
+
     public function testAddAddress()
     {
         // create cutomer

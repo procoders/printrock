@@ -865,6 +865,153 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
+     *   path="/customers/{customerId}/address/{id}",
+     *   @SWG\Operation(
+     *     nickname="Update customer address",
+     *     method="PATCH",
+     *     summary="Update customer address",
+     *     notes="Returns customers address",
+     *     type="CustomersAddress",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer Id",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="id",
+     *       description="ID of customers address",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="country",
+     *       description="Country",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="city",
+     *       description="City",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="phone",
+     *       description="Phone",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="zip_code",
+     *       description="Zip Code",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="name",
+     *       description="Name",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="street",
+     *       description="Street",
+     *       required=false,
+     *       type="string",
+     *       paramType="form",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function updateAddress($customerId, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+        $inputs = \Input::all();
+        $inputs['id'] = $id;
+
+        try {
+
+            $validationRules = [
+                'id' => 'required|numeric'
+            ];
+
+            if (isset($inputs['country']))
+                $validationRules['country'] = 'required|alpha|max:100';
+
+            if (isset($inputs['city']))
+                $validationRules['city'] = 'required|alpha|max:100';
+
+            if (isset($inputs['phone']))
+                $validationRules['phone'] = 'required|regex:"^([0-9\s\-\+\(\)]{5,})$"';
+
+            if (isset($inputs['zip_code']))
+                $validationRules['zip_code'] = 'required|regex:"^\d{5}(?:[-\s]\d{4})?$"';
+
+            $validator = Validator::make($inputs, $validationRules);
+
+            if ($validator->fails()) {
+                $response = ['error' => $validator->errors()];
+                $statusCode = 500;
+            } else {
+                $customersAddressModel = Models\CustomersAddress::where('id', $id)
+                    ->where('customer_id', $customerId)
+                    ->first();
+
+                if (!isset($customersAddressModel) && $customersAddressModel->id < 1) {
+                    throw new ModelNotFoundException();
+                }
+
+                foreach ($inputs as $key => $value) {
+                    switch ($key) {
+                        case 'country':
+                        case 'city':
+                        case 'phone':
+                        case 'zip_code':
+                        case 'name':
+                        case 'street':
+                            $customersAddressModel->$key = $value;
+                            break;
+                    }
+                }
+
+                $customersAddressModel->save();
+                $customersAddressView = new ModelViews\CustomersAddress($customersAddressModel);
+
+                $response = $customersAddressView->get();
+            }
+        } catch (ModelNotFoundException $e) {
+            $response = [
+                'error' => 'Customers address doesn\'t exists'
+            ];
+            $statusCode = 404;
+        } finally {
+            return \Response::json($response, $statusCode);
+        }
+    }
+
+    /**
+     * @SWG\Api(
      *   path="/customers/{customerId}/address/",
      *   @SWG\Operation(
      *     nickname="Add new customers address",
