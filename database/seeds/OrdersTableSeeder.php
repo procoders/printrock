@@ -36,5 +36,15 @@ class OrdersTableSeeder extends Seeder
 			'price_per_item' => $addon->price,
 			'qty' => 1
 		]);
+		
+		Models\OrdersDelivery::create([
+			'order_id' => $order->id,
+			'country' => 'Germany',
+			'city' => 'Munhich',
+			'phone' => '755-06-6',
+			'zip_code' => '41322',
+			'name' => 'Alex',
+			'street' => 'Morgen shtrasse'			
+		]);
     }
 }

@@ -471,6 +471,14 @@ class CustomerController extends Controller {
      *       paramType="path",
      *       allowMultiple=false
      *     ),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
      *     @SWG\ResponseMessage(code=404, message="Order not found"),
      *     @SWG\ResponseMessage(code=500, message="Internal server error")
      *   )
@@ -622,13 +630,15 @@ class CustomerController extends Controller {
         $statusCode = 200;
 
         $params = \Input::all();
+        $params['customer_id'] = $customerId;
 
         if ($params) {
             $errors = [];
             $mainValidator = Validator::make($params, [
                 'customer_id' => 'required|numeric|exists:customers,id',
                 'total' => 'required|numeric|min:1',
-                'items' => 'required|array'
+                'items' => 'required|array',
+                'delivery' => 'required|array'
             ]);
 
             if ($mainValidator->fails()) {
@@ -667,6 +677,19 @@ class CustomerController extends Controller {
                             }
                         }
                     }
+                }
+
+                $validator = Validator::make($params['delivery'], [
+                    'country'     => 'required|alpha|max:100',
+                    'city'        => 'required|alpha|max:100',
+                    'phone'       => 'required|regex:"^([0-9\s\-\+\(\)]{5,})$"',
+                    'zip_code'    => 'required|regex:"^\d{5}(?:[-\s]\d{4})?$"',
+                    'name'        => 'required',
+                    'street'      => 'required'
+                ]);
+
+                if ($validator->fails()) {
+                    $errors['delivery'] = $validator->errors();
                 }
 
                 if ($errors) {

@@ -45,9 +45,12 @@ Class Order extends BaseView
             $items[] = $ordersItemView->get();
         }
 
+        $ordersDeliveryModel = $this->_model->delivery()->first();
+
         return [
             'id'            => $this->_model->id,
             'orders_status' => $ordersStatusView->get(),
+            'delivery'      => (new ModelViews\OrdersDelivery($ordersDeliveryModel))->get(),
             'items'         => $items,
             'total'         => $this->_model->total,
             'comment'       => $this->_model->comment

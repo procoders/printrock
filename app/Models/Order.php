@@ -64,4 +64,14 @@ class Order extends SleepingOwlModel {
         return new Repositories\OrderRepository($this);
     }
 
+    /**
+     * This method will return order delivery model
+     *
+     * @return OrdersDelivery
+     */
+    public function delivery()
+    {
+        return $this->hasOne(OrdersDelivery::class);
+    }
+
 }

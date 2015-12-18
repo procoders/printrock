@@ -70,6 +70,18 @@ Class OrderRepository implements Interfaces\iAdminSave
                 }
             }
         }
+
+        if ($attributes['delivery']) {
+            $delivery = new Models\OrdersDelivery();
+            $delivery->order_id = $this->model->id;
+            $delivery->country = $attributes['delivery']['country'];
+            $delivery->city = $attributes['delivery']['city'];
+            $delivery->phone = $attributes['delivery']['phone'];
+            $delivery->zip_code = $attributes['delivery']['zip_code'];
+            $delivery->street = $attributes['delivery']['street'];
+            $delivery->name = $attributes['delivery']['name'];
+            $delivery->save();
+        }
     }
 
 }

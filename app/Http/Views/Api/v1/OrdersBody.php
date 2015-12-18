@@ -14,10 +14,6 @@ use App\Http\Views\Api\v1 as ModelViews;
 Class OrdersBody extends BaseView
 {
     /**
-     * @SWG\Property(name="customer_id", type="integer", required=true)
-     */
-
-    /**
      * @SWG\Property(name="total", type="integer", required=true)
      */
 
@@ -27,6 +23,10 @@ Class OrdersBody extends BaseView
 
     /**
      * @SWG\Property(name="comment", type="string", required=false)
+     */
+
+    /**
+     * @SWG\Property(name="delivery", type="OrdersDelivery", required=true)
      */
 
     public function get()

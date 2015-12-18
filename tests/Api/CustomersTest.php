@@ -313,6 +313,14 @@ class ApiCustomersTest extends TestCase
                     ]
                 ]
             ],
+            'delivery' => [
+                "country" => "Germany",
+                "city" => "Munich",
+                "phone" => "55-66-77",
+                "zip_code" => 12345,
+                "name" => "Wolter",
+                "street" => "Some street"
+            ],
             'comment' => 'test comment'
         ];
 
@@ -350,6 +358,14 @@ class ApiCustomersTest extends TestCase
         $this->assertArrayHasKey('items', $order);
         $this->assertArrayHasKey('total', $order);
         $this->assertArrayHasKey('comment', $order);
+        $this->assertArrayHasKey('delivery', $order);
+
+        $this->assertArrayHasKey('country', $order['delivery']);
+        $this->assertArrayHasKey('city',  $order['delivery']);
+        $this->assertArrayHasKey('phone',  $order['delivery']);
+        $this->assertArrayHasKey('zip_code',  $order['delivery']);
+        $this->assertArrayHasKey('name',  $order['delivery']);
+        $this->assertArrayHasKey('street',  $order['delivery']);
     }
 
     public function testGetCustomerOrders()
