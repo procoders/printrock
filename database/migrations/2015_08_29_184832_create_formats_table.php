@@ -17,7 +17,7 @@ class CreateFormatsTable extends Migration
             $table->increments('id');
             $table->integer('width')->unsigned();
             $table->integer('height')->unsigned();
-            $table->integer('price')->unsigned();
+            $table->decimal('price',8,2);
             $table->timestamps();
         });
     }
