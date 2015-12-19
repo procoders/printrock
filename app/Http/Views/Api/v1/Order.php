@@ -32,9 +32,13 @@ Class Order extends BaseView
     /**
      * @SWG\Property(name="comment", type="string", required=false)
      */
-    
+
     /**
      * @SWG\Property(name="delivery", type="OrdersDelivery", required=true)
+     */
+
+    /**
+     * @SWG\Property(name="created", type="string", required=true)
      */
 
     public function get()
@@ -57,7 +61,8 @@ Class Order extends BaseView
             'delivery'      => (new ModelViews\OrdersDelivery($ordersDeliveryModel))->get(),
             'items'         => $items,
             'total'         => $this->_model->total,
-            'comment'       => $this->_model->comment
+            'comment'       => $this->_model->comment,
+            'created'       => strtotime($this->_model->created_at)
         ];
     }
 
