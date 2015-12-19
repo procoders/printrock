@@ -22,9 +22,7 @@ class ApiOrdersStatusTest extends TestCase
             $this->assertArrayHasKey('id', $orderStatus);
             $this->assertArrayHasKey('code', $orderStatus);
             $this->assertArrayHasKey('default', $orderStatus);
-            $this->assertArrayHasKey('descriptions', $orderStatus);
-
-            $this->assertEquals(count($orderStatus['descriptions']), 3);
+            $this->assertArrayHasKey('name', $orderStatus);
         }
 
         // validate language filter
@@ -37,7 +35,7 @@ class ApiOrdersStatusTest extends TestCase
         foreach ($responseData as $orderStatus) {
             $orderStatus = (array) $orderStatus;
 
-            $this->assertEquals(count($orderStatus['descriptions']), 1);
+            $this->assertArrayHasKey('name', $orderStatus);
         }
 
     }
@@ -53,9 +51,7 @@ class ApiOrdersStatusTest extends TestCase
         $this->assertArrayHasKey('id', $orderStatus);
         $this->assertArrayHasKey('code', $orderStatus);
         $this->assertArrayHasKey('default', $orderStatus);
-        $this->assertArrayHasKey('descriptions', $orderStatus);
-
-        $this->assertEquals(count($orderStatus['descriptions']), 3);
+        $this->assertArrayHasKey('name', $orderStatus);
 
         // validate language filter
         $response = $this->call('GET', '/api/v1/orders_status/1?language_id=1');
@@ -64,7 +60,7 @@ class ApiOrdersStatusTest extends TestCase
 
         $orderStatus = json_decode($response->getContent(), true);
 
-        $this->assertEquals(count($orderStatus['descriptions']), 1);
+        $this->assertArrayHasKey('name', $orderStatus);
 
     }
 

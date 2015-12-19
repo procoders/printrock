@@ -298,12 +298,10 @@ class ApiCustomersTest extends TestCase
 
         $data = [
             'customer_id' => $customerData->id,
-            'total' => ($format->price + $addon->price),
             'items' => [
                 [
                     'photo_id' => $photo->id,
                     'qty' => 1,
-                    'price_per_item' => $format->price,
                     'format_id' => $format->id,
                     'addons' => [
                         [
@@ -353,7 +351,6 @@ class ApiCustomersTest extends TestCase
     protected function _validateOrder($order)
     {
         $this->assertArrayHasKey('id', $order);
-        $this->assertArrayHasKey('orders_status', $order);
         $this->assertArrayHasKey('orders_status', $order);
         $this->assertArrayHasKey('items', $order);
         $this->assertArrayHasKey('total', $order);
