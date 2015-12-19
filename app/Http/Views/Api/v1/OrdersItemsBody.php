@@ -22,10 +22,6 @@ Class OrdersItemsBody extends BaseView
      */
 
     /**
-     * @SWG\Property(name="price_per_item", type="double", required=true)
-     */
-
-    /**
      * @SWG\Property(name="format_id", type="integer", required=true)
      */
 

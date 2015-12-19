@@ -21,7 +21,7 @@ class OrdersItemsAddon extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['orders_item_id', 'addon_id', 'qty', 'price_per_item'];
+    protected $fillable = ['orders_item_id', 'addon_id', 'qty', 'addon_price'];
 
     /**
      * Model guarded fields

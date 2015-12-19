@@ -37,4 +37,9 @@ class AddonsType extends SleepingOwlModel {
     {
         return static::lists('name', 'id')->all();
     }
+
+    public function descriptions()
+    {
+        return $this->hasMany(AddonsTypesDescription::class);
+    }
 }

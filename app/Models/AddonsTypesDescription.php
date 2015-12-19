@@ -4,10 +4,10 @@ namespace App\Models;
 use SleepingOwl\Models\SleepingOwlModel;
 
 /**
- * Class Language
+ * Class AddonsTypesDescription
  * @package App\Models
  */
-class Language extends SleepingOwlModel {
+class AddonsTypesDescription extends SleepingOwlModel {
 
     /**
      * Primary column
@@ -21,7 +21,7 @@ class Language extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['code', 'name'];
+    protected $fillable = ['language_id', 'name', 'addons_type_id'];
 
     /**
      * Model guarded fields
@@ -33,13 +33,17 @@ class Language extends SleepingOwlModel {
     /**
      * @return mixed
      */
-    public function orderStatusDescription()
+    public function language()
     {
-        return $this->belongsTo(OrdersStatusesDescription::class);
+        return $this->belongsTo(Language::class);
     }
 
-    public function getRepository()
+    /**
+     * @return mixed
+     */
+    public function addonsType()
     {
-        return new Repositories\LanguageRepository($this);
+        return $this->belongsTo(AddonsType::class);
     }
+
 }

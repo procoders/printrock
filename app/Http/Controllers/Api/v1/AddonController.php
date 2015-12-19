@@ -36,6 +36,14 @@ class AddonController extends Controller {
      *       paramType="path",
      *       allowMultiple=false
      *     ),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
      *     @SWG\ResponseMessage(code=404, message="Format not found"),
      *     @SWG\ResponseMessage(code=500, message="Internal server error")
      *   )
@@ -100,6 +108,14 @@ class AddonController extends Controller {
      *       required=false,
      *       type="string",
      *       enum="['price', 'percent']",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
      *       paramType="query",
      *       allowMultiple=false
      *     ),

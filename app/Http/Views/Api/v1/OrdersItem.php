@@ -26,7 +26,7 @@ Class OrdersItem extends BaseView
      */
 
     /**
-     * @SWG\Property(name="price_per_item", type="double", required=true)
+     * @SWG\Property(name="format_price", type="double", required=true)
      */
 
     /**
@@ -34,7 +34,7 @@ Class OrdersItem extends BaseView
      */
 
     /**
-     * @SWG\Property(name="addons", type="Addon", required=true)
+     * @SWG\Property(name="addons", type="OrdersItemsAddon", required=true)
      */
 
     public function get()
@@ -58,7 +58,7 @@ Class OrdersItem extends BaseView
             'id'             => $this->_model->id,
             'photo'          => $photoView->get(),
             'qty'            => $this->_model->qty,
-            'price_per_item' => $this->_model->price_per_item,
+            'format_price'   => $this->_model->format_price,
             'format'         => $formatView->get(),
             'addons'         => $ordersItemsAddons
         ];

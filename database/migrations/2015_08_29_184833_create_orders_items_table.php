@@ -20,7 +20,7 @@ class CreateOrdersItemsTable extends Migration
             $table->integer('photo_id')->unsigned();
             $table->foreign('photo_id')->references('id')->on('photos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('qty')->unsigned();
-            $table->float('price_per_item')->unsigned();
+            $table->float('format_price')->unsigned();
             $table->integer('format_id')->unsigned();
             $table->foreign('format_id')->references('id')->on('formats')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

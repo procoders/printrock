@@ -637,7 +637,6 @@ class CustomerController extends Controller {
             $errors = [];
             $mainValidator = Validator::make($params, [
                 'customer_id' => 'required|numeric|exists:customers,id',
-                'total' => 'required|numeric|min:1',
                 'items' => 'required|array',
                 'delivery' => 'required|array'
             ]);
@@ -655,7 +654,6 @@ class CustomerController extends Controller {
                     $itemsValidator[$itemKey] = Validator::make($item, [
                         'photo_id' => 'required|numeric|exists:photos,id',
                         'qty' => 'required|numeric|min:1',
-                        'price_per_item' => 'required|numeric',
                         'format_id' => 'required|numeric|exists:formats,id'
                     ]);
 

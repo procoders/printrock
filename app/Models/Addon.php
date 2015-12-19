@@ -21,7 +21,7 @@ class Addon extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['name', 'addons_type_id', 'addon_id', 'image', 'price_type', 'price'];
+    protected $fillable = ['addons_type_id', 'addon_id', 'image', 'price_type', 'price'];
 
     /**
      * Model guarded fields
@@ -41,5 +41,10 @@ class Addon extends SleepingOwlModel {
     public function getRepository()
     {
         return new Repositories\AddonRepository($this);
+    }
+
+    public function descriptions()
+    {
+        return $this->hasMany(AddonsDescription::class);
     }
 }

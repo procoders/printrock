@@ -14,7 +14,15 @@ use App\Http\Views\Api\v1 as ModelViews;
 Class OrdersItemsAddon extends BaseView
 {
     /**
-     * @SWG\Property(name="addon", type="Addon", required=true)
+     * @SWG\Property(name="id", type="integer", required=true)
+     */
+
+    /**
+     * @SWG\Property(name="name", type="string", required=true)
+     */
+
+    /**
+     * @SWG\Property(name="image", type="string", required=true)
      */
 
     /**
@@ -23,12 +31,14 @@ Class OrdersItemsAddon extends BaseView
 
     public function get()
     {
-        $addonModel = $this->_model->addon()->first();
-
-        $addonView = new ModelViews\Addon($addonModel);
+        $addonModel = Models\Addon::find($this->_model->addon_id);
+        $addonModel = (is_null($addonModel)) ? new Models\Addon() : $addonModel->first();
 
         return [
-            'addon' => $addonView->get(),
+            'id'    => $this->_model->addon_id,
+            'name'  => $addonModel->name,
+            'image' => $addonModel->image,
+            'price' => $this->_model->addon_price,
             'qty'   => $this->_model->qty
         ];
     }

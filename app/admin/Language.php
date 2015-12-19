@@ -37,6 +37,7 @@ Admin::model(\App\Models\Language::class)
     {
         FormItem::text('code', 'Code')->validationRule('required');
         FormItem::text('name', 'Name')->validationRule('required');
+        FormItem::checkbox('default', 'Default');
     })
     ->viewFilters(function()
     {

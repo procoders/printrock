@@ -11,20 +11,20 @@ Admin::model(\App\Models\Addon::class)
     ->columns(function ()
     {
         Column::string('id', 'Id');
-        Column::string('name', 'Name')
-            ->inlineEdit(true);
+//        Column::string('name', 'Name')
+//            ->inlineEdit(true);
         Column::string('type.name', 'Type');
         Column::string('price_type', 'Price Type');
         Column::string('price', 'Price');
     })
     ->inlineEdit(function($field) {
         switch($field) {
-            case 'name':
-                return function() {
-                    InlineEditItem::text('name', NULL)
-                        ->validationRule('required');
-                };
-                break;
+//            case 'name':
+//                return function() {
+//                    InlineEditItem::text('name', NULL)
+//                        ->validationRule('required');
+//                };
+//                break;
             default:
                 return function() {};
                 break;
@@ -32,7 +32,7 @@ Admin::model(\App\Models\Addon::class)
     })
     ->form(function ()
     {
-        FormItem::text('name', 'Name')->validationRule('required');
+//        FormItem::text('name', 'Name')->validationRule('required');
         FormItem::select('addons_type_id', 'Type')
             ->list(Models\AddonsType::class)
             ->required();
@@ -46,7 +46,7 @@ Admin::model(\App\Models\Addon::class)
     })
     ->viewFilters(function()
     {
-        ViewFilter::text('name', 'Name');
+//        ViewFilter::text('name', 'Name');
         ViewFilter::text('type.name', 'Type');
         ViewFilter::text('price_type', 'Price Type');
     });

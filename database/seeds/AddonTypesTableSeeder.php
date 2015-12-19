@@ -12,15 +12,45 @@ class AddonTypesTableSeeder extends Seeder
      */
     public function run()
     {
-
-        Models\AddonsType::create([
+        $languages = [
+            'en' => Models\Language::where('code', 'en')->first()->id,
+            'de' => Models\Language::where('code', 'de')->first()->id,
+            'ru' => Models\Language::where('code', 'ru')->first()->id,
+        ];
+        $addonType = Models\AddonsType::create([
             'code' => 'photo_operation',
-            'name' => 'Operations under the photo'
         ]);
 
-        Models\AddonsType::create([
+        $names = [
+            'en' => 'Operations under the photo',
+            'de' => 'Maßnahmen im Rahmen des Foto',
+            'ru' => 'Операции над фото'
+        ];
+
+        foreach ($languages as $code => $id) {
+            Models\AddonsTypesDescription::create([
+                'language_id' => $id,
+                'addons_type_id' => $addonType->id,
+                'name' => $names[$code]
+            ]);
+        }
+
+        $addonType = Models\AddonsType::create([
             'code' => 'photo_frames',
-            'name' => 'Put photo into the frame'
         ]);
+
+        $names = [
+                'en' => 'Put photo into the frame',
+                'de' => 'Setzen Foto in den Rahmen',
+                'ru' => 'Поставить фото в рамку'
+        ];
+
+        foreach ($languages as $code => $id) {
+            Models\AddonsTypesDescription::create([
+                'language_id' => $id,
+                'addons_type_id' => $addonType->id,
+                'name' => $names[$code]
+            ]);
+        }
     }
 }

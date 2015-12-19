@@ -14,7 +14,8 @@ class LanguagesTableSeeder extends Seeder
     {
     	Models\Language::create([
             'code' => 'en',
-            'name' => 'English'
+            'name' => 'English',
+            'default' => true
         ]);
 
     	Models\Language::create([

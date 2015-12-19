@@ -26,32 +26,22 @@ Class OrdersStatus extends BaseView
      */
 
     /**
-     * @SWG\Property(name="descriptions", type="array", @SWG\Items("OrdersStatusesDescription"), required=true)
+     * @SWG\Property(name="name", type="string", required=true)
      */
 
     public function get()
     {
-        $descriptions = [];
 
-        $languageId = (int)\Input::get('language_id', 0);
+        $languageId = (int)\Input::get('language_id', $this->_getDefaultLanguageId());
 
-        if (!empty($languageId)) {
-            $descriptionsModel = $this->_model->descriptions()->where('language_id', $languageId)->get();
-        } else {
-            $descriptionsModel = $this->_model->descriptions()->get();
-        }
-
-        foreach ($descriptionsModel as $ordersStatusesDescriptionModel) {
-            $ordersStatusesDescriptionView = new ModelViews\OrdersStatusesDescription($ordersStatusesDescriptionModel);
-
-            $descriptions[] = $ordersStatusesDescriptionView->get();
-        }
+        $description = $this->_model->descriptions()->where('language_id', $languageId)->first();
+        $name = (!is_null($description)) ? $description->name : '';
 
         return [
             'id'           => $this->_model->id,
             'code'         => $this->_model->code,
             'default'      => $this->_model->default,
-            'descriptions' => $descriptions
+            'name' => $name
         ];
     }
 

@@ -20,4 +20,14 @@ abstract class BaseView
     }
 
     abstract public function get();
+
+    protected function _getDefaultLanguageId()
+    {
+        $langModel = Models\Language::where('default', true)->first();
+
+        if (is_null($langModel))
+            $langModel = Models\Language::first();
+
+        return $langModel->id;
+    }
 }

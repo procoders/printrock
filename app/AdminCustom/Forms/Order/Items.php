@@ -32,6 +32,8 @@ class Items extends Text implements FormItemInterface
         $itemsAddons = [];
         $itemsField = [];
 
+        $addonPrices = [];
+
         foreach ($model->items()->get() as $key => $item) {
             $itemsField[$key] = [
                 HtmlBuilder::text('items[' . $key . '][qty]', 'Qty', $item->qty, [
@@ -39,7 +41,7 @@ class Items extends Text implements FormItemInterface
                     'data-parsley-type' => 'number',
                     'data-parsley-min' => '1'
                 ]),
-                HtmlBuilder::text('items[' . $key . '][price_per_item]', 'Price per item', $item->price_per_item, [
+                HtmlBuilder::text('items[' . $key . '][format_price]', 'Format price', $item->format_price, [
                     'data-parsley-required' => true,
                     'data-parsley-type' => 'number',
                 ]),
@@ -53,6 +55,7 @@ class Items extends Text implements FormItemInterface
             $photos[$key] = $item->photo()->first();
 
             foreach ($item->ordersItemsAddons()->get() as $ordersItemsAddon) {
+                $addonPrices[$ordersItemsAddon->addon_id] = $ordersItemsAddon->addon_price;
                 $itemsAddons[$key][$ordersItemsAddon->addon_id] = $ordersItemsAddon->qty;
             }
         }
@@ -62,6 +65,7 @@ class Items extends Text implements FormItemInterface
             ->with('itemsField', $itemsField)
             ->with('photos', $photos)
             ->with('addons', Models\Addon::get())
+            ->with('addonPrices', $addonPrices)
             ->with('itemsAddons', $itemsAddons);
     }
 }

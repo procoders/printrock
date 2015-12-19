@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAddonsTable extends Migration
+class CreateAddonsTypesDescriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class CreateAddonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('addons', function(Blueprint $table)
+        Schema::create('addons_types_descriptions', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->integer('language_id')->unsigned();
+            $table->foreign('language_id')->references('id')->on('languages')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('name', 100);
             $table->integer('addons_type_id')->unsigned();
             $table->foreign('addons_type_id')->references('id')->on('addons_types')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('image', 255);
-            $table->enum('price_type', ['price', 'percent'])->required();
-            $table->float('price')->unsigned();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateAddonsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('addons');
+        Schema::drop('addons_types_descriptions');
     }
 }

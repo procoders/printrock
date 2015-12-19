@@ -36,6 +36,14 @@ class AddonsTypeController extends Controller {
      *       paramType="path",
      *       allowMultiple=false
      *     ),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
      *     @SWG\ResponseMessage(code=404, message="Addons type not found"),
      *     @SWG\ResponseMessage(code=500, message="Internal server error")
      *   )
@@ -82,6 +90,14 @@ class AddonsTypeController extends Controller {
      *     notes="Returns all addons type",
      *     type="array",
      *     @SWG\Items("AddonsType"),
+     *     @SWG\Parameter(
+     *       name="language_id",
+     *       description="ID of language",
+     *       type="integer",
+     *       format="int64",
+     *       paramType="query",
+     *       allowMultiple=false
+     *     ),
      *     authorizations={}
      *   )
      * )

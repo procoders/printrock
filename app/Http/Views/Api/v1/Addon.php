@@ -43,9 +43,15 @@ Class Addon extends BaseView
 
         $addonsTypeView = new ModelViews\AddonsType($addonsType);
 
+        $languageId = (int)\Input::get('language_id', $this->_getDefaultLanguageId());
+
+        $description = $this->_model->descriptions()->where('language_id', $languageId)->first();
+        $name = (!is_null($description)) ? $description->name : '';
+
+
         $result = [
             'id'         => $this->_model->id,
-            'name'       => $this->_model->name,
+            'name'       => $name,
             'image'      => $this->_model->image,
             'price_type' => $this->_model->price_type,
             'price'      => $this->_model->price,

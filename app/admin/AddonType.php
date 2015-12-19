@@ -11,8 +11,8 @@ Admin::model(\App\Models\AddonsType::class)
         Column::string('id', 'Id');
         Column::string('code', 'Code')
             ->inlineEdit(true);
-        Column::string('name', 'Name')
-            ->inlineEdit(true);
+//        Column::string('name', 'Name')
+//            ->inlineEdit(true);
     })
     ->inlineEdit(function($field) {
         switch($field) {
@@ -36,10 +36,10 @@ Admin::model(\App\Models\AddonsType::class)
     ->form(function ()
     {
         FormItem::text('code', 'Code')->validationRule('required');
-        FormItem::text('name', 'Name')->validationRule('required');
+//        FormItem::text('name', 'Name')->validationRule('required');
     })
     ->viewFilters(function()
     {
         ViewFilter::text('code', 'Code');
-        ViewFilter::text('name', 'Name');
+//        ViewFilter::text('name', 'Name');
     });

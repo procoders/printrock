@@ -13,9 +13,6 @@ use App\Http\Views\Api\v1 as ModelViews;
  */
 Class OrdersBody extends BaseView
 {
-    /**
-     * @SWG\Property(name="total", type="integer", required=true)
-     */
 
     /**
      * @SWG\Property(name="items", type="array", @SWG\Items("OrdersItemsBody"), required=true)
