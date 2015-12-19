@@ -7,19 +7,20 @@ use App\Models as Models;
 use Input;
 
 /**
- * Class AddonRepository
+ * Class AddonsTypeRepository
  *
  * @package App\Models\Photo
  */
-Class AddonRepository implements Interfaces\iAdminSave
+Class AddonsTypeRepository implements Interfaces\iAdminSave
 {
     use Traits\DescriptionTrait;
-    protected $model;
+
+    protected $model = null;
 
     /**
-     * @param \App\Models\Addon $model
+     * @param \App\Models\AddonsType $model
      */
-    public function __construct(Models\Addon $model)
+    public function __construct(Models\AddonsType $model)
     {
         $this->model = $model;
         return $this;
@@ -30,18 +31,8 @@ Class AddonRepository implements Interfaces\iAdminSave
      */
     public function saveFromArray(array $attributes = array())
     {
-
-        $params = $attributes;
-        if (isset($attributes['image'])) {
-            if (is_object($attributes['image'])) {
-                $imageName = '/addons/' . md5(time() . rand(0, 999)) . '.' . $attributes['image']->guessClientExtension();
-                $imagePath = public_path() . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR;
-                $attributes['image']->move($imagePath, $imageName);
-                $params['image'] = $imageName;
-            }
-        }
-
-        $this->model->fill($params);
+        dd($attributes);
+        $this->model->fill($attributes);
         $this->model->save();
 
         $languages = Models\Language::all();

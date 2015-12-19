@@ -1,6 +1,7 @@
 <?php
 
 use App\Models;
+use SleepingOwl\Admin\Models\Form\FormGroup;
 
 Admin::model(\App\Models\Addon::class)
     ->title('Addons')
@@ -42,12 +43,6 @@ Admin::model(\App\Models\Addon::class)
     })
     ->inlineEdit(function($field) {
         switch($field) {
-//            case 'name':
-//                return function() {
-//                    InlineEditItem::text('name', NULL)
-//                        ->validationRule('required');
-//                };
-//                break;
             default:
                 return function() {};
                 break;
@@ -55,21 +50,36 @@ Admin::model(\App\Models\Addon::class)
     })
     ->form(function ()
     {
-//        FormItem::text('name', 'Name')->validationRule('required');
+
         FormItem::select('addons_type_id', 'Type')
             ->list(Models\AddonsType::class)
-            ->required();
+            ->validationRule('required');
         FormItem::select('price_type', 'Price Type')
             ->list(['price' => 'price', 'percent' => 'percent'])
-            ->required();
+            ->validationRule('required');
         FormItem::text('price', 'Price')->validationRule('required');
         FormItem::image()
             ->column('image')
             ->label('Image');
+
+        FormItem::descriptions()
+            ->useTabs(true)
+            ->type('model')
+            ->modelMethod('descriptions')
+            ->fields(
+                [
+                    'name' => [
+                        'name' => 'Name',
+                        'value' => 'name',
+                        'type' => 'text',
+                        'validation' => 'required'
+                    ]
+                ]
+            );
     })
     ->viewFilters(function()
     {
-//        ViewFilter::text('name', 'Name');
-        ViewFilter::text('type.name', 'Type');
+        ViewFilter::text('name', 'Name');
+        ViewFilter::text('type', 'Type');
         ViewFilter::text('price_type', 'Price Type');
     });

@@ -51,7 +51,9 @@
                                                     <td><input type="checkbox" name="items[{{$key}}][addons][{{$addonKey}}][id]" value="{{$addon->id}}" @if (isset($itemsAddons[$key][$addon->id])) checked="checked" @endif /></td>
                                                     <td>{{$addon->name}}</td>
                                                     <td>{{$addon->type()->first()->name}} ({{$addon->type()->first()->code}})</td>
-                                                    <td>{{(isset($addonPrices[$addon->id])) ? $addonPrices[$addon->id] : $addon->price}}</td>
+                                                    <td>{{(isset($addonPrices[$addon->id])) ? $addonPrices[$addon->id] : $addon->price}}
+                                                        <input type="hidden" name="items[{{$key}}][addons][{{$addonKey}}][addon_price]" value="{{(isset($addonPrices[$addon->id])) ? $addonPrices[$addon->id] : $addon->price}}" />
+                                                    </td>
                                                     <td>
                                                         <input type="text" name="items[{{$key}}][addons][{{$addonKey}}][qty]" value="@if(isset($itemsAddons[$key][$addon->id])){{$itemsAddons[$key][$addon->id]}}@endif" />
                                                     </td>

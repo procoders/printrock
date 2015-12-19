@@ -21,7 +21,7 @@ class AddonsType extends SleepingOwlModel {
      *
      * @var array
      */
-    protected $fillable = ['code', 'name'];
+    protected $fillable = ['code'];
 
     /**
      * Model guarded fields
@@ -35,11 +35,30 @@ class AddonsType extends SleepingOwlModel {
      */
     public static function getList()
     {
-        return static::lists('name', 'id')->all();
+        $values = [];
+
+        $language = config('admin.default_language_code');
+        $languageModel = Language::where('code', $language)->first();
+
+        if (empty($languageModel)) {
+            $languageModel = Language::first();
+        }
+
+        foreach (AddonsType::all() as $type) {
+            $description = $type->descriptions()->where('language_id', $languageModel->id)->first();
+            $values[$type->id] = (!is_null($description)) ? $description->name : '[' . $type->id . ']';
+        }
+
+        return $values;
     }
 
     public function descriptions()
     {
         return $this->hasMany(AddonsTypesDescription::class);
+    }
+
+    public function getRepository()
+    {
+        return new Repositories\AddonsTypeRepository($this);
     }
 }

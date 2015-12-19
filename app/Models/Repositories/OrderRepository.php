@@ -41,19 +41,18 @@ Class OrderRepository implements Interfaces\iAdminSave
         }
 
         // calculate total price
-        if ($this->model->id < 1 || empty($data['total'])) {
-            $total = 0;
+        $total = 0;
 
-            foreach ($data['items'] as $item) {
-                $total += $item['qty'] * $item['format_price'];
+        foreach ($data['items'] as $item) {
+            $total += $item['qty'] * $item['format_price'];
 
-                foreach ($item['addons'] as $addon) {
-                    $total += $addon['addon_price']*$addon['qty'];
-                }
+            foreach ($item['addons'] as $addon) {
+                $total += $addon['addon_price']*$addon['qty'];
             }
-
-            $data['total'] = $total;
         }
+
+        $data['total'] = $total;
+
         return $data;
     }
 

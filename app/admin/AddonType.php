@@ -1,6 +1,7 @@
 <?php
 
 use App\Models;
+use SleepingOwl\Admin\Models\Form\FormGroup;
 
 Admin::model(\App\Models\AddonsType::class)
     ->title('Addons Types')
@@ -46,8 +47,28 @@ Admin::model(\App\Models\AddonsType::class)
     })
     ->form(function ()
     {
-        FormItem::text('code', 'Code')->validationRule('required');
-//        FormItem::text('name', 'Name')->validationRule('required');
+        FormItem::text('code', 'Code')
+            ->group('general')
+            ->validationRule('required');
+
+        FormItem::descriptions()
+            ->useTabs(true)
+            ->type('model')
+            ->modelMethod('descriptions')
+            ->fields(
+                [
+                    'name' => [
+                        'name' => 'Name',
+                        'value' => 'name',
+                        'type' => 'text',
+                        'validation' => 'required'
+                    ]
+                ]
+            )
+            ->group('descriptions');
+
+        FormGroup::create('general', 'General')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
+        FormGroup::create('descriptions', 'Status Descriptions')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
     })
     ->viewFilters(function()
     {

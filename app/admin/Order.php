@@ -58,9 +58,6 @@ Admin::model(\App\Models\Order::class)
             ->list(Models\OrdersStatus::class)
             ->validationRule('required|numeric|exists:orders_statuses,id')
             ->group('general');
-        FormItem::text('total', 'Total')
-            ->validationRule('required|numeric|min:1')
-            ->group('general');
         FormItem::text('comment', 'Comment')
             ->group('general');
         FormItem::items('items', 'Items')
@@ -69,43 +66,43 @@ Admin::model(\App\Models\Order::class)
         FormItem::customTextField()
             ->name('delivery[country]')
             ->label('Country')
-            ->callback(function($model) {;
-                return $model->delivery()->first()->country;
+            ->callback(function($model) {
+                return is_null($model->delivery()->first()) ? '' : $model->delivery()->first()->country;
             })
             ->group('delivery');
         FormItem::customTextField()
             ->name('delivery[city]')
             ->label('City')
-            ->callback(function($model) {;
-                return $model->delivery()->first()->city;
+            ->callback(function($model) {
+                return is_null($model->delivery()->first()) ? '' : $model->delivery()->first()->city;
             })
             ->group('delivery');
         FormItem::customTextField()
             ->name('delivery[phone]')
             ->label('Phone')
-            ->callback(function($model) {;
-                return $model->delivery()->first()->phone;
+            ->callback(function($model) {
+                return is_null($model->delivery()->first()) ? '' : $model->delivery()->first()->phone;
             })
             ->group('delivery');
         FormItem::customTextField()
             ->name('delivery[zip_code]')
             ->label('Zip Code')
-            ->callback(function($model) {;
-                return $model->delivery()->first()->zip_code;
+            ->callback(function($model) {
+                return is_null($model->delivery()->first()) ? '' : $model->delivery()->first()->zip_code;
             })
             ->group('delivery');
         FormItem::customTextField()
             ->name('delivery[street]')
             ->label('Street')
-            ->callback(function($model) {;
-                return $model->delivery()->first()->street;
+            ->callback(function($model) {
+                return is_null($model->delivery()->first()) ? '' : $model->delivery()->first()->street;
             })
             ->group('delivery');
         FormItem::customTextField()
             ->name('delivery[name]')
             ->label('Name')
-            ->callback(function($model) {;
-                return $model->delivery()->first()->name;
+            ->callback(function($model) {
+                return is_null($model->delivery()->first()) ? '' : $model->delivery()->first()->name;
             })
             ->group('delivery');
 
