@@ -11,9 +11,32 @@ Admin::model(\App\Models\Addon::class)
     ->columns(function ()
     {
         Column::string('id', 'Id');
-//        Column::string('name', 'Name')
-//            ->inlineEdit(true);
-        Column::string('type.name', 'Type');
+        Column::callback('name', 'Name')
+            ->contentCallback(function($instance) {
+                $language = config('admin.default_language_code');
+                $languageModel = Models\Language::where('code', $language)->first();
+
+                if (empty($languageModel)) {
+                    $languageModel = Models\Language::first();
+                }
+
+                return $instance->descriptions()->where('language_id', $languageModel->id)->first()->name;
+            });
+        Column::callback('type', 'Type')
+            ->contentCallback(function($instance) {
+                $language = config('admin.default_language_code');
+                $languageModel = Models\Language::where('code', $language)->first();
+
+                if (empty($languageModel)) {
+                    $languageModel = Models\Language::first();
+                }
+                return $instance->type()
+                    ->first()
+                    ->descriptions()
+                    ->where('language_id', $languageModel->id)
+                    ->first()
+                    ->name;
+            });
         Column::string('price_type', 'Price Type');
         Column::string('price', 'Price');
     })

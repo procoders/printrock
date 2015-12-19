@@ -1,5 +1,7 @@
 <?php
 
+use App\Models;
+
 Admin::model(\App\Models\AddonsType::class)
     ->title('Addons Types')
     ->denyEditingAndDeleting(function ($instance)
@@ -11,8 +13,17 @@ Admin::model(\App\Models\AddonsType::class)
         Column::string('id', 'Id');
         Column::string('code', 'Code')
             ->inlineEdit(true);
-//        Column::string('name', 'Name')
-//            ->inlineEdit(true);
+        Column::callback('name', 'Name')
+            ->contentCallback(function($instance) {
+                $language = config('admin.default_language_code');
+                $languageModel = Models\Language::where('code', $language)->first();
+
+                if (empty($languageModel)) {
+                    $languageModel = Models\Language::first();
+                }
+
+                return $instance->descriptions()->where('language_id', $languageModel->id)->first()->name;
+            });
     })
     ->inlineEdit(function($field) {
         switch($field) {
