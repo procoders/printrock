@@ -631,6 +631,7 @@ class CustomerController extends Controller {
 
         $params = \Input::all();
         $params['customer_id'] = $customerId;
+        $params['addons'] = (!isset($params['addons'])) ? [] : (array)$params['addons'];
 
         if ($params) {
             $errors = [];
@@ -655,15 +656,16 @@ class CustomerController extends Controller {
                         'photo_id' => 'required|numeric|exists:photos,id',
                         'qty' => 'required|numeric|min:1',
                         'price_per_item' => 'required|numeric',
-                        'format_id' => 'required|numeric|exists:formats,id',
-                        'addons' => 'required|array'
+                        'format_id' => 'required|numeric|exists:formats,id'
                     ]);
 
-                    foreach ($item['addons'] as $addon) {
-                        $itemsAddonsValidator[$itemKey][] = Validator::make($addon, [
-                            'id' => 'required|numeric|exists:addons,id',
-                            'qty' => 'required|numeric|min:1'
-                        ]);
+                    if (!empty($params['addons'])) {
+                        foreach ($item['addons'] as $addon) {
+                            $itemsAddonsValidator[$itemKey][] = Validator::make($addon, [
+                                'id' => 'required|numeric|exists:addons,id',
+                                'qty' => 'required|numeric|min:1'
+                            ]);
+                        }
                     }
                 }
 
@@ -671,9 +673,11 @@ class CustomerController extends Controller {
                     if ($validator->fails()) {
                         $errors['items'][$itemKey + 1] = $validator->errors();
                     } else {
-                        foreach ($itemsAddonsValidator[$itemKey] as $addonKey => $validator) {
-                            if ($validator->fails()) {
-                                $errors['items'][$itemKey + 1]['addons'][$addonKey + 1] = $validator->errors();
+                        if (!empty($params['addons'])) {
+                            foreach ($itemsAddonsValidator[$itemKey] as $addonKey => $validator) {
+                                if ($validator->fails()) {
+                                    $errors['items'][$itemKey + 1]['addons'][$addonKey + 1] = $validator->errors();
+                                }
                             }
                         }
                     }
