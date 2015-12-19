@@ -596,6 +596,85 @@ class CustomerController extends Controller {
 
     /**
      * @SWG\Api(
+     *   path="/customers/{customerId}/order_calculate",
+     *   @SWG\Operation(
+     *     nickname="Calculate order",
+     *     method="POST",
+     *     summary="Calculate order",
+     *     notes="Returns order price",
+     *     type="OrderCalculate",
+     *     authorizations={},
+     *     @SWG\Parameter(
+     *       name="customerId",
+     *       description="Customer Id",
+     *       required=true,
+     *       type="integer",
+     *       format="int64",
+     *       paramType="path",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\Parameter(
+     *       name="Body",
+     *       description="Body",
+     *       required=true,
+     *       type="OrdersCalculateBody",
+     *       paramType="body",
+     *       allowMultiple=false
+     *     ),
+     *     @SWG\ResponseMessage(code=500, message="Internal server error")
+     *   )
+     * )
+     */
+    public function calculateOrder($customerId)
+    {
+        // NOTE! that customer id need for features price breaks
+        $statusCode = 200;
+        $params = \Input::all();
+        $order = [
+            'total' => 0,
+            'items' => []
+        ];
+        if (isset($params['items'])) {
+
+            foreach ($params['items'] as $item) {
+                $orderItem = [
+                    'format_id' => isset($item['format_id']) ? $item['format_id'] : 0,
+                    'qty' => isset($item['qty']) ? $item['qty'] : 0,
+                    'addons' => []
+                ];
+
+                $formatModel = Models\Format::find($item['format_id']);
+                if (is_null($formatModel)) {
+                    return \Response::json(['error' => 'Format does\'t exists'], 500);
+                }
+                if (isset($item['addons'])) {
+                    foreach ($item['addons'] as $addon) {
+                        $orderItem['addons'][] = [
+                            'id' => isset($addon['id']) ? $addon['id'] : 0,
+                            'qty' => isset($addon['qty']) ? $addon['qty'] : 0,
+                        ];
+
+                        $addonModel = Models\Addon::find(@$addon['id']);
+
+                        if (is_null($addonModel)) {
+                            return \Response::json(['error' => 'Addon does\'t exists'], 500);
+                        }
+                    }
+                }
+
+                $order['items'][] = $orderItem;
+            }
+
+            $orderModal = new Models\Order();
+            $order = $orderModal->getRepository()->fillOrderPrices($order);
+            return \Response::json($order, $statusCode);
+        } else {
+            return \Response::json($order, $statusCode);
+        }
+    }
+
+    /**
+     * @SWG\Api(
      *   path="/customers/{customerId}/orders",
      *   @SWG\Operation(
      *     nickname="Add new order",
