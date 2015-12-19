@@ -32,6 +32,10 @@ Class Order extends BaseView
     /**
      * @SWG\Property(name="comment", type="string", required=false)
      */
+    
+    /**
+     * @SWG\Property(name="delivery", type="OrdersDelivery", required=true)
+     */
 
     public function get()
     {
