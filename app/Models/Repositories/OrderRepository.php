@@ -44,7 +44,6 @@ Class OrderRepository implements Interfaces\iAdminSave
         $this->model->save();
 
         $this->model->items()->delete();
-
         foreach ($attributes['items'] as $oredersItem) {
             $item = new Models\OrdersItem();
 
@@ -70,7 +69,6 @@ Class OrderRepository implements Interfaces\iAdminSave
                 }
             }
         }
-
         if ($attributes['delivery']) {
             $delivery = new Models\OrdersDelivery();
             $delivery->order_id = $this->model->id;

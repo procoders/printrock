@@ -7,7 +7,7 @@ Admin::model(\App\Models\Order::class)
     ->title('Orders')
     ->denyCreating(function ()
     {
-        return false;
+        return true;
     })
     ->columns(function ()
     {
@@ -61,10 +61,56 @@ Admin::model(\App\Models\Order::class)
         FormItem::text('total', 'Total')
             ->validationRule('required|numeric|min:1')
             ->group('general');
+        FormItem::text('comment', 'Comment')
+            ->group('general');
         FormItem::items('items', 'Items')
             ->group('items');
 
+        FormItem::customTextField()
+            ->name('delivery[country]')
+            ->label('Country')
+            ->callback(function($model) {;
+                return $model->delivery()->first()->country;
+            })
+            ->group('delivery');
+        FormItem::customTextField()
+            ->name('delivery[city]')
+            ->label('City')
+            ->callback(function($model) {;
+                return $model->delivery()->first()->city;
+            })
+            ->group('delivery');
+        FormItem::customTextField()
+            ->name('delivery[phone]')
+            ->label('Phone')
+            ->callback(function($model) {;
+                return $model->delivery()->first()->phone;
+            })
+            ->group('delivery');
+        FormItem::customTextField()
+            ->name('delivery[zip_code]')
+            ->label('Zip Code')
+            ->callback(function($model) {;
+                return $model->delivery()->first()->zip_code;
+            })
+            ->group('delivery');
+        FormItem::customTextField()
+            ->name('delivery[street]')
+            ->label('Street')
+            ->callback(function($model) {;
+                return $model->delivery()->first()->street;
+            })
+            ->group('delivery');
+        FormItem::customTextField()
+            ->name('delivery[name]')
+            ->label('Name')
+            ->callback(function($model) {;
+                return $model->delivery()->first()->name;
+            })
+            ->group('delivery');
+
         FormGroup::create('general', 'General')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
+        FormGroup::create('delivery', 'Delivery')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
         FormGroup::create('items', 'Items')->setDisplayType(FormGroup::DISPLAY_TYPE_FULL);
     })
     ->viewFilters(function()

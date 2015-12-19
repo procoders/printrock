@@ -18,7 +18,7 @@
                     </a>
                 </h3>
             </div>
-            <div id="collapse_{{$key}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{{$key}}">
+            <div id="collapse_{{$key}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_{{$key}}">
                 <div class="panel-body">
                     <div class="form-group">
                         <label class="col-md-2 control-label">Photo</label>
