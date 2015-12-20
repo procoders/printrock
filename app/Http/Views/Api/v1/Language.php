@@ -25,7 +25,7 @@ Class Language extends BaseView
      */
 
     /**
-     * @SWG\Property(name="default", type="bool", required=true)
+     * @SWG\Property(name="default", type="boolean", required=true)
      */
 
     public function get()
