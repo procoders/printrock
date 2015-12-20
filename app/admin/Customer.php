@@ -49,11 +49,11 @@ Admin::model(\App\Models\Customer::class)
     })
     ->form(function ()
     {
-        FormItem::text('name', 'Name')->validationRule('required')->group('general');
-        FormItem::text('second_name', 'Second Name')->validationRule('required')->group('general');
-        FormItem::text('last_name', 'Last Name')->validationRule('required')->group('general');
-        FormItem::email('email', 'Email')->validationRule('required|email')->group('general');
-        FormItem::text('phone', 'Phone')->validationRule('required')->group('general');
+        FormItem::text('name', 'Name')->group('general');
+        FormItem::text('second_name', 'Second Name')->group('general');
+        FormItem::text('last_name', 'Last Name')->group('general');
+        FormItem::email('email', 'Email')->group('general');
+        FormItem::text('phone', 'Phone')->group('general');
 
         if (! preg_match('/edit$/', Request::url()) && ! preg_match('/update$/', Request::url())) {
             FormItem::text('login', 'Login')->validationRule('required')->group('general');
