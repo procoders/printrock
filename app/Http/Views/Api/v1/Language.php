@@ -24,12 +24,17 @@ Class Language extends BaseView
      * @SWG\Property(name="name", type="string", required=true)
      */
 
+    /**
+     * @SWG\Property(name="default", type="bool", required=true)
+     */
+
     public function get()
     {
         return [
             'id'   => $this->_model->id,
             'code' => $this->_model->code,
-            'name' => $this->_model->name
+            'name' => $this->_model->name,
+            'default' => ((int)$this->_model->default > 0)
         ];
     }
 
