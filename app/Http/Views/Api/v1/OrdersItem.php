@@ -30,7 +30,7 @@ Class OrdersItem extends BaseView
      */
 
     /**
-     * @SWG\Property(name="format", type="Format", required=true)
+     * @SWG\Property(name="format_id", type="integer", required=true)
      */
 
     /**
@@ -43,12 +43,13 @@ Class OrdersItem extends BaseView
 
         $photoView = new ModelViews\Photo($photoModel);
 
-        $formatModel = $this->_model->format()->first();
-
-        $formatView = new ModelViews\Format($formatModel);
+//        $formatModel = $this->_model->format()->first();
+//
+//        $formatView = new ModelViews\Format($formatModel);
 
         $ordersItemsAddons = [];
         foreach ($this->_model->ordersItemsAddons()->get() as $ordersItemsAddonModel) {
+
             $ordersItemsAddonView = new ModelViews\OrdersItemsAddon($ordersItemsAddonModel);
 
             $ordersItemsAddons[] = $ordersItemsAddonView->get();
@@ -59,7 +60,7 @@ Class OrdersItem extends BaseView
             'photo'          => $photoView->get(),
             'qty'            => $this->_model->qty,
             'format_price'   => $this->_model->format_price,
-            'format'         => $formatView->get(),
+            'format_id'      => $this->_model->format_id,
             'addons'         => $ordersItemsAddons
         ];
     }

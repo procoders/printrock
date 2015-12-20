@@ -34,9 +34,15 @@ Class OrdersItemsAddon extends BaseView
         $addonModel = Models\Addon::find($this->_model->addon_id);
         $addonModel = (is_null($addonModel)) ? new Models\Addon() : $addonModel->first();
 
+        $languageId = (int)\Input::get('language_id', $this->_getDefaultLanguageId());
+
+        $description = $addonModel->descriptions()->where('language_id', $languageId)->first();
+        $name = (!is_null($description)) ? $description->name : '';
+
+
         return [
             'id'    => $this->_model->addon_id,
-            'name'  => $addonModel->name,
+            'name'  => $name,
             'image' => $addonModel->image,
             'price' => $this->_model->addon_price,
             'qty'   => $this->_model->qty
