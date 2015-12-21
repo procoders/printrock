@@ -710,7 +710,6 @@ class CustomerController extends Controller {
 
         $params = \Input::all();
         $params['customer_id'] = $customerId;
-        $params['addons'] = (!isset($params['addons'])) ? [] : (array)$params['addons'];
 
         if ($params) {
             $errors = [];

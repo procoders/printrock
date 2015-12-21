@@ -28,13 +28,12 @@ Class OrderRepository implements Interfaces\iAdminSave
     {
         foreach ($data['items'] as $itemKey => $item) {
             if ($this->model->id < 1 || (!isset($item['format_price']))) {
-                $data['items'][$itemKey]['format_price'] = Models\Format::find($item['format_id'])->first()->price;
+                $data['items'][$itemKey]['format_price'] = Models\Format::find($item['format_id'])->price;
             }
 
             foreach ($item['addons'] as $addonKey => $addon) {
                 if ($this->model->id < 1) {
                     $data['items'][$itemKey]['addons'][$addonKey]['addon_price'] = Models\Addon::find($addon['id'])
-                        ->first()
                         ->price;
                 }
             }
@@ -52,7 +51,6 @@ Class OrderRepository implements Interfaces\iAdminSave
         }
 
         $data['total'] = $total;
-
         return $data;
     }
 
