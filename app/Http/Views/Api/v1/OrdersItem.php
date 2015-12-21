@@ -68,7 +68,7 @@ Class OrdersItem extends BaseView
             'format_price'   => $this->_model->format_price,
             'format_id'      => $this->_model->format_id,
             'format_width'   => $formatModel->width,
-            'format_height'   => $formatModel->height,
+            'format_height'  => $formatModel->height,
             'addons'         => $ordersItemsAddons
         ];
     }

@@ -32,7 +32,7 @@ Class OrdersItemsAddon extends BaseView
     public function get()
     {
         $addonModel = Models\Addon::find($this->_model->addon_id);
-        $addonModel = (is_null($addonModel)) ? new Models\Addon() : $addonModel->first();
+        $addonModel = (is_null($addonModel)) ? new Models\Addon() : $addonModel;
 
         $languageId = (int)\Input::get('language_id', $this->_getDefaultLanguageId());
 
